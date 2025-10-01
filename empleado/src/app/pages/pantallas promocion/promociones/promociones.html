@@ -1,0 +1,44 @@
+<div class="page">
+  <!-- Topbar -->
+  <header class="topbar">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
+    <div class="user-section">
+      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
+      <span>Usuario</span>
+    </div>
+  </header>
+      <h1> Promociones</h1>
+    <div class="tabla-container">
+    <table class="tabla-formatos">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th> Porcentaje de Descuento</th>
+        <th> ID Tipo Cliente </th>
+        <th> ID dia</th>       
+      </tr>
+    </thead>
+    <tbody>
+  @for (tipo of promociones; track tipo.id) {
+    <tr [class.selected]="selectedRow === promociones.indexOf(tipo)" (click)="selectRow(promociones.indexOf(tipo))">
+      <td>{{ tipo.id }}</td>
+      <td>{{ tipo.nombre}}</td>
+      <td>{{ tipo.porcentajeDescuento }}</td>
+      <td>{{ tipo.tipoClienteId }}</td>
+      <td>{{ tipo.diaId }}</td>
+     
+ 
+    </tr>
+  }
+  </tbody>
+  </table>
+  <div class="button-group">
+    
+    <button (click)="onNew()">NUEVO</button>
+    <button (click)="onEdit()">EDITAR</button>
+    <button (click)="onDelete()">ELIMINAR</button>
+
+  </div>
+</div>
+

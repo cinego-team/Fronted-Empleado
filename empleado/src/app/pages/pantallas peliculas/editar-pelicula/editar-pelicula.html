@@ -1,0 +1,88 @@
+<div class="container">
+  <!-- Barra superior -->
+  <header class="topbar">
+    <img src="assets/logo.png" alt="CineGo" class="logo" />
+    <div class="user-section">
+      <img src="assets/usuario.png" alt="Usuario" class="user-icon" />
+      <span>Usuario</span>
+    </div>
+  </header>
+
+  <!-- Título -->
+   <div class="editar-box">
+  <h2>Editar película</h2>
+
+  <!-- Formulario -->
+  <form>
+    <div class="form-row">
+        <label for="id">ID:</label> <div class="id-value"></div> </div>
+    <div class="form-group">
+      <label>
+        Título
+        <input type="text" name="titulo" required />
+      </label>
+      <label>
+        Estado
+        <select name="estado">
+      
+        </select>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label class="duracion">
+        Duración
+        <div class="duracion-input">
+          <input type="number" min="1" required />
+          <span>min</span>
+        </div>
+      </label>
+      <label>
+        Clasificación
+        <select name="clasificacion">
+    
+        </select>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label>
+        Fecha Estreno
+        <div class="dob">
+          <select name="dia"><option>Día</option></select>
+          <select name="mes"><option>Mes</option></select>
+          <select name="año"><option>Año</option></select>
+        </div>
+      </label>
+      <label>
+        Género
+        <select name="genero">
+       
+        </select>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label>
+        Director
+        <input type="text" name="director" required />
+      </label>
+      <label>
+        Idioma
+        <select name="idioma">
+       
+        </select>
+      </label>
+    </div>
+
+    <label>Sinopsis</label>
+    <input type="text" name="sinopsis" required />
+
+    <label>URL Imagen</label>
+    <input type="url" name="imagen" required />
+
+    <button type="submit">GUARDAR</button>
+  </form>
+</div>
+</div>
+

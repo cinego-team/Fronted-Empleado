@@ -1,0 +1,33 @@
+<div class="page">
+ <header class="topbar">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
+    <div class="user-section">
+      <img src="assets/usuario.png" alt="Usuario" class="user-icon" />
+      <span>Usuario</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h1>Registrar Estado Película</h1>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+        <label for="nombre">Nombre</label>
+        <input
+  id="nombre"
+  type="text"
+  formControlName="nombre"
+  placeholder="Ej.: Acción"
+  [class.invalid]="f['nombre'].touched && f['nombre'].invalid"
+/>
+
+<div class="error" *ngIf="f['nombre'].touched && f['nombre'].errors">
+  <small *ngIf="f['nombre'].errors?.['required']">El nombre es obligatorio.</small>
+  <small *ngIf="f['nombre'].errors?.['minlength']">Mínimo 2 caracteres.</small>
+</div>
+
+        <button type="submit" (click)="form.invalid">REGISTRAR</button>
+      </form>
+    </section>
+  </main>
+</div>

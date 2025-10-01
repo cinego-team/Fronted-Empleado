@@ -1,0 +1,38 @@
+<div class="page">
+  <!-- Topbar -->
+  <header class="topbar">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
+    <div class="user-section">
+      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
+      <span>Usuario</span>
+    </div>
+  </header>
+      <h1> Ventas</h1>
+    <div class="tabla-container">
+    <table class="tabla-formatos">
+    <thead>
+      <tr>
+        <th>Numero Venta</th>
+        <th>Fecha</th>
+        <th> Hora</th>
+        <th> Total </th>
+        <th> ID promocion</th>       
+      </tr>
+    </thead>
+    <tbody>
+  @for (tipo of ventas; track tipo.nroVenta) {
+    <tr [class.selected]="selectedRow === ventas.indexOf(tipo)" (click)="selectRow(ventas.indexOf(tipo))">
+      <td>{{ tipo.nroVenta }}</td>
+      <td>{{ tipo.fecha}}</td>
+      <td>{{ tipo.hora }}</td>
+      <td>{{ tipo.total }}</td>
+      <td>{{ tipo.promocionId }}</td>
+     
+ 
+    </tr>
+  }
+  </tbody>
+  </table>
+ 
+</div>
+

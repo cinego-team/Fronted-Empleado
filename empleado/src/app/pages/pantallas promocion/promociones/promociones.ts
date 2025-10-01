@@ -1,0 +1,74 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { ApiService } from '../../../services/api.service';
+import { GlobalStatusService } from '../../../services/global-status.service';
+@Component({
+  selector: 'app-promociones',
+  imports: [],
+  templateUrl: './promociones.html',
+  styleUrl: './promociones.css'
+})
+export class Promociones {
+constructor(
+    private router: Router,
+    private readonly apiService: ApiService,
+    private readonly globalStatusService: GlobalStatusService
+   
+  ) { }
+  promociones: Array<{
+    id:number;
+    nombre: string;
+    porcentajeDescuento: number;
+    tipoClienteId: number;
+    diaId: number;
+  }> =[];
+   selectedRow: number | null = null;
+  actualPage: number = 1;
+  ngOnInit(): void {
+    this.initialization();
+  }
+   async initialization(): Promise<void> {
+    this.globalStatusService.setLoading(true);
+    await new Promise(resolve => setTimeout(resolve, 500)); //Decorativo
+    const data = await this.apiService.getPromociones();
+    if (data.length === 0) {
+      alert('No hay promociones para mostrar.');
+      this.globalStatusService.setLoading(false);
+      this.actualPage --;
+      return;
+    }
+    this.promociones = data;
+    this.globalStatusService.setLoading(false);
+  }
+  selectRow(rowId: number) {
+    this.selectedRow = rowId;
+  }
+
+  onNew() {
+    this.router.navigate(['/registrar-promocion']);
+  }
+
+  onEdit() {
+    if (this.selectedRow === null) {
+      alert('Seleccioná un promocion primero.');
+      return;
+    }
+    const selectedPromocion = this.promociones[this.selectedRow];
+    this.router.navigate(['/editar-promocion', selectedPromocion.id]);
+  }
+
+  onDelete() {
+    if (this.selectedRow === null) {
+      alert('Seleccioná una promocion primero.');
+      return;
+    }
+    const selectedPromocion = this.promociones[this.selectedRow];
+    if (confirm(`¿Estás seguro de que querés eliminar la promocion ${selectedPromocion.nombre} (ID: ${selectedPromocion.id})?`)) {
+      this.apiService.deletePromocion(selectedPromocion.id).then(() => {
+        alert('Promocion eliminado correctamente.');
+        this.promociones.splice(this.selectedRow!, 1);
+        this.selectedRow = null;
+      })
+    }
+  }
+}

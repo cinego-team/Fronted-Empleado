@@ -1,0 +1,36 @@
+<div class="page">
+  <!-- Topbar -->
+  <header class="topbar">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
+    <div class="user-section">
+      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
+      <span>Usuario</span>
+    </div>
+  </header>
+      <h1> Tipo Cliente</h1>
+    <div class="tabla-container">
+    <table class="tabla-formatos">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+  @for (tipo of tiposCliente; track tipo.id) {
+    <tr [class.selected]="selectedRow === tiposCliente.indexOf(tipo)" (click)="selectRow(tiposCliente.indexOf(tipo))">
+      <td>{{ tipo.id }}</td>
+      <td>{{ tipo.nombre }}</td>
+    </tr>
+  }
+  </tbody>
+  </table>
+  <div class="button-group">
+    
+    <button (click)="onNew()">NUEVO</button>
+    <button (click)="onEdit()">EDITAR</button>
+    <button (click)="onDelete()">ELIMINAR</button>
+
+  </div>
+</div>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Película</title>
+    
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+           <img src="/assets/logo.png" alt="CineGo" class="logo" />
+        </div>
+        <div class="user-section">
+            <img src="/assets/usuario.png" alt="CineGo" class="usuario" />
+            <span class="user-label">Usuario</span>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <aside class="poster-section">
+            <div class="poster-placeholder">
+                <svg class="poster-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+            </div>
+            <h1 class="movie-title">Título</h1>
+            <button class="back-button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+        </aside>
+
+        <section class="form-section">
+       
+            <div class="form-row">
+                <div class="form-group small">
+                    <label>ID:</label>
+                    <div class="form-display"></div>
+                </div>
+                <div class="form-group large">
+                    <label>Estado</label>
+                    <div class="form-display"></div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group medium">
+                    <label>Duración</label>
+                    <div class="form-display"></div>
+                </div>
+                <div class="form-group large">
+                    <label>Clasificación</label>
+                    <div class="form-display"></div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group-date">
+                    <label>Fecha Estreno</label>
+                    <div class="date-inputs">
+                        <div class="form-display date-input">Día</div>
+                        <div class="form-display date-input">Mes</div>
+                        <div class="form-display date-input">Año</div>
+                    </div>
+                </div>
+                <div class="form-group large">
+                    <label>Género</label>
+                    <div class="form-display"></div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group medium">
+                    <label>Director</label>
+                    <div class="form-display"></div>
+                </div>
+                <div class="form-group large">
+                    <label>Idioma</label>
+                    <div class="form-display"></div>
+                </div>
+            </div>
+
+            <div class="form-group full">
+                <label>Sinopsis</label>
+                <div class="form-display textarea"></div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
