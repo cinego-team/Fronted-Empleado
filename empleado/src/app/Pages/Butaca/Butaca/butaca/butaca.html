@@ -1,0 +1,35 @@
+<div class="page">
+  <header class="topbar">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
+    <div class="user"><span class="icon">👤</span><span class="label">Usuario</span></div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h1>Butacas</h1>
+
+      <!-- grilla por filas, pero con selección como en tu tabla -->
+      <div class="seats">
+        <div class="row" *ngFor="let letra of rows">
+          <ng-container *ngFor="let b of seatsByRow[letra]">
+            <button
+              type="button"
+              class="seat"
+              (click)="seleccionar(b)"
+              [class.sel]="seleccion?.id === b.id"
+            >
+              {{ b.numero }}{{ b.letra }}
+            </button>
+            <div class="aisle" *ngIf="isAisle(b.numero)"></div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button (click)="nuevo()">NUEVA </button>
+        <button (click)="eliminar()" >ELIMINAR</button>
+        <button (click)="editar()"   >EDITAR</button>
+      </div>
+    </section>
+  </main>
+</div>
