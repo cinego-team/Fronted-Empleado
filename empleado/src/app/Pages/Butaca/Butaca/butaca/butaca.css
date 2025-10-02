@@ -1,0 +1,140 @@
+/* ======== Fondo / Layout general ======== */
+.page {
+  min-height: 100vh;
+  background: #4F1917; /* bordó oscuro */
+  color: #fff;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+}
+
+.logo {
+  height: 36px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.9;
+}
+
+.wrap {
+  display: grid;
+  place-items: center;
+  padding: 32px 16px 56px;
+}
+
+.card {
+  width: min(900px, 92vw);
+  background: #840b0a; /* rojo oscuro */
+  border-radius: 24px;
+  padding: 36px 24px 28px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) inset,
+              0 10px 30px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+.card h1 {
+  margin: 0 0 14px;
+  font-size: 28px;
+  font-weight: 700;
+  color : #ffffff;
+}
+
+/* ======== GRID DE BUTACAS ======== */
+.seats {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  margin: 8px 0 10px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;            /* espacio entre butacas */
+  flex-wrap: nowrap;   /* todas en una sola línea */
+}
+
+/* Espacio visual de pasillo */
+.aisle {
+  width: 16px;
+  flex: 0 0 16px;
+}
+
+/* ======== BUTACAS ======== */
+.seat {
+  width: 44px;
+  height: 36px;
+  border-radius: 12px;
+  background: #e74c3c; /* rojo disponible */
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 13px;
+  color: #fff;
+  transition: background 0.2s, transform 0.05s;
+}
+
+/* Sin brazos ni base */
+.seat::before,
+.seat::after {
+  content: none !important;
+}
+
+/* Estados */
+.seat:hover {
+  background: #ff6655;
+}
+
+.seat:active {
+  transform: scale(0.95);
+}
+
+.seat.selected {
+  background: #27ae60; /* verde */
+}
+
+.seat.occupied,
+.seat:disabled {
+  background: #7f8c8d; /* gris */
+  cursor: not-allowed;
+}
+
+
+/* Botonera */
+.actions{
+  display:flex;gap:16px;justify-content:center;margin-top:18px;flex-wrap:wrap;
+}
+.actions button{
+  border:none;border-radius:999px;padding:10px 18px;
+  background:#eac4c1;color:#5a2422;font-weight:800;letter-spacing:.2px;
+  cursor:pointer;transition:transform .05s ease, opacity .2s;
+}
+.actions button:disabled{ opacity:.6; cursor:not-allowed; }
+.actions button:not(:disabled):active{ transform:translateY(1px); }
+
+/* ======== Resumen selección ======== */
+.summary {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ffecec;
+}
+
+.link {
+  background: none;
+  border: none;
+  color: #ffecec;
+  text-decoration: underline;
+  cursor: pointer;
+}

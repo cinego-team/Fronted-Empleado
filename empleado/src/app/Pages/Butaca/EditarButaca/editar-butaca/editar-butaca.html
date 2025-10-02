@@ -1,0 +1,55 @@
+<div class="page">
+  <header class="topbar">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
+    <div class="user">
+      <span class="icon">👤</span>
+      <span class="label">Usuario</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h1>Editar Butaca</h1>
+
+      <!-- Chip de ID -->
+      <div class="pill">
+          <label>ID:</label>
+          <input id="id" type="text" formControlName="" />
+        </div>
+        
+
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+        <label for="numero" class="lbl">Numero</label>
+        <input
+          id="numero"
+          type="text"
+          formControlName="numero"
+          placeholder="Ej: 12"
+          [class.invalid]="f.numero.touched && f.numero.invalid"
+        />
+        <div class="error" *ngIf="f.numero.touched && f.numero.invalid">
+          <small *ngIf="f.numero.errors?.['required']">El número es obligatorio.</small>
+          <small *ngIf="f.numero.errors?.['pattern']">Solo números.</small>
+          <small *ngIf="f.numero.errors?.['min']">Debe ser ≥ 1.</small>
+        </div>
+
+        <label for="fila" class="lbl">Fila</label>
+        <input
+          id="fila"
+          type="text"
+          formControlName="fila"
+          placeholder="Ej: 5"
+          [class.invalid]="f.fila.touched && f.fila.invalid"
+        />
+        <div class="error" *ngIf="f.fila.touched && f.fila.invalid">
+          <small *ngIf="f.fila.errors?.['required']">La fila es obligatoria.</small>
+          <small *ngIf="f.fila.errors?.['pattern']">Solo números.</small>
+          <small *ngIf="f.fila.errors?.['min']">Debe ser ≥ 1.</small>
+        </div>
+
+        <button type="submit" [disabled]="form.invalid">GUARDAR</button>
+      </form>
+    </section>
+  </main>
+</div>

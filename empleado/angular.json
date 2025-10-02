@@ -19,9 +19,14 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+<<<<<<< HEAD
               
                 {"glob": "**/*","input": "src/assets", "output": "/assets"},
                 {"input": "src/favicon.ico","output": "/","glob": "favicon.ico"}
+=======
+              { "glob": "**/*", "input": "src/assets", "output": "/assets" },
+              { "input": "src/favicon.ico", "output": "/", "glob": "favicon.ico" }
+>>>>>>> caf14d4ba62c36595707964956b3eeca72f32708
             ],
             "styles": [
              "node_modules/bootstrap/dist/css/bootstrap.min.css", "src/styles.css"
@@ -75,10 +80,8 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              { "glob": "**/*", "input": "src/assets", "output": "/assets" },
+              { "input": "src/favicon.ico", "output": "/", "glob": "favicon.ico" }
             ],
             "styles": [
               "src/styles.css"

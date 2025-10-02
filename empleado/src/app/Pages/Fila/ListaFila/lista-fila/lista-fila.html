@@ -1,0 +1,41 @@
+<div class="page">
+  <header class="topbar">
+    <img src="assets/logo.png" alt="CineGo" class="logo" />
+    <div class="user"><span class="icon">👤</span><span class="label">Usuario</span></div>
+  </header>
+
+  <main class="wrap">
+    <h1>Fila</h1>
+
+    
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Numero</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            *ngFor="let g of generos"
+            (click)="seleccionar(g)"
+            [class.sel]="seleccion?.id === g.id"
+            tabindex="0"
+          >
+            <td>{{ g.id }}</td>
+            <td>{{ g.numero }}</td>
+          </tr>
+        </tbody>
+      </table>
+    
+
+    <div class="actions">
+        <button (click)="nuevo()">NUEVA FILA</button>
+
+        <button (click)="!seleccion" (click)="eliminar()">ELIMINAR</button>
+
+        <button (click)="!seleccion" (click)="editar()">EDITAR</button>
+      </div>
+  </main>
+</div>
