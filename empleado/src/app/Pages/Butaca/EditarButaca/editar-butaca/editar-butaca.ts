@@ -64,3 +64,5 @@ export class EditarButacaComponent {
     // this.router.navigate(['/butacas']);
   }
 }
+
+//probando
