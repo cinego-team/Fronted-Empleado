@@ -1,0 +1,98 @@
+/* Fondo general */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #4f1917; /* el bordo que ya usás */
+}
+
+.container {
+  background-color: #4f1917;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+    min-width: 1536px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo img {
+  height: 50px;
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px;
+  color: #f0d4b0;
+}
+
+.user .icon-user {
+  width: 30px;
+  height: 30px;
+  border: 2px solid #f0d4b0;
+  border-radius: 50%;
+  margin-bottom: 4px;
+}
+
+/* Caja principal */
+.form-container {
+  background-color: #8b0f0f;
+  border-radius: 20px;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 40px;
+  text-align: center;
+}
+
+.form-container h2 {
+  margin-bottom: 30px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* Inputs */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.form-group input {
+  width: 80%;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  text-align: center;
+  background-color: #f5d5d5;
+  font-size: 16px;
+}
+
+/* Botón */
+.btn-registrar {
+  margin-top: 20px;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 20px;
+  background-color: #f5d5d5;
+  color: #8b0f0f;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-registrar:hover {
+  background-color: #e8c4c4;
+}

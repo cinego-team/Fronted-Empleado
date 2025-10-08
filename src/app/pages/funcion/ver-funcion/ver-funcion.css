@@ -1,0 +1,134 @@
+/* Fondo general */
+.container {
+  background-color: #4f1917; /* bordo oscuro */
+  height: 100vh;
+  min-width: 1536px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header */
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  align-items: center;
+}
+
+.logo {
+  height: 50px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 14px;
+}
+
+.user i {
+  margin-right: 5px;
+}
+
+/* Tarjeta del formulario */
+.form-card {
+  background-color: #8b0000; /* rojo vino */
+  border-radius: 20px;
+  padding: 30px;
+  width: 500px;
+  margin-top: 40px;
+  color: #fff;
+  text-align: center;
+}
+
+.form-card h2 {
+  margin-bottom: 20px;
+}
+
+/* Grupos de inputs */
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  flex: 1;
+  margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.form-groupId input {
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+  width: 20%;
+  background-color: #f5cfcf;
+  text-align: left;
+  
+}
+
+#id::placeholder {
+  color: black;
+  opacity: 1;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 20px;
+  border: none;
+  background-color: #f8dada; /* rosa claro */
+  outline: none;
+  text-align: center;
+}
+
+/* Fecha con 3 select */
+.fecha-inputs {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.fecha-inputs select {
+  flex: 1;
+  margin: 0 3px;
+}
+
+/* Botón */
+.form-actions {
+  margin-top: 20px;
+}
+
+.btn-registrar {
+  background-color: #f8dada;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-registrar:hover {
+  background-color: #e6baba;
+}
+
+.flecha {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #fff;
+  transform: rotate(180deg);
+}

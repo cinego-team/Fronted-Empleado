@@ -1,0 +1,45 @@
+<div class="container">
+  <!-- Header con logo y usuario -->
+  <header class="header">
+    <div class="logo-container">
+      <img src="assets/logo.png" alt="CineGo Logo" class="logo" />
+    </div>
+    <div class="user">
+      <i class="icon-user"></i>
+      <span>Usuario</span>
+    </div>
+  </header>
+
+  <!-- Contenedor principal -->
+  <main class="form-container">
+    <h2>Editar Sala</h2>
+
+    <form>
+      <div class="form-groupId">
+        <label for="id"></label>
+        <input id="id" type="text"  placeholder="ID:" disabled />
+      </div>
+
+      <div class="form-group">
+        <label for="nombre">Numero</label>
+        <input id="nombre" type="number" />
+      </div>
+
+      <div class="form-group">
+        <label for="precio">Disponibilidad</label>
+        <input id="precio" type="text" />
+      </div>
+
+      <div class="form-group">
+        <label for="precio">capacidad</label>
+        <input id="precio" type="number" />
+      </div>
+
+    </form>
+  </main>
+
+  <!-- Botón guardar -->
+  <div class="button-container">
+  <button type="button" class="btn-guardar" (click)="guardar()">GUARDAR</button>
+  </div>
+</div>

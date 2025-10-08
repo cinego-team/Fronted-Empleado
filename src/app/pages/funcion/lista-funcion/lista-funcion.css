@@ -1,0 +1,106 @@
+/* Contenedor general */
+.container {
+  background-color: #4f1917; /* color de fondo bordo */
+  color: #fff;
+  min-height: 100vh;
+  min-width: 1536px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  height: 50px;
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.icono-usuario {
+  font-size: 24px;
+}
+
+/* Título */
+.titulo {
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* Tabla */
+.tabla-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tabla-funciones {
+  border-collapse: collapse;
+  width: 60%;
+  background-color: #e9e0e0;
+  color: #541b1b;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tabla-funciones th,
+.tabla-funciones td {
+  padding: 15px;
+  text-align: center;
+}
+
+.tabla-funciones th {
+  background-color: #dfbbbb;
+}
+
+.tabla-funciones tbody tr:hover {
+  background-color: #d9c0c0;
+  cursor: pointer;
+}
+
+/* Fila seleccionada */
+.tabla-funciones tbody tr.selected {
+  background-color: #b35b5b;
+  color: #fff;
+}
+
+/* Botones */
+.botones {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.btn {
+  background-color: #f2dede;
+  color: #541b1b;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: #e0bcbc;
+}
+
+/* Flecha de navegación */
+.flecha {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #fff;
+}

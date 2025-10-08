@@ -1,0 +1,36 @@
+<div class="container">
+  <!-- Header con logo y usuario -->
+  <header class="header">
+    <div class="logo">
+      <img src="assets/logo.png" alt="CineGo Logo"  />
+    </div>
+    <div class="user">
+      <i class="icon-user"></i>
+      <span>Usuario</span>
+    </div>
+  </header>
+
+  <!-- Contenedor principal -->
+  <main class="form-container">
+    <h2>Registrar Sala</h2>
+
+    <form>
+      <div class="form-group">
+        <label for="numero">Numero</label>
+        <input id="numero" type="number" />
+      </div>
+
+      <div class="form-group">
+        <label for="disponibilidad">Disponibilidad</label>
+        <input id="disponibilidad" type="text" />
+      </div>
+
+      <div class="form-group">
+        <label for="capacidad">Capacidad</label>
+        <input id="capacidad" type="number" />
+      </div>
+
+      <button type="submit" class="btn-registrar" (click)="registrar()">Registrar</button>
+    </form>
+  </main>
+</div>

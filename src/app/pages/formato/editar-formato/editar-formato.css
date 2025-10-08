@@ -1,0 +1,125 @@
+/* Ajustar fondo general */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #4f1917; /* el bordo que ya usás */
+}
+
+/* Contenedor general */
+.container {
+  background-color: #4f1917;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  min-width: 1536px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+/* Header con logo y usuario */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #f5cfcf;
+  font-size: 14px;
+}
+
+.icon-user {
+  border: 2px solid #f5cfcf;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+}
+
+/* Caja del formulario */
+.form-container {
+  background-color: #8b0f0f;
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.form-container h2 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group label {
+  color: white;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.form-group input {
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+  width: 60%;
+  background-color: #f5cfcf;
+  text-align: center;
+}
+
+.form-groupId input {
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+  width: 20%;
+  background-color: #f5cfcf;
+  text-align: left;
+  
+}
+
+#id::placeholder {
+  color: black;
+  opacity: 1;
+}
+
+/* Botón guardar */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.btn-guardar {
+  background-color: #f5cfcf;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 40px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #8b0f0f;
+  transition: 0.3s;
+}
+
+.btn-guardar:hover {
+  background-color: #ffd6d6;
+}
