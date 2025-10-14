@@ -50,9 +50,9 @@ import { ButacaComponent } from './pages/Butaca/Butaca/butaca/butaca';
 import { Principal } from './pages/principal/principal';
 
 export const routes: Routes = [
-  { path: '', component: Principal }, // 👈 esta será tu pantalla principal
+  { path: '', component: LoginComponent }, // 👈 esta será tu pantalla principal
   
-  { path: 'login', component: LoginComponent },
+  { path: 'home', component: Principal },
   { path:'registrar-empleado', component:Register },
   { path :'registrar-pelicula', component:RegistrarPelicula },
   { path:'editar-pelicula', component:EditarPelicula },
