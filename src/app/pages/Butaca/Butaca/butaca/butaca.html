@@ -1,7 +1,10 @@
 <div class="page">
   <header class="topbar">
     <img src="/assets/logo.png" alt="CineGo" class="logo" />
-    <div class="user"><span class="icon">👤</span><span class="label">Usuario</span></div>
+    <div class="user-section">
+      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
+      <span>Usuario</span>
+    </div>
   </header>
 
   <main class="wrap">
@@ -31,5 +34,10 @@
         <button (click)="editar()"   >EDITAR</button>
       </div>
     </section>
+   
   </main>
+    <div class="button-group">
+    
+    <button (click)="onBack()">VOLVER</button>
+    </div>
 </div>

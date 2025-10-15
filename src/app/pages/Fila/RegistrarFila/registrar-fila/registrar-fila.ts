@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-registrar-fila',
   standalone: true,
@@ -11,6 +11,9 @@ import { CommonModule } from '@angular/common';
 })
 
 export class RegistrarFilaComponent {
+  constructor( private router: Router,) {
+    
+   }
   private fb = inject(FormBuilder);
 
   form = this.fb.group({
@@ -31,5 +34,8 @@ export class RegistrarFilaComponent {
 
     // Reseteo opcional
     this.form.reset();
+  }
+  volver(){
+     this.router.navigate(['/fila/lista']);
   }
 }

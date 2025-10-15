@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router"
 import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms"
 import { CommonModule } from "@angular/common"
 import { ApiService } from "../../../services/api.service"
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-pelicula",
@@ -20,6 +21,7 @@ export class Pelicula implements OnInit {
     private fb: FormBuilder,
     private apiService: ApiService,
     private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   async ngOnInit() {
@@ -52,7 +54,7 @@ export class Pelicula implements OnInit {
     }
   }
 
-  goBack() {
-    window.history.back()
+ onBack() {
+    this.router.navigate(['/peliculas']);
   }
 }

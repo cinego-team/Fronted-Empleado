@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrar-clasificacion',
@@ -11,6 +12,10 @@ import { CommonModule } from '@angular/common';
 })
 
 export class RegistrarClasificacionComponent {
+  constructor() {
+  }
+  private router = inject(Router);
+
   private fb = inject(FormBuilder);
 
   form = this.fb.group({
@@ -31,5 +36,8 @@ export class RegistrarClasificacionComponent {
 
     // Reseteo opcional
     this.form.reset();
+  }
+  volver(){
+    this.router.navigate(['/clasificacion/lista']);
   }
 }

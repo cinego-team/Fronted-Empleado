@@ -19,6 +19,9 @@ export class RegistrarFuncion {
     console.log('funcion registrada');
 
     // Redirigir a la lista
-    this.router.navigate(['/lista-funcion']);
+    this.router.navigate(['/funciones']);
+  }
+   volver() {
+    this.router.navigate(['/funciones']);
   }
 }

@@ -6,7 +6,6 @@
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -15,23 +14,19 @@
 }
 
 .logo {
-  height: 50px;
+   width: 140px;
 }
 
-.user {
+.user-section {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  opacity: 0.9;
+  color:#ebccc7
 }
 
-.user .icon {
-  font-size: 22px;
-  line-height: 1;
-}
-
-.user .label {
-  font-size: 12px;
+.user-icon {
+  width: 48px;
+  height: 48px;
 }
 
 /* CONTENEDOR PRINCIPAL */
@@ -113,5 +108,33 @@
 }
 
 .form button:not(:disabled):active {
+  transform: translateY(1px);
+}
+/* Centra el botón debajo de la tarjeta */
+.back-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* distancia desde la tarjeta */
+}
+
+/* Estilo del botón */
+.back-button button {
+  padding: 10px 22px;
+  border: none;
+  border-radius: 999px;
+  background: #eac4c1;
+  color: #5a2422;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.05s ease, background-color 0.2s ease;
+}
+
+/* Hover */
+.back-button button:hover {
+  background: #cfa6a3;
+}
+
+/* Pequeño efecto al presionar */
+.back-button button:active {
   transform: translateY(1px);
 }

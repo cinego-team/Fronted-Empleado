@@ -1,33 +1,53 @@
+html,
+body {
+  /* Added margin and padding reset to remove white borders */
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden; /* Prevents horizontal scroll */
+}
+
 /* Contenedor general */
 .container {
   background-color: #4f1917; /* color de fondo bordo */
   color: #fff;
   min-height: 100vh;
-  min-width: 1536px;
-  padding: 20px;
+  /* Added !important to override Bootstrap's container styles */
+  width: 100vw !important;
+  max-width: 100vw !important;
+  padding: 0px !important;
+  margin: 0 !important;
   font-family: Arial, sans-serif;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
+
 /* Header */
-.header {
+.topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 16px 32px;
 }
 
 .logo {
-  height: 50px;
+  width: 140px;
 }
 
-.usuario {
+.user-section {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 5px;
+  color: #ebccc7;
 }
 
-.icono-usuario {
-  font-size: 24px;
+.user-icon {
+  width: 48px;
+  height: 48px;
 }
 
 /* Título */
@@ -95,12 +115,3 @@
   background-color: #e0bcbc;
 }
 
-/* Flecha de navegación */
-.flecha {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-size: 30px;
-  cursor: pointer;
-  color: #fff;
-}

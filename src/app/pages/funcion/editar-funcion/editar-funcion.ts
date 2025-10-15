@@ -19,6 +19,9 @@ export class EditarFuncion {
     console.log('funcion editada');
 
     // Redirigir a la lista
-    this.router.navigate(['/lista-funcion']);
+    this.router.navigate(['/funciones']);
+  }
+   volver() {
+    this.router.navigate(['/funciones']);
   }
 }

@@ -73,6 +73,10 @@ export class ButacaComponent {
   eliminar() {
     
   }
+  onBack() {
+    this.router.navigate(['/home']);
+  }
+  
 }
 
 

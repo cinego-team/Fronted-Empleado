@@ -40,4 +40,7 @@ export class ListaFilaComponent {
   eliminar() {
     
   }
+  volver(){
+    this.router.navigate(['/home']);
+  }
 }

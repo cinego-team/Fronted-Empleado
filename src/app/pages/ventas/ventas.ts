@@ -44,6 +44,8 @@ constructor(
   selectRow(rowId: number) {
     this.selectedRow = rowId;
   }
-
+  OnBack(){
+    this.router.navigate(['/home']);
+  }
 
 }

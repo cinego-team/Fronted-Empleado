@@ -111,3 +111,24 @@
 .form button:not(:disabled):active {
   transform: translateY(1px);
 }
+.back-button button {
+  padding: 10px 22px;
+  border: none;
+  border-radius: 999px;
+  background: #eac4c1;
+  color: #5a2422;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.05s ease, background-color 0.2s ease;
+   margin-top: 40px;
+}
+
+/* Hover */
+.back-button button:hover {
+  background: #cfa6a3;
+}
+
+/* Pequeño efecto al presionar */
+.back-button button:active {
+  transform: translateY(1px);
+}

@@ -19,6 +19,6 @@ export class VerFuncion {
     console.log('Regreando a la lista...');
 
     // Redirigir a la lista
-    this.router.navigate(['/lista-funcion']);
+    this.router.navigate(['/funciones']);
   }
 }

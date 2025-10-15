@@ -42,5 +42,8 @@ export class ListaDiaComponent {
   eliminar() {
     
   }
+  volver(){
+    this.router.navigate(['/home']);
+  }
 }
 

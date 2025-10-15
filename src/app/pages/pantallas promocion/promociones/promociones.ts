@@ -48,13 +48,17 @@ constructor(
     this.router.navigate(['/registrar-promocion']);
   }
 
-  onEdit() {
+  /*onEdit() {
     if (this.selectedRow === null) {
       alert('Seleccioná un promocion primero.');
       return;
     }
     const selectedPromocion = this.promociones[this.selectedRow];
     this.router.navigate(['/editar-promocion', selectedPromocion.id]);
+  }
+  */
+ onEdit() {
+  this.router.navigate(['/editar-promocion']);
   }
 
   onDelete() {
@@ -70,5 +74,8 @@ constructor(
         this.selectedRow = null;
       })
     }
+  }
+  onBack(){
+    this.router.navigate(['/home']);
   }
 }

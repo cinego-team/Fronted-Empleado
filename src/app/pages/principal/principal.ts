@@ -14,10 +14,10 @@ export class Principal {
      this.router.navigate(['/peliculas']);
   }
   onFunciones(){
-     this.router.navigate([' ']);
+     this.router.navigate(['/funciones']);
   }
   onButacas(){
-     this.router.navigate(['Butaca/butaca']);
+     this.router.navigate(['butaca/butaca']);
   }
   onIdiomas(){
      this.router.navigate(['/idioma/lista']);

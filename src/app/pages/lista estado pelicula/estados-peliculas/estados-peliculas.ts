@@ -46,13 +46,17 @@ constructor(
     this.router.navigate(['/registrar-estado-pelicula']);
   }
 
-  onEdit() {
+  /*onEdit() {
     if (this.selectedRow === null) {
       alert('Seleccioná un tipo cliente primero.');
       return;
     }
     const selectedEstado = this.estadosPeliculas[this.selectedRow];
     this.router.navigate(['/editar-estado-pelicula', selectedEstado.id]);
+  }
+    */
+  onEdit() {
+    this.router.navigate(['/editar-estado-pelicula']);
   }
 
   onDelete() {
@@ -68,5 +72,8 @@ constructor(
         this.selectedRow = null;
       })
     }
+  }
+   onBack(){
+    this.router.navigate(['/home']);
   }
 }

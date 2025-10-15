@@ -1,9 +1,10 @@
+<body>
 <div class="container">
   <!-- Header -->
-  <header class="header">
-    <img src="assets/logo.png" alt="CineGo" class="logo" />
-    <div class="usuario">
-      <span class="icono-usuario">&#128100;</span>
+<header class="topbar">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
+    <div class="user-section">
+      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
       <span>Usuario</span>
     </div>
   </header>
@@ -44,14 +45,13 @@
 
   <!-- Botones -->
   <div class="botones">
-    <button class="btn" (click)="nuevaFuncion()">NUEVA SALA</button>
+    <button class="btn" (click)="volver()">VOLVER</button>
+    <button class="btn" (click)="nuevaFuncion()">NUEVA FUNCION</button>
     <button class="btn" (click)="ver()">VER</button>
     <button class="btn">ELIMINAR</button>
     <button class="btn" (click)="editarFuncion()">EDITAR</button>
   </div>
 
-  <!-- Flecha de navegación -->
-  <div class="flecha">
-    &#10132;
-  </div>
+  
 </div>
+</body>

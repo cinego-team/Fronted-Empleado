@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrar-dia',
@@ -11,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 
 export class RegistrarDiaComponent {
+  constructor(private router: Router) {}
   private fb = inject(FormBuilder);
 
   form = this.fb.group({
@@ -29,5 +31,8 @@ export class RegistrarDiaComponent {
     console.log('Registrando dia:', payload);
 
     this.form.reset();
+  }
+  volver(){
+    this.router.navigate(['/dia/lista']);
   }
 }

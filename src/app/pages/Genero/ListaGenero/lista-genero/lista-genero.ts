@@ -42,5 +42,8 @@ export class ListaGeneroComponent {
   eliminar() {
     
   }
+    volver() {
+    this.router.navigate(['/home']);
+  }
 }
 

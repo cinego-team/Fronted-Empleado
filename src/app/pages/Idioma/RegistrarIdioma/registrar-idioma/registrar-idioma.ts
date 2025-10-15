@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrar-idioma',
@@ -12,6 +13,7 @@ import { CommonModule } from '@angular/common';
 
 export class RegistrarIdiomaComponent {
   private fb = inject(FormBuilder);
+  constructor(private router: Router) {}
 
   form = this.fb.group({
     nombre: ['', [Validators.required, Validators.minLength(2)]],
@@ -31,5 +33,8 @@ export class RegistrarIdiomaComponent {
 
     // Reseteo opcional
     this.form.reset();
+  }
+   volver() {
+    this.router.navigate(['/idioma/lista']);
   }
 }

@@ -24,7 +24,7 @@ export class ListaFuncion {
     this.selectedIndex = index;
   }
 
-  editarFuncion() {
+  /*editarFuncion() {
     if (this.selectedIndex !== null) {
       const id = this.funciones[this.selectedIndex].id;
       this.router.navigate(['/editar-funcion', id]);
@@ -32,15 +32,27 @@ export class ListaFuncion {
       alert('Selecciona una funcion primero');
     }
   }
+    */
+   editarFuncion() {
+    this.router.navigate(['/editar-funcion']);
+  }
+
   nuevaFuncion() {
   this.router.navigate(['/registrar-funcion']);
   }
-  ver() {
+  /*ver() {
     if (this.selectedIndex !== null) {
       const id = this.funciones[this.selectedIndex].id;
       this.router.navigate(['/ver-funcion', id]);
     } else {
       alert('Selecciona una funcion primero');
     }
+  }
+  */
+  ver() {
+    this.router.navigate(['/funcion']);
+  }
+  volver() {
+    this.router.navigate(['/home']);
   }
 }

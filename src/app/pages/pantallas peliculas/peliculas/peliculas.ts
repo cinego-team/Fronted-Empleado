@@ -163,16 +163,17 @@ seleccionarPelicula(rowId: number): void {
  onNew() {
     this.router.navigate(['/registrar-pelicula']);
   }
-onEdit(): void {
-  if (this.selectedRow === null) {
-    alert('Seleccioná una película primero.');
-    return;
-  }
-  const selectedPelicula = this.peliculas[this.selectedRow];
-  this.router.navigate(['/editar-pelicula', selectedPelicula.id]);
+onEdit() {
+  //if (this.selectedRow === null) {
+    //alert('Seleccioná una película primero.');
+    //return;
+  
+  //const selectedPelicula = this.peliculas[this.selectedRow];
+  this.router.navigate(['/editar-pelicula']);
 }
 
-onView(): void {
+
+/*onView(): void {
   if (this.selectedRow === null) {
     alert('Seleccioná una película primero.');
     return;
@@ -180,6 +181,11 @@ onView(): void {
   const selectedPelicula = this.peliculas[this.selectedRow];
   this.router.navigate(['/pelicula', selectedPelicula.id]);
 }
+*/
+onView() {
+   this.router.navigate(['/pelicula']);
+}
+
 
 onDelete(): void {
   if (this.selectedRow === null) {
@@ -194,5 +200,9 @@ onDelete(): void {
       alert('Película eliminada correctamente.');
     });
   }
+  
 }
+ onBack() {
+    this.router.navigate(['/home']);
+  }
 }

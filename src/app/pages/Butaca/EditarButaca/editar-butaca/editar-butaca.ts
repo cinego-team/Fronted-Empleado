@@ -2,8 +2,10 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
+
   selector: 'app-editar-butaca',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
@@ -11,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./editar-butaca.css']
 })
 export class EditarButacaComponent {
+  private router = inject(Router);
   private fb = inject(FormBuilder);
   private route = inject(ActivatedRoute);
 
@@ -63,6 +66,10 @@ export class EditarButacaComponent {
     // Opcional: feedback / navegación
     // this.router.navigate(['/butacas']);
   }
+  onBack() {
+    this.router.navigate(['/butaca/butaca']);
+  }
+
 }
 
 //probando

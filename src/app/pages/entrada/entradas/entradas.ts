@@ -46,7 +46,7 @@ constructor(
     this.router.navigate(['/registrar-entrada']);
   }
 
-  onEdit() {
+  /*onEdit() {
     if (this.selectedRow === null) {
       alert('Seleccioná una entrada primero.');
       return;
@@ -54,6 +54,11 @@ constructor(
     const selectedEntrada = this.entradas[this.selectedRow];
     this.router.navigate(['/editar-entradas', selectedEntrada.id]);
   }
+    */
+  onEdit() {
+    this.router.navigate(['/editar-entrada']);
+  }
+
 
   onDelete() {
     if (this.selectedRow === null) {
@@ -68,5 +73,8 @@ constructor(
         this.selectedRow = null;
       })
     }
+  }
+  volver(){
+    this.router.navigate(['/home']);
   }
 }

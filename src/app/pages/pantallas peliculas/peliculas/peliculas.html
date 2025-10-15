@@ -1,15 +1,9 @@
 <div class="container">
-  <header class="header">
-    <div class="logo">
-      <img src="assets/logo.png" alt="CineGo" class="logo" />
-    </div>
+   <header class="topbar">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
     <div class="user-section">
-      <div class="user-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-        </svg>
-      </div>
-      <span class="user-text">Usuario</span>
+      <img src="assets/usuario.png" alt="Usuario" class="user-icon" />
+      <span>Usuario</span>
     </div>
   </header>
 
@@ -36,6 +30,7 @@
   </div>
 
   <div class="button-group">
+    <button (click)="onBack()">VOLVER</button>
     <button (click)="onNew()">NUEVO</button>
     <button (click)="onEdit()">EDITAR</button>
     <button (click)="onDelete()">ELIMINAR</button>

@@ -1,7 +1,10 @@
 <div class="page">
   <header class="topbar">
-    <img src="assets/logo.png" alt="CineGo" class="logo" />
-    <div class="user"><span class="icon">👤</span><span class="label">Usuario</span></div>
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
+    <div class="user-section">
+      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
+      <span>Usuario</span>
+    </div>
   </header>
 
   <main class="wrap">
@@ -31,6 +34,7 @@
     
 
     <div class="actions">
+       <button (click)="volver()">VOLVER</button>
         <button (click)="nuevo()">NUEVA CLASIFICACION</button>
 
         <button (click)="!seleccion" (click)="eliminar()">ELIMINAR</button>

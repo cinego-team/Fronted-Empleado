@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-editar-genero',
@@ -11,6 +12,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./editar-genero.css'],
 })
 export class EditarGeneroComponent implements OnInit {
+  constructor() {}
+  private router = inject(Router);
   private fb = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   // TODO: inyectar tu servicio real, ej:
@@ -46,4 +49,7 @@ export class EditarGeneroComponent implements OnInit {
 
     // TODO: this.generoSrv.actualizar(payload.id!, { nombre: payload.nombre! }).subscribe(...)
   }
+    volver() {
+    this.router.navigate(['/genero/lista']);
+}
 }

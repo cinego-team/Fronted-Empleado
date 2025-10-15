@@ -40,4 +40,7 @@ export class ListaClasificacionComponent {
   eliminar() {
     
   }
+  volver(){
+    this.router.navigate(['/home']);
+  }
 }

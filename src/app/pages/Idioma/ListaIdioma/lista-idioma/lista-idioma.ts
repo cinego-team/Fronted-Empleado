@@ -40,4 +40,8 @@ export class ListaIdiomaComponent {
   eliminar() {
     
   }
+  volver() {
+    this.router.navigate(['/home']);
+  }
+
 }

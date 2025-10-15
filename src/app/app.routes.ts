@@ -48,6 +48,10 @@ import { RegistrarButacaComponent } from './pages/Butaca/RegistrarButaca/registr
 import { EditarButacaComponent } from './pages/Butaca/EditarButaca/editar-butaca/editar-butaca';
 import { ButacaComponent } from './pages/Butaca/Butaca/butaca/butaca';
 import { Principal } from './pages/principal/principal';
+import { ListaFuncion } from './pages/funcion/lista-funcion/lista-funcion';
+import { RegistrarFuncion } from './pages/funcion/registrar-funcion/registrar-funcion';
+import { EditarFuncion } from './pages/funcion/editar-funcion/editar-funcion';
+import { VerFuncion } from './pages/funcion/ver-funcion/ver-funcion';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent }, // 👈 esta será tu pantalla principal
@@ -106,6 +110,10 @@ export const routes: Routes = [
   { path: 'butaca/registrar', component: RegistrarButacaComponent },
   { path: 'butaca/editar', component: EditarButacaComponent },
   { path: 'butaca/butaca', component: ButacaComponent },
+  { path: 'funciones', component: ListaFuncion },
+  {path:'registrar-funcion',component: RegistrarFuncion},
+  {path:'editar-funcion',component: EditarFuncion},
+  {path:'funcion',component: VerFuncion},
 
   { path: '**', redirectTo: '' } // cualquier ruta desconocida redirige al principal
 ];

@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-editar-entrada',
   imports: [CommonModule,
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class EditarEntrada implements OnInit {
       form!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     // Inicializamos el formulario con validaciones
@@ -38,6 +38,9 @@ export class EditarEntrada implements OnInit {
 
     // Aquí podrías enviar al backend y luego resetear
     this.form.reset();
+  }
+   volver(){
+     this.router.navigate(['/entradas']);
   }
 }
 

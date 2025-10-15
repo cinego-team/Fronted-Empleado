@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrar-entrada',
@@ -13,7 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class RegistrarEntrada implements OnInit {
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     // Inicializamos el formulario con un campo "codigo"
@@ -41,5 +42,8 @@ export class RegistrarEntrada implements OnInit {
     // this.miServicio.registrarEntrada(codigo).subscribe(...);
 
     this.form.reset(); // Limpiamos el formulario después de registrar
+  }
+   volver(){
+     this.router.navigate(['/entradas']);
   }
 }

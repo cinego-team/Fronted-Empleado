@@ -1,38 +1,47 @@
-/* ======== Fondo / Layout general ======== */
+/* ====================== Layout general ====================== */
 .page {
   min-height: 100vh;
-  background: #4F1917; /* bordó oscuro */
+  background: #4f1917; /* Bordó oscuro */
   color: #fff;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 24px;
+  padding: 16px 32px;
 }
 
 .logo {
-  height: 36px;
+  width: 140px;
 }
 
-.user {
+.user-section {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  opacity: 0.9;
+  color: #ebccc7;
+}
+
+.user-icon {
+  width: 48px;
+  height: 48px;
 }
 
 .wrap {
   display: grid;
   place-items: center;
+  flex: 1;
   padding: 32px 16px 56px;
 }
 
+/* ====================== Tarjeta central ====================== */
 .card {
   width: min(900px, 92vw);
-  background: #840b0a; /* rojo oscuro */
+  background: #840b0a;
   border-radius: 24px;
   padding: 36px 24px 28px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) inset,
@@ -44,10 +53,10 @@
   margin: 0 0 14px;
   font-size: 28px;
   font-weight: 700;
-  color : #ffffff;
+  color: #ffffff;
 }
 
-/* ======== GRID DE BUTACAS ======== */
+/* ====================== Grilla de butacas ====================== */
 .seats {
   display: grid;
   gap: 12px;
@@ -59,8 +68,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;            /* espacio entre butacas */
-  flex-wrap: nowrap;   /* todas en una sola línea */
+  gap: 8px;
+  flex-wrap: wrap; /* Se adapta en pantallas pequeñas */
 }
 
 /* Espacio visual de pasillo */
@@ -69,7 +78,7 @@
   flex: 0 0 16px;
 }
 
-/* ======== BUTACAS ======== */
+/* ====================== Butacas ====================== */
 .seat {
   width: 44px;
   height: 36px;
@@ -86,13 +95,6 @@
   transition: background 0.2s, transform 0.05s;
 }
 
-/* Sin brazos ni base */
-.seat::before,
-.seat::after {
-  content: none !important;
-}
-
-/* Estados */
 .seat:hover {
   background: #ff6655;
 }
@@ -101,30 +103,74 @@
   transform: scale(0.95);
 }
 
-.seat.selected {
-  background: #27ae60; /* verde */
+.seat.sel {
+  background: #27ae60; /* verde selección */
 }
 
 .seat.occupied,
 .seat:disabled {
-  background: #7f8c8d; /* gris */
+  background: #7f8c8d;
   cursor: not-allowed;
 }
 
-
-/* Botonera */
-.actions{
-  display:flex;gap:16px;justify-content:center;margin-top:18px;flex-wrap:wrap;
+/* ====================== Botones dentro de la tarjeta ====================== */
+.actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 18px;
+  flex-wrap: wrap;
 }
-.actions button{
-  border:none;border-radius:999px;padding:10px 18px;
-  background:#eac4c1;color:#5a2422;font-weight:800;letter-spacing:.2px;
-  cursor:pointer;transition:transform .05s ease, opacity .2s;
-}
-.actions button:disabled{ opacity:.6; cursor:not-allowed; }
-.actions button:not(:disabled):active{ transform:translateY(1px); }
 
-/* ======== Resumen selección ======== */
+.actions button {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  background: #eac4c1;
+  color: #5a2422;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: transform 0.05s ease, opacity 0.2s;
+}
+
+.actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.actions button:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+/* ====================== Botón “VOLVER” ====================== */
+.button-group {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 25px;
+  width: 100%;
+}
+
+.button-group button {
+  padding: 12px 25px;
+  background-color: #d9c0c0;
+  color: #541b1b;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s ease;
+  min-width: 100px;
+}
+
+.button-group button:hover {
+  background-color: #8a1009;
+}
+
+/* ====================== Resumen / enlaces ====================== */
 .summary {
   margin-top: 10px;
   font-size: 14px;

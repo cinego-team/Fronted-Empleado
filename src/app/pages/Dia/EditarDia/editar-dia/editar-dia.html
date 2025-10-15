@@ -1,9 +1,9 @@
 <div class="page">
-  <header class="topbar">
-    <img src="assets/logo.png" alt="CineGo" class="logo" />
-    <div class="user">
-      <span class="icon">👤</span>
-      <span class="label">Usuario</span>
+ <header class="topbar">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
+    <div class="user-section">
+      <img src="assets/usuario.png" alt="Usuario" class="user-icon" />
+      <span>Usuario</span>
     </div>
   </header>
 
@@ -34,5 +34,8 @@
         <button type="submit" [disabled]="form.invalid">GUARDAR</button>
       </form>
     </section>
+     <div class="back-button">
+      <button (click)="volver()">VOLVER</button>
+      </div>
   </main>
 </div>
