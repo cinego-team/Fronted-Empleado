@@ -73,10 +73,13 @@ input.invalid{ outline:2px solid #ffd1d1; background:#ffe9e9; }
 
 /* Botón */
 button{
-  margin-top:10px; padding:12px 26px;
-  border:none; border-radius:999px;
-  background:#eac4c1; color:#5a2422; font-weight:800; letter-spacing:.5px;
-  cursor:pointer; transition:transform .05s ease, opacity .2s;
+  background-color: #f2dede;
+  color: #541b1b;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
 }
 button:disabled{ opacity:.6; cursor:not-allowed; }
 button:not(:disabled):active{ transform:translateY(1px); }
@@ -90,18 +93,15 @@ button:not(:disabled):active{ transform:translateY(1px); }
 }
 
 .button-group button {
-  padding: 12px 25px;
-  background-color: #d9c0c0;
+  background-color: #f2dede;
   color: #541b1b;
   border: none;
-  font-size: 1.1rem;
-  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 15px;
   cursor: pointer;
-  border-radius: 5px;
-  transition: 0.3s ease;
-  min-width: 100px;
+  font-weight: bold;
 }
 
 .button-group button:hover {
-  background-color: #8a1009;
+ background-color: #e0bcbc;
 }

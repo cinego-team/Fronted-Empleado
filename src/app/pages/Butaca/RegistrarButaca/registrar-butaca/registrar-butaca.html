@@ -41,12 +41,11 @@
           <small *ngIf="f.fila.errors?.['min']">Debe ser mayor o igual a 1.</small>
         </div>
 
-        <button type="submit" [disabled]="form.invalid">REGISTRAR</button>
+        <button class="btn" type="submit" [disabled]="form.invalid">REGISTRAR</button>
       </form>
     </section>
   </main>
    <div class="button-group">
-    
-    <button (click)="onBack()">VOLVER</button>
+    <button class=btn (click)="onBack()">VOLVER</button>
     </div>
 </div>

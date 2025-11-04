@@ -78,12 +78,22 @@ h1{ text-align:center; margin:8px 0 18px; }
 
 /* Botonera */
 .actions{
-  display:flex;gap:16px;justify-content:center;margin-top:18px;flex-wrap:wrap;
+  display:flex;
+  gap:16px;
+  justify-content:center;
+  margin-top:18px;
+  flex-wrap:wrap;
 }
 .actions button{
-  border:none;border-radius:999px;padding:10px 18px;
-  background:#eac4c1;color:#5a2422;font-weight:800;letter-spacing:.2px;
-  cursor:pointer;transition:transform .05s ease, opacity .2s;
+    background-color: #f2dede;
+  color: #541b1b;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
 }
-.actions button:disabled{ opacity:.6; cursor:not-allowed; }
-.actions button:not(:disabled):active{ transform:translateY(1px); }
+
+.actions button:hover {
+ background-color: #e0bcbc;
+}

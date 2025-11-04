@@ -96,19 +96,15 @@ button:not(:disabled):active{ transform:translateY(1px); }
   width: 100%;
 }
 
-.button-group button {
-  padding: 12px 25px;
-  background-color: #d9c0c0;
+.btn {
+  background-color: #f2dede;
   color: #541b1b;
   border: none;
-  font-size: 1.1rem;
-  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 15px;
   cursor: pointer;
-  border-radius: 5px;
-  transition: 0.3s ease;
-  min-width: 100px;
+  font-weight: bold;
 }
-
-.button-group button:hover {
-  background-color: #8a1009;
+button:hover {
+  background-color: #e0bcbc;
 }

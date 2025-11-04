@@ -1,17 +1,30 @@
-:host {
-  display: block;
-  min-height: 100vh;
-  background: #4F1917; 
-  color: #fff;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+:host{
+  display:block;
+  min-height:100vh;
+  background: #4F1917;       /* fondo bordó */
+  color:#fff;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 }
 
+.container {
+  position: auto;
+  width: 100%; 
+  height: auto;
+  background-color: #4f1917;
+  display: auto;
+  flex-direction: column;  
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 40px;
+  overflow: hidden;
+}
 
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 18px;
+  padding: 16px 32px;
+  flex-shrink: 0;
 }
 
 .logo {
@@ -93,15 +106,13 @@
 
 
 .form button {
-  margin-top: 18px;
-  padding: 10px 22px;
+  background-color: #f2dede;
+  color: #541b1b;
   border: none;
-  border-radius: 999px;
-  background: #eac4c1;
-  color: #5a2422;
-  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 15px;
   cursor: pointer;
-  transition: transform 0.05s ease;
+  font-weight: bold;
 }
 
 .form button:disabled {
@@ -112,24 +123,26 @@
 .form button:not(:disabled):active {
   transform: translateY(1px);
 }
-.back-button button {
-  padding: 10px 22px;
+
+.button-group {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+     margin-top: 25px;
+     width: 100%; 
+}
+
+.button-group button {
+  background-color: #f2dede;
+  color: #541b1b;
   border: none;
-  border-radius: 999px;
-  background: #eac4c1;
-  color: #5a2422;
-  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 15px;
   cursor: pointer;
-  transition: transform 0.05s ease, background-color 0.2s ease;
-  margin-top: 40px;
+  font-weight: bold;
 }
 
-/* Hover */
-.back-button button:hover {
-  background: #cfa6a3;
-}
-
-/* Pequeño efecto al presionar */
-.back-button button:active {
-  transform: translateY(1px);
+.button-group button:hover {
+ background-color: #e0bcbc;
 }

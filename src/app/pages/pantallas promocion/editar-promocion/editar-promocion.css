@@ -1,31 +1,34 @@
-/* Fondo general */
-
-
-/* Contenedor general */
-.container {
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #4f1917;
-  min-width: 2160px;
-  
-  
-
+:host{
+  display:block;
+  min-height:100vh;
+  background: #4F1917;       /* fondo bordó */
+  color:#fff;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 }
 
-/* Barra superior */
+.container {
+  position: auto;
+  width: 100%; 
+  height: auto;
+  background-color: #4f1917;
+  display: auto;
+  flex-direction: column;  
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 40px;
+  overflow: hidden;
+}
+
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  padding: 20px 30px; /* Si necesitas espacio, hazlo aquí */
+  padding: 16px 32px;
+  flex-shrink: 0;
 }
 
 .logo {
-  width: 140px;
+   width: 140px;
 }
 
 .user-section {
@@ -38,8 +41,8 @@
 .user-icon {
   width: 48px;
   height: 48px;
-  
 }
+
 
 
 /* Formulario */
@@ -51,7 +54,7 @@
   width: 800px;
   color: #fff;
   text-align: center;
-  
+  margin: 0 auto;
   
 }
 /* Título */
@@ -138,6 +141,15 @@ button {
   transition: 0.3s;
 }
 
+.btn {
+  background-color: #f2dede;
+  color: #541b1b;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
 button:hover {
-  background-color: #ebccc7;
+  background-color: #e0bcbc;
 }

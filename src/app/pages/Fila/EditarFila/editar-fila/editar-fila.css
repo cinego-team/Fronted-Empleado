@@ -68,31 +68,36 @@ input.invalid{ outline:2px solid #ffd1d1; background:#ffe9e9; }
 
 /* Botón */
 button{
-  margin-top:10px; padding:12px 26px;
-  border:none; border-radius:999px;
-  background:#eac4c1; color:#5a2422; font-weight:800; letter-spacing:.5px;
-  cursor:pointer; transition:transform .05s ease, opacity .2s;
+  background-color: #f2dede;
+  color: #541b1b;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
 }
 button:disabled{ opacity:.6; cursor:not-allowed; }
 button:not(:disabled):active{ transform:translateY(1px); }
 /* Estilo del botón */
-.back-button button {
-  padding: 20px 22px;
+.button-group {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+     margin-top: 25px;
+     width: 100%; 
+}
+
+.button-group button {
+  background-color: #f2dede;
+  color: #541b1b;
   border: none;
-  border-radius: 999px;
-  background: #eac4c1;
-  color: #5a2422;
-  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 15px;
   cursor: pointer;
-  transition: transform 0.05s ease, background-color 0.2s ease;
+  font-weight: bold;
 }
 
-/* Hover */
-.back-button button:hover {
-  background: #cfa6a3;
-}
-
-/* Pequeño efecto al presionar */
-.back-button button:active {
-  transform: translateY(1px);
+.button-group button:hover {
+ background-color: #e0bcbc;
 }

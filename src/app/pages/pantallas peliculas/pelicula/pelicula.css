@@ -1,44 +1,46 @@
-* {
-  margin: 0;
-  padding: 0;
+:host{
+  display:block;
+  min-height:100vh;
+  background: #4F1917;       /* fondo bordó */
+  color:#fff;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+.container {
+  position: auto;
+  width: 100%; 
+  height: auto;
+  background-color: #4f1917;
+  display: auto;
+  flex-direction: column;  
+  justify-content: space-between;
   box-sizing: border-box;
+  padding: 40px;
+  overflow: hidden;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background:#4f1917;
-  min-height: 100vh;
-  color: #ede1c0;
-}
-
-.header {
+.topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
+  padding: 16px 32px;
+  flex-shrink: 0;
 }
 
-.logo-img {
-  height: 80px;
-  width: auto;
+.logo {
+   width: 140px;
 }
 
 .user-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  color:#ebccc7
 }
 
 .user-icon {
-  width: 30px;
-  height: 30px;
-  color: #ede1c0
-}
-
-.user-label {
-  font-size: 1rem;
-  color:#ede1c0
+  width: 48px;
+  height: 48px;
 }
 
 .main-content {
@@ -58,7 +60,7 @@ body {
 .poster-placeholder {
   width: 280px;
   height: 380px;
-  background: #8a1009;
+  background: #7d1c16;
   border: 4px solid#740b05;
   border-radius: 12px;
   display: flex;
@@ -208,8 +210,17 @@ button {
     min-width: 100px;
 }
 
+.btn {
+  background-color: #f2dede;
+  color: #541b1b;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
 button:hover {
-    background-color: #8a1009;
+  background-color: #e0bcbc;
 }
 
 @media (max-width: 1024px) {

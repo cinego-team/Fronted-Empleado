@@ -1,28 +1,34 @@
-
-/* Contenedor general */
-.container {
-  min-height: 100vh;
-  padding: 30px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #4f1917; 
-  min-width: 2160px;
+:host{
+  display:block;
+  min-height:100vh;
+  background: #4F1917;       /* fondo bordó */
+  color:#fff;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 }
 
+.container {
+  position: auto;
+  width: 100%; 
+  height: auto;
+  background-color: #4f1917;
+  display: auto;
+  flex-direction: column;  
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 40px;
+  overflow: hidden;
+}
 
-/* Barra superior */
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  
+  padding: 16px 32px;
+  flex-shrink: 0;
 }
 
 .logo {
-  width: 140px;
+   width: 140px;
 }
 
 .user-section {
@@ -38,12 +44,13 @@
 }
 /* Formulario */
 .editar-box {
-  background-color: #8a1009 ;/* Rojo más claro */
+  background-color: #7d1c16 ;/* Rojo más claro */
   padding: 40px;
   border-radius: 20px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
   width: 800px;
   color: #fff;
+  margin: 0 auto;
 }
 /* Título */
  h2 {
@@ -131,6 +138,15 @@ button {
   transition: 0.3s;
 }
 
+.btn {
+  background-color: #f2dede;
+  color: #541b1b;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
 button:hover {
-  background-color: #ebccc7;
+  background-color: #e0bcbc;
 }
