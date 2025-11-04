@@ -42,6 +42,9 @@ export class EditarEntrada implements OnInit {
    volver(){
      this.router.navigate(['/entradas']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }
 
 

@@ -38,4 +38,7 @@ export class RegistrarFilaComponent {
   volver(){
      this.router.navigate(['/fila/lista']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

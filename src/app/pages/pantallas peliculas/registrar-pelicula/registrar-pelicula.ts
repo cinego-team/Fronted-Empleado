@@ -13,4 +13,7 @@ export class RegistrarPelicula {
   OnBack() {
     this.router.navigate(['/peliculas']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

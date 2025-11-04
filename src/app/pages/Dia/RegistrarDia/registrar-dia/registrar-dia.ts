@@ -35,4 +35,7 @@ export class RegistrarDiaComponent {
   volver(){
     this.router.navigate(['/dia/lista']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

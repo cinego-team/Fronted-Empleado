@@ -15,5 +15,8 @@ export class RegistrarPromocion {
   volver(){
     this.router.navigate(['/promociones']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 
 }

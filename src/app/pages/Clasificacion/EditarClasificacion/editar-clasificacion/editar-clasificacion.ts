@@ -49,4 +49,7 @@ export class EditarClasificacionComponent implements OnInit {
   volver(){
     this.router.navigate(['/clasificacion/lista']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

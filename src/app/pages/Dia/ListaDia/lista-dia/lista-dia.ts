@@ -45,5 +45,8 @@ export class ListaDiaComponent {
   volver(){
     this.router.navigate(['/home']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }
 

@@ -45,5 +45,8 @@ export class ListaGeneroComponent {
     volver() {
     this.router.navigate(['/home']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }
 

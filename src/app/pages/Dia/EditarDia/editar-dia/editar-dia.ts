@@ -51,4 +51,7 @@ export class EditarDiaComponent implements OnInit {
    volver(){
     this.router.navigate(['/dia/lista']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

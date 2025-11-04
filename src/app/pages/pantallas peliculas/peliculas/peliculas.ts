@@ -201,8 +201,11 @@ onDelete(): void {
     });
   }
   
-}
+  }
  onBack() {
+    this.router.navigate(['/home']);
+  }
+  inicio() {
     this.router.navigate(['/home']);
   }
 }

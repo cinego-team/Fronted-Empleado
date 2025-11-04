@@ -43,4 +43,7 @@ export class EditarEstadoPelicula implements OnInit  {
   volver(){
     this.router.navigate(['/estados-peliculas']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

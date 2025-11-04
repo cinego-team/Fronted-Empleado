@@ -53,4 +53,7 @@ export class EditarFilaComponent implements OnInit {
    volver(){
      this.router.navigate(['/fila/lista']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

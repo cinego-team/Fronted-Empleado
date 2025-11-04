@@ -46,5 +46,8 @@ export class Principal {
    onDias(){
      this.router.navigate(['/dia/lista']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 
 }

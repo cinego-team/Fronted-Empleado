@@ -14,4 +14,7 @@ export class EditarPromocion {
   volver(){
     this.router.navigate(['/promociones']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

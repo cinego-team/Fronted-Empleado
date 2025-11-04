@@ -37,4 +37,7 @@ export class RegistrarIdiomaComponent {
    volver() {
     this.router.navigate(['/idioma/lista']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

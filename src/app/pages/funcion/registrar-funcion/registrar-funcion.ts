@@ -24,4 +24,7 @@ export class RegistrarFuncion {
    volver() {
     this.router.navigate(['/funciones']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

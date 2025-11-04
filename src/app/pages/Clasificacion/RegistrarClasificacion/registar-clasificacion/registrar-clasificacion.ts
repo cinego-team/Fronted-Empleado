@@ -40,4 +40,7 @@ export class RegistrarClasificacionComponent {
   volver(){
     this.router.navigate(['/clasificacion/lista']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

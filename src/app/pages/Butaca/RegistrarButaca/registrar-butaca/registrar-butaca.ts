@@ -54,4 +54,7 @@ export class RegistrarButacaComponent {
    onBack() {
     this.router.navigate(['/butaca/butaca']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

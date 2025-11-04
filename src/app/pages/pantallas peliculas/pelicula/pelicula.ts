@@ -57,4 +57,7 @@ export class Pelicula implements OnInit {
  onBack() {
     this.router.navigate(['/peliculas']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

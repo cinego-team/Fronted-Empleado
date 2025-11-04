@@ -47,5 +47,7 @@ constructor(
   OnBack(){
     this.router.navigate(['/home']);
   }
-
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

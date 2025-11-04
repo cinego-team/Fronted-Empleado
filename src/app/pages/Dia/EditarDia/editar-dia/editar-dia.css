@@ -15,6 +15,7 @@
 
 .logo {
   width: 140px;
+  cursor: pointer;
 }
 
 .user-section {
@@ -70,7 +71,7 @@ input.invalid{ outline:2px solid #ffd1d1; background:#ffe9e9; }
 
 /* Botón */
 button{
- background-color: #f2dede;
+  background-color: #f2dede;
   color: #541b1b;
   border: none;
   padding: 10px 20px;

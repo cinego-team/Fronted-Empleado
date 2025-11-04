@@ -24,7 +24,9 @@ export class EditarFormato implements OnInit {
     // Redirigir a la lista
     this.router.navigate(['/']);
   }
-
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }
 
 

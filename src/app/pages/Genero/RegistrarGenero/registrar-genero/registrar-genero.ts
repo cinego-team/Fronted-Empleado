@@ -37,6 +37,9 @@ export class RegistrarGeneroComponent {
   }
   volver() {
     this.router.navigate(['/genero/lista']);
-}
+  }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }
 

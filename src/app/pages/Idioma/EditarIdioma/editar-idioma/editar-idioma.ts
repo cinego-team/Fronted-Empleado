@@ -52,5 +52,8 @@ export class EditarIdiomaComponent implements OnInit {
   volver() {
     this.router.navigate(['/idioma/lista']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }
 

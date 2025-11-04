@@ -37,6 +37,7 @@
 
 .logo {
    width: 140px;
+   cursor: pointer;
 }
 
 .user-section {

@@ -21,4 +21,7 @@ export class VerFuncion {
     // Redirigir a la lista
     this.router.navigate(['/funciones']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }
