@@ -10,6 +10,30 @@ export const config = {
   },
   APIPeliculasUrls: {
     baseUrl: 'http://localhost:3001',
+    getPeliculaById: (id: number) => `/pelicula/${id}`,
+    getPeliculas: '/peliculas/',
+    createPelicula: '/pelicula/nueva-pelicula',
+    updatePelicula: (id: number) => `/pelicula/${id}`,
+    //idioma
+    getIdiomaById: (id: number) => `/idiomas/${id}`,
+    getIdiomas: '/idiomas/',
+    createIdioma: '/idiomas/new',
+    updateIdioma: (id: number) => `/idiomas/${id}`,
+    //genero
+    getGeneroById: (id: number) => `/generos/${id}`,
+    getGeneros: '/generos/',
+    createGenero: '/generos/new',
+    updateGenero: (id: number) => `/generos/${id}`,
+    //clasificacion
+    getClasificacionById: (id: number) => `/clasificaciones/${id}`,
+    getClasificaciones: '/clasificaciones/',
+    createClasificacion: '/clasificaciones/new',
+    updateClasificacion: (id: number) => `/clasificaciones/${id}`,
+    //estados
+    getEstadoById: (id: number) => `/estados/${id}`,
+    getEstados: '/estados/',
+    createEstado: '/estados/new',
+    updateEstado: (id: number) => `/estados/${id}`,
   },
   APIVentasUrls: {
     baseUrl: 'http://localhost:3002',
