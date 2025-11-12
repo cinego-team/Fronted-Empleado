@@ -1,89 +1,85 @@
-<!-- Barra superior -->
- <header class="topbar">
+<div class="container">
+  <!-- Barra superior -->
+  <header class="topbar">
     <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()" />
     <div class="user-section">
       <img src="assets/usuario.png" alt="Usuario" class="user-icon" />
       <span>Usuario</span>
     </div>
   </header>
-  <div class="container">
-  
 
   <!-- Título -->
   <div class="register-box">
-  <h2>Registrar película</h2>
+    <h2>Registrar película</h2>
 
-  <!-- Formulario -->
-  <form>
-    <div class="form-group">
-      <label>
-        Título
-        <input type="text" name="titulo" required />
-      </label>
-      <label>
-        Estado
-        <select name="estado">
-      
+    <!-- Formulario -->
+    <form>
+      <div class="form-group">
+        <label>Título</label>
+        <input formControlName="titulo" type="text" />
+        <label>Estado</label>
+        <select formControlName="estado">
+          <option value="">Seleccione</option>
+          <option *ngFor="let e of estados" [value]="e.id">{{ e.nombre }}</option>
         </select>
-      </label>
-    </div>
+      </div>
 
-    <div class="form-group">
-      <label class="duracion">
-        Duración
-        <div class="duracion-input">
-          <input type="number" min="1" required />
-          <span>min</span>
+      <div class="form-group">
+        <label>Duración</label>
+        <input formControlName="duracion" type="number" placeholder="min" />
+        <label>Clasificación</label>
+        <select formControlName="clasificacion">
+          <option value="">Seleccione</option>
+          <option *ngFor="let c of clasificaciones" [value]="c.id">{{ c.nombre }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Fecha Estreno</label>
+        <div class="fecha-inputs">
+          <input
+            formControlName="fechaEstrenoDia"
+            type="number"
+            placeholder="Día"
+            min="1"
+            max="31"
+          />
+          <input
+            formControlName="fechaEstrenoMes"
+            type="number"
+            placeholder="Mes"
+            min="1"
+            max="12"
+          />
+          <input formControlName="fechaEstrenoAnio" type="number" placeholder="Año" min="1900" />
         </div>
-      </label>
-      <label>
-        Clasificación
-        <select name="clasificacion">
-    
+        <label>Género</label>
+        <select formControlName="genero">
+          <option value="">Seleccione</option>
+          <option *ngFor="let g of generos" [value]="g.id">{{ g.nombre }}</option>
         </select>
-      </label>
-    </div>
+      </div>
 
-    <div class="form-group">
-      <label>
-        Fecha Estreno
-        <div class="dob">
-          <select name="dia"><option>Día</option></select>
-          <select name="mes"><option>Mes</option></select>
-          <select name="año"><option>Año</option></select>
-        </div>
-      </label>
-      <label>
-        Género
-        <select name="genero">
-       
+      <div class="form-group">
+        <label>Director</label>
+        <input formControlName="director" type="text" />
+        <label>Idioma</label>
+        <select formControlName="idioma">
+          <option value="">Seleccione</option>
+          <option *ngFor="let i of idiomas" [value]="i.id">{{ i.nombre }}</option>
         </select>
-      </label>
-    </div>
+      </div>
 
-    <div class="form-group">
-      <label>
-        Director
-        <input type="text" name="director" required />
-      </label>
-      <label>
-        Idioma
-        <select name="idioma">
-       
-        </select>
-      </label>
-    </div>
+      <label>Sinopsis</label>
+      <textarea formControlName="sinopsis"></textarea>
 
-    <label>Sinopsis</label>
-    <input type="text" name="sinopsis" required />
+      <label>URL Imagen</label>
+      <input formControlName="urlImagen" type="text" />
 
-    <label>URL Imagen</label>
-    <input type="url" name="imagen" required />
-
-    <button class=btn type="submit">REGISTRAR</button>
-  </form>
-</div>
- <div class="button-group">
-    <button class=btn (click)="OnBack()">VOLVER</button>
- </div>
+      <button class="btn" type="submit">REGISTRAR</button>
+    </form>
+  </div>
+  <div class="button-group">
+    <button class="btn" (click)="OnBack()">VOLVER</button>
+  </div>
 </div>

@@ -7,73 +7,68 @@ import { GlobalStatusService } from '../../../services/global-status.service';
   selector: 'app-estados-peliculas',
   imports: [],
   templateUrl: './estados-peliculas.html',
-  styleUrl: './estados-peliculas.css'
+  styleUrl: './estados-peliculas.css',
 })
 export class EstadosPeliculas {
-constructor(
-    private router: Router,
-    private readonly apiService: ApiService,
-    private readonly globalStatusService: GlobalStatusService
-   
-  ) { }
-  estadosPeliculas: Array<{
-    id:number;
+  constructor(private router: Router, private readonly apiService: ApiService) {}
+  estados: Array<{
+    id: number;
     nombre: string;
-  }> =[];
-   selectedRow: number | null = null;
-  actualPage: number = 1;
+  }> = [];
+  selec: number | null = null;
+
   ngOnInit(): void {
     this.initialization();
   }
-   async initialization(): Promise<void> {
-    this.globalStatusService.setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 500)); //Decorativo
-    const data = await this.apiService.getEstadosPeliculas();
+  async initialization(): Promise<void> {
+    const data = await this.apiService.getAllEstados();
     if (data.length === 0) {
       alert('No hay estados para mostrar.');
-      this.globalStatusService.setLoading(false);
-      this.actualPage --;
       return;
     }
-    this.estadosPeliculas = data;
-    this.globalStatusService.setLoading(false);
+    this.estados = data;
   }
-  selectRow(rowId: number) {
-    this.selectedRow = rowId;
+  seleccionar(rowId: number) {
+    this.selec = rowId;
+  }
+
+  onDelete() {
+    if (this.selec === null) {
+      alert('Seleccioná un estado  primero.');
+      return;
+    }
+
+    const selectedC = this.estados[this.selec];
+
+    if (confirm(`¿Estás seguro de que querés eliminar ?`)) {
+      this.apiService
+        .deleteEstado(selectedC.id)
+        .then(() => {
+          alert('Genero eliminada correctamente.');
+          this.estados.splice(this.selec!, 1);
+          this.selec = null;
+        })
+        .catch((error) => {
+          console.error('Error al eliminar', error);
+          alert('Ocurrió un error al eliminar');
+        });
+    }
   }
 
   onNew() {
     this.router.navigate(['/registrar-estado-pelicula']);
   }
 
-  /*onEdit() {
-    if (this.selectedRow === null) {
-      alert('Seleccioná un tipo cliente primero.');
+  onEdit() {
+    if (this.selec === null) {
+      alert('Seleccioná uno primero.');
       return;
     }
-    const selectedEstado = this.estadosPeliculas[this.selectedRow];
+    const selectedEstado = this.estados[this.selec];
     this.router.navigate(['/editar-estado-pelicula', selectedEstado.id]);
   }
-    */
-  onEdit() {
-    this.router.navigate(['/editar-estado-pelicula']);
-  }
 
-  onDelete() {
-    if (this.selectedRow === null) {
-      alert('Seleccioná un estado primero.');
-      return;
-    }
-    const selectedEstado = this.estadosPeliculas[this.selectedRow];
-    if (confirm(`¿Estás seguro de que querés eliminar el estado ${selectedEstado.nombre} (ID: ${selectedEstado.id})?`)) {
-      this.apiService.deleteTipoCliente(selectedEstado.id).then(() => {
-        alert('Estado eliminado correctamente.');
-        this.estadosPeliculas.splice(this.selectedRow!, 1);
-        this.selectedRow = null;
-      })
-    }
-  }
-   onBack(){
+  onBack() {
     this.router.navigate(['/home']);
   }
   inicio() {

@@ -11,6 +11,7 @@ export class ApiService {
   constructor() {}
   //peliculas
   async getPeliculaById(id: number): Promise<{
+    urlImagen: string;
     id: number;
     titulo: string;
     sinopsis: string;
@@ -34,6 +35,7 @@ export class ApiService {
       genero: datos.genero,
       clasificacion: datos.clasficiacion,
       estado: datos.estado,
+      urlImagen: datos.urlImagen,
     };
   }
 
@@ -156,7 +158,7 @@ export class ApiService {
       nombre: datos.nombre,
     };
   }
-  async getAllIGeneros(): Promise<
+  async getAllGeneros(): Promise<
     Array<{
       id: number;
       nombre: string;
@@ -192,7 +194,7 @@ export class ApiService {
       nombre: datos.nombre,
     };
   }
-  async getAllIClasificaciones(): Promise<
+  async getAllClasificaciones(): Promise<
     Array<{
       id: number;
       nombre: string;
