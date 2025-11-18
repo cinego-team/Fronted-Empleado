@@ -1,8 +1,8 @@
 <div class="page">
   <header class="topbar">
-    <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()" />
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
     <div class="user-section">
-      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
+      <img src="assets/usuario.png" alt="Usuario" class="user-icon" />
       <span>Usuario</span>
     </div>
   </header>
@@ -11,31 +11,25 @@
     <section class="card">
       <h1>Editar Idioma</h1>
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
-        <div class="pill">
-          <label>ID:</label>
-          <input id="id" type="text" formControlName="" />
+      @if (idioma) {
+      <form (ngSubmit)="onSave()">
+        <div class="form-group">
+          <label for="id">ID</label>
+          <div class="readonly-text">{{ idioma.id }}</div>
         </div>
 
-        <label for="nombre" class="lbl">Nombre</label>
-        <input
-          id="nombre"
-          type="text"
-          formControlName="nombre"
-          placeholder="Ej.:español"
-          [class.invalid]="f.nombre.touched && f.nombre.invalid"
-        />
-
-        <div class="error" *ngIf="f.nombre.touched && f.nombre.errors">
-          <small *ngIf="f.nombre.errors['required']">El nombre es obligatorio.</small>
-          <small *ngIf="f.nombre.errors['minlength']">Mínimo 2 caracteres.</small>
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input id="name" [(ngModel)]="idioma.name" name="name" required />
         </div>
 
-        <button type="submit" [disabled]="form.invalid">GUARDAR</button>
+        <button type="submit">GUARDAR</button>
       </form>
+      }
     </section>
-  </main>
-     <div class="button-group">
+
+    <div class="button-group">
       <button (click)="volver()">VOLVER</button>
-      </div>
+    </div>
+  </main>
 </div>

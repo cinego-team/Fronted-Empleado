@@ -3,7 +3,10 @@ import { config } from '../axios_service/env';
 import { axiosAPIPeliculas } from '../axios_service/axios.client';
 import { EditPeliculaOutput } from '../pages/pantallas peliculas/editar-pelicula/editar-pelicula.dto';
 import { EditPeliculaInput } from '../pages/pantallas peliculas/editar-pelicula/editar-pelicula.dto';
-
+import { EditGenero, GeneroInput } from '../pages/Genero/genero.dto';
+import { EditIdioma, IdiomaInput } from '../pages/Idioma/idioma.dto';
+import { EditEstado, EstadoInput } from '../pages/lista estado pelicula/estado-pelicula.dto';
+import { EditClasificacion, ClasificacionInput } from '../pages/Clasificacion/clasificacion.dto';
 @Injectable({
   providedIn: 'root',
 })
@@ -141,11 +144,17 @@ export class ApiService {
   async deleteIdioma(id: number): Promise<void> {
     await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getIdiomaById(id));
   }
-  async createIdioma(nombre: string): Promise<void> {
-    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createIdioma, { nombre });
+  async createIdioma(formulario: any): Promise<void> {
+    const nuevoIdioma: EditIdioma = {
+      nombre: formulario.get('nombre').value,
+    };
+    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createIdioma, nuevoIdioma);
   }
-  async updateIdioma(id: number, nombre: string): Promise<void> {
-    await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateIdioma(id)}`, { nombre });
+  async updateIdioma(idioma: IdiomaInput): Promise<void> {
+    const data: IdiomaInput = {
+      nombre: idioma.nombre,
+    };
+    await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateIdioma(idioma.id!)}`, data);
   }
   //genero
   async getGeneroById(id: number): Promise<{
@@ -176,11 +185,17 @@ export class ApiService {
   async deleteGenero(id: number): Promise<void> {
     await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getGeneroById(id));
   }
-  async createGenero(nombre: string): Promise<void> {
-    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createIdioma, { nombre });
+  async createGenero(formulario: any): Promise<void> {
+    const nuevoGenero: EditGenero = {
+      nombre: formulario.get('nombre').value,
+    };
+    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createGenero, nuevoGenero);
   }
-  async updateGenero(id: number, nombre: string): Promise<void> {
-    await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateGenero(id)}`, { nombre });
+  async updateGenero(genero: GeneroInput): Promise<void> {
+    const data: GeneroInput = {
+      nombre: genero.nombre,
+    };
+    await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateGenero(genero.id!)}`, data);
   }
   //clasificacion
   async getClasificacionById(id: number): Promise<{
@@ -212,11 +227,20 @@ export class ApiService {
   async deleteClasificacion(id: number): Promise<void> {
     await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getClasificacionById(id));
   }
-  async createClasificacion(nombre: string): Promise<void> {
-    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createIdioma, { nombre });
+  async createClasificacion(formulario: any): Promise<void> {
+    const nuevaClasificacion: EditClasificacion = {
+      nombre: formulario.get('nombre').value,
+    };
+    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createClasificacion, nuevaClasificacion);
   }
-  async updateClasificacion(id: number, nombre: string): Promise<void> {
-    await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateClasificacion(id)}`, { nombre });
+  async updateClasificacion(clasificacion: ClasificacionInput): Promise<void> {
+    const data: ClasificacionInput = {
+      nombre: clasificacion.nombre,
+    };
+    await axiosAPIPeliculas.put(
+      `${config.APIPeliculasUrls.updateClasificacion(clasificacion.id!)}`,
+      data
+    );
   }
   //estados
   async getEstadosById(id: number): Promise<{
@@ -247,10 +271,16 @@ export class ApiService {
   async deleteEstado(id: number): Promise<void> {
     await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getEstadoById(id));
   }
-  async createEstado(nombre: string): Promise<void> {
-    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createIdioma, { nombre });
+  async createEstado(formulario: any): Promise<void> {
+    const nuevoEstado: EditEstado = {
+      nombre: formulario.get('nombre').value,
+    };
+    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createEstado, nuevoEstado);
   }
-  async updateEstado(id: number, nombre: string): Promise<void> {
-    await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateEstado(id)}`, { nombre });
+  async updateEstado(estado: EstadoInput): Promise<void> {
+    const data: EstadoInput = {
+      nombre: estado.nombre,
+    };
+    await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateEstado(estado.id!)}`, data);
   }
 }

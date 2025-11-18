@@ -1,59 +1,67 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { ApiService } from '../../../../services/api.service';
 
 @Component({
   selector: 'app-editar-idioma',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './editar-idioma.html',
   styleUrls: ['./editar-idioma.css'],
 })
 export class EditarIdiomaComponent implements OnInit {
-  constructor() {}
-  private router = inject(Router);
-  private fb = inject(FormBuilder);
-  private route = inject(ActivatedRoute);
-  // TODO: inyectar tu servicio real, ej:
-  // private generoSrv = inject(GeneroService);
+  idioma: any;
+  originalIdioma: any;
 
-  form = this.fb.group({
-    id: [{ value: '', disabled: true }],        // ID solo lectura
-    nombre: ['', [Validators.required, Validators.minLength(2)]],
-  });
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiService: ApiService
+  ) {}
 
-  get f() { return this.form.controls; }
-
-  ngOnInit(): void {
-    // Si vienes con /genero/editar/:id, lo agarramos y precargamos
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.form.patchValue({ id });
-      // (Opcional) cargar datos desde backend:
-      // this.generoSrv.obtenerPorId(id).subscribe(g =>
-      //   this.form.patchValue({ nombre: g.nombre })
-      // );
-    }
+  ngOnInit() {
+    const idiomaId = this.route.snapshot.paramMap.get('id');
+    this.initialization(idiomaId);
   }
 
-  onSubmit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+  async initialization(idiomaId: string | null): Promise<void> {
+    if (!idiomaId) {
+      alert('No se proporcionó un ID de idioma válido.');
       return;
     }
-    // Como 'id' está disabled, úsalo desde getRawValue()
-    const payload = this.form.getRawValue(); // { id, nombre }
-    console.log('Guardando idioma:', payload);
+    try {
+      const fetched = await this.apiService.getIdiomaById(+idiomaId);
+      console.log('Idioma obtenido:', fetched);
+      this.idioma = { ...fetched };
+      this.originalIdioma = { ...fetched };
+    } catch (error) {
+      alert('Error al obtener el idioma:');
+    }
+  }
+  onSave() {
+    const modifiedKeys = Object.keys(this.idioma).filter(
+      (key) => key !== 'id' && this.idioma[key] !== this.originalIdioma[key]
+    );
+    if (modifiedKeys.length === 0) {
+      alert('No se cambió ningún dato.');
+    } else if (modifiedKeys.length === Object.keys(this.idioma).length - 1) {
+      this.apiService
+        .updateIdioma(this.idioma)
+        .then(() => {
+          alert('Idioma actualizado correctamente.');
+        })
+        .catch((error) => {
+          console.error('Error al actualizar el idioma:', error);
+          alert('Error al actualizar el idioma.');
+        });
+    }
 
-    // TODO: this.generoSrv.actualizar(payload.id!, { nombre: payload.nombre! }).subscribe(...)
+    this.router.navigate(['/idioma/lista']);
   }
   volver() {
     this.router.navigate(['/idioma/lista']);
   }
-  inicio() {
-    this.router.navigate(['/home']);
-  }
 }
-

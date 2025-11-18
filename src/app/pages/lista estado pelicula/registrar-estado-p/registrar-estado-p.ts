@@ -1,52 +1,46 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ApiService } from './../../../services/api.service';
 
 @Component({
   selector: 'app-registrar-estado',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './registrar-estado-p.html',
-  styleUrl: './registrar-estado-p.css'
+  styleUrl: './registrar-estado-p.css',
 })
-export class RegistrarEstadoPeliculaComponent implements OnInit {
-
-    form!: FormGroup;
-
-  constructor(private fb: FormBuilder, private router: Router) {}
-
-  ngOnInit(): void {
-    // Inicializamos el formulario con validaciones
+export class RegistrarEstadoPeliculaComponent {
+  form: FormGroup;
+  restaurant: any;
+  error: string | null = null;
+  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
     this.form = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(2)]]
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
-
-  // Getter para usar f.nombre en el HTML
-  get f() {
-    return this.form.controls;
-  }
-
-  // Método al enviar el formulario
-  onSubmit(): void {
+  onSave() {
     if (this.form.invalid) {
-      this.form.markAllAsTouched(); // Muestra errores si hay campos inválidos
+      alert('Por favor, completa  los campos correctamente.');
       return;
+    } else if (this.form.valid) {
+      const nombre: string = (this.form.get('nombre')?.value ?? '').toString();
+
+      this.apiService
+        .createGenero(nombre)
+        .then(() => {
+          alert('Idioma creado correctamente.');
+          this.router.navigate(['/idioma/lista']);
+        })
+        .catch((error) => {
+          console.error('Error al crear el idioma:', error);
+          alert('Error al crear el idioma. Por favor, inténtalo de nuevo más tarde.');
+        });
     }
-
-    console.log('Formulario válido, datos:', this.form.value);
-
-    // Aquí podrías enviar al backend y luego resetear
-    this.form.reset();
   }
-    volver(){
+
+  volver() {
     this.router.navigate(['/estados-peliculas']);
-  }
-  inicio() {
-    this.router.navigate(['/home']);
   }
 }

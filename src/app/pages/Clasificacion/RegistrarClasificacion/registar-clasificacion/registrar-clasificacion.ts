@@ -1,46 +1,46 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ApiService } from '../../../../services/api.service';
 
 @Component({
   selector: 'app-registrar-clasificacion',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './registrar-clasificacion.html',  
-  styleUrls: ['./registrar-clasificacion.css']     
+  templateUrl: './registrar-clasificacion.html',
+  styleUrls: ['./registrar-clasificacion.css'],
 })
-
 export class RegistrarClasificacionComponent {
-  constructor() {
+  form: FormGroup;
+  restaurant: any;
+  error: string | null = null;
+  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
+    this.form = this.fb.group({
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
+    });
   }
-  private router = inject(Router);
-
-  private fb = inject(FormBuilder);
-
-  form = this.fb.group({
-    nombre: ['', [Validators.required, Validators.minLength(2)]],
-  });
-
-  get f() { return this.form.controls; }
-
-  onSubmit() {
+  onSave() {
     if (this.form.invalid) {
-      this.form.markAllAsTouched();
+      alert('Por favor, completa  los campos correctamente.');
       return;
+    } else if (this.form.valid) {
+      const nombre: string = (this.form.get('nombre')?.value ?? '').toString();
+
+      this.apiService
+        .createGenero(nombre)
+        .then(() => {
+          alert('Clasificación creada correctamente.');
+          this.router.navigate(['/clasificaciones']);
+        })
+        .catch((error) => {
+          console.error('Error al crear la clasificación:', error);
+          alert('Error al crear la clasificación. Por favor, inténtalo de nuevo más tarde.');
+        });
     }
-
-    const payload = { nombre: this.form.value.nombre?.trim() };
-    // TODO: llamar a tu servicio HTTP para crear el género
-    console.log('Registrando Clasificacion:', payload);
-
-    // Reseteo opcional
-    this.form.reset();
   }
-  volver(){
-    this.router.navigate(['/clasificacion/lista']);
-  }
-  inicio() {
-    this.router.navigate(['/home']);
+
+  volver() {
+    this.router.navigate(['/clasificaciones']);
   }
 }

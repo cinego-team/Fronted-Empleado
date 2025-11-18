@@ -1,49 +1,67 @@
-
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-editar-estado-pelicula',
-  imports: [CommonModule,
-    ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './editar-estado-pelicula.html',
-  styleUrl: './editar-estado-pelicula.css'
+  styleUrl: './editar-estado-pelicula.css',
 })
-export class EditarEstadoPelicula implements OnInit  {
-    form!: FormGroup;
+export class EditarEstadoPelicula implements OnInit {
+  estado: any;
+  originalEstado: any;
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiService: ApiService
+  ) {}
 
-  ngOnInit(): void {
-    // Inicializamos el formulario con validaciones
-    this.form = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(2)]]
-    });
+  ngOnInit() {
+    const estadoId = this.route.snapshot.paramMap.get('id');
+    this.initialization(estadoId);
   }
 
-  // Getter para usar f.nombre en el HTML
-  get f() {
-    return this.form.controls;
-  }
-
-  // Método al enviar el formulario
-  onSubmit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched(); // Muestra errores si hay campos inválidos
+  async initialization(estadoId: string | null): Promise<void> {
+    if (!estadoId) {
+      alert('No se proporcionó un ID de estado válido.');
       return;
     }
-
-    console.log('Formulario válido, datos:', this.form.value);
-
-    // Aquí podrías enviar al backend y luego resetear
-    this.form.reset();
+    try {
+      const fetched = await this.apiService.getEstadosById(+estadoId);
+      console.log('Estado obtenido:', fetched);
+      this.estado = { ...fetched };
+      this.originalEstado = { ...fetched };
+    } catch (error) {
+      alert('Error al obtener el estado:');
+    }
   }
-  volver(){
+  onSave() {
+    const modifiedKeys = Object.keys(this.estado).filter(
+      (key) => key !== 'id' && this.estado[key] !== this.originalEstado[key]
+    );
+    if (modifiedKeys.length === 0) {
+      alert('No se cambió ningún dato.');
+    } else if (modifiedKeys.length === Object.keys(this.estado).length - 1) {
+      this.apiService
+        .updateEstado(this.estado)
+        .then(() => {
+          alert('Estado actualizado correctamente.');
+        })
+        .catch((error) => {
+          console.error('Error al actualizar el estado:', error);
+          alert('Error al actualizar el estado.');
+        });
+    }
+
     this.router.navigate(['/estados-peliculas']);
   }
-  inicio() {
-    this.router.navigate(['/home']);
+
+  volver() {
+    this.router.navigate(['/estados-peliculas']);
   }
 }

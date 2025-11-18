@@ -1,6 +1,6 @@
 <div class="page">
- <header class="topbar">
-    <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()"/>
+  <header class="topbar">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
     <div class="user-section">
       <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
       <span>Usuario</span>
@@ -11,27 +11,22 @@
     <section class="card">
       <h1>Registrar Idioma</h1>
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
-        <label for="nombre">Nombre</label>
-        <input
-          id="nombre"
-          type="text"
-          formControlName="nombre"
-          placeholder="Ej.: Espñaol"
-          [class.invalid]="f.nombre.touched && f.nombre.invalid"
-        />
-
-        <div class="error" *ngIf="f.nombre.touched && f.nombre.errors">
-          <small *ngIf="f.nombre.errors['required']">El nombre es obligatorio.</small>
-          <small *ngIf="f.nombre.errors['minlength']">Mínimo 2 caracteres.</small>
+      <form [formGroup]="form" (ngSubmit)="onSave()">
+        @if (error) {
+        <div class="alert alert-danger">{{ error }}</div>
+        }
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" formControlName="nombre" />
+          @if (form.get('name')?.invalid && form.get('name')?.touched) {
+          <small class="text-danger">Nombre requerido (mínimo 2 letras)</small>
+          }
         </div>
-
-        <button type="submit" [disabled]="form.invalid">REGISTRAR</button>
+        <button type="submit" (click)="(form.invalid)">REGISTRAR</button>
       </form>
     </section>
   </main>
-      <div class="button-group">
-      
-      <button (click)="volver()">VOLVER</button>
-      </div>
+  <div class="button-group">
+    <button (click)="volver()">VOLVER</button>
+  </div>
 </div>
