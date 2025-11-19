@@ -6,35 +6,34 @@ import { GlobalStatusService } from '../../../services/global-status.service';
   selector: 'app-promociones',
   imports: [],
   templateUrl: './promociones.html',
-  styleUrl: './promociones.css'
+  styleUrl: './promociones.css',
 })
 export class Promociones {
-constructor(
+  constructor(
     private router: Router,
     private readonly apiService: ApiService,
     private readonly globalStatusService: GlobalStatusService
-   
-  ) { }
+  ) {}
   promociones: Array<{
-    id:number;
+    id: number;
     nombre: string;
     porcentajeDescuento: number;
     tipoClienteId: number;
     diaId: number;
-  }> =[];
-   selectedRow: number | null = null;
+  }> = [];
+  selectedRow: number | null = null;
   actualPage: number = 1;
   ngOnInit(): void {
     this.initialization();
   }
-   async initialization(): Promise<void> {
+  async initialization(): Promise<void> {
     this.globalStatusService.setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 500)); //Decorativo
+    await new Promise((resolve) => setTimeout(resolve, 500)); //Decorativo
     const data = await this.apiService.getPromociones();
     if (data.length === 0) {
       alert('No hay promociones para mostrar.');
       this.globalStatusService.setLoading(false);
-      this.actualPage --;
+      this.actualPage--;
       return;
     }
     this.promociones = data;
@@ -48,17 +47,13 @@ constructor(
     this.router.navigate(['/registrar-promocion']);
   }
 
-  /*onEdit() {
+  onEdit() {
     if (this.selectedRow === null) {
       alert('Seleccioná un promocion primero.');
       return;
     }
     const selectedPromocion = this.promociones[this.selectedRow];
     this.router.navigate(['/editar-promocion', selectedPromocion.id]);
-  }
-  */
- onEdit() {
-  this.router.navigate(['/editar-promocion']);
   }
 
   onDelete() {
@@ -67,15 +62,19 @@ constructor(
       return;
     }
     const selectedPromocion = this.promociones[this.selectedRow];
-    if (confirm(`¿Estás seguro de que querés eliminar la promocion ${selectedPromocion.nombre} (ID: ${selectedPromocion.id})?`)) {
+    if (
+      confirm(
+        `¿Estás seguro de que querés eliminar la promocion ${selectedPromocion.nombre} (ID: ${selectedPromocion.id})?`
+      )
+    ) {
       this.apiService.deletePromocion(selectedPromocion.id).then(() => {
         alert('Promocion eliminado correctamente.');
         this.promociones.splice(this.selectedRow!, 1);
         this.selectedRow = null;
-      })
+      });
     }
   }
-  onBack(){
+  onBack() {
     this.router.navigate(['/home']);
   }
   inicio() {

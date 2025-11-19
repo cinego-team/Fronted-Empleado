@@ -38,7 +38,7 @@ export class ListaClasificacionComponent {
     this.selec = rowId;
   }
 
-  onDelete() {
+  eliminar() {
     if (this.selec === null) {
       alert('Seleccioná una clasificación primero.');
       return;
@@ -64,7 +64,7 @@ export class ListaClasificacionComponent {
     this.router.navigate(['/clasificacion/registrar']);
   }
 
-  onEdit() {
+  editar() {
     if (this.selec === null) {
       alert('Seleccioná uno primero.');
       return;

@@ -38,7 +38,7 @@ export class ListaGeneroComponent {
     this.selec = rowId;
   }
 
-  onDelete() {
+  eliminar() {
     if (this.selec === null) {
       alert('Seleccioná un genero  primero.');
       return;
@@ -65,7 +65,7 @@ export class ListaGeneroComponent {
     this.router.navigate(['/genero/registrar']);
   }
 
-  onEdit() {
+  editar() {
     if (this.selec === null) {
       alert('Seleccioná uno primero.');
       return;

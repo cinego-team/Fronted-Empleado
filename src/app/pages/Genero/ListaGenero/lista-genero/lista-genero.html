@@ -1,45 +1,38 @@
+<!-- Topbar -->
+<header class="topbar">
+  <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()" />
+  <div class="user-section">
+    <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
+    <span>Usuario</span>
+  </div>
+</header>
 <div class="page">
- <header class="topbar">
-    <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()"/>
-    <div class="user-section">
-      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
-      <span>Usuario</span>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <h1>Géneros</h1>
-
-    
-      <table class="tabla">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr
-            *ngFor="let g of generos"
-            (click)="seleccionar(g)"
-            [class.sel]="seleccion?.id === g.id"
-            tabindex="0"
-          >
-            <td>{{ g.id }}</td>
-            <td>{{ g.nombre }}</td>
-          </tr>
-        </tbody>
-      </table>
-    
-
-    <div class="actions">
+  <h1>Géneros</h1>
+  <div class="tabla-container">
+    <table class="tabla-formatos">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (tipo of generos; track tipo.id) {
+        <tr
+          [class.selected]="selec === generos.indexOf(tipo)"
+          (click)="seleccionar(generos.indexOf(tipo))"
+        >
+          <td>{{ tipo.id }}</td>
+          <td>{{ tipo.nombre }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    <div class="button-group">
       <button (click)="volver()">VOLVER</button>
-        <button (click)="nuevo()">NUEVO</button>
-
-        <button (click)="!seleccion" (click)="eliminar()">ELIMINAR</button>
-
-        <button (click)="!seleccion" (click)="editar()">EDITAR</button>
-      </div>
-  </main>
+      <button (click)="nuevo()">NUEVO</button>
+      <button (click)="eliminar()">ELIMINAR</button>
+      <button (click)="editar()">EDITAR</button>
+    </div>
+  </div>
 </div>

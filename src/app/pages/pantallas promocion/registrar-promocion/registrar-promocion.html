@@ -1,55 +1,57 @@
-  <!-- Barra superior -->
- <header class="topbar">
-    <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()" />
+<!-- Barra superior -->
+<div class="container">
+  <header class="topbar">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
     <div class="user-section">
       <img src="assets/usuario.png" alt="Usuario" class="user-icon" />
       <span>Usuario</span>
     </div>
   </header>
-<div class="container">
+  <main class="wrap">
+    <section class="card">
+      <!-- Título -->
 
+      <h2>Registrar Promoción</h2>
 
-  <!-- Título -->
-  <div class="register-box">
-  <h2>Registrar Promoción</h2>
+      <!-- Formulario -->
+      <form [formGroup]="form" (ngSubmit)="onSave()">
+        @if (error) {
+        <div class="alert alert-danger">{{ error }}</div>
+        }
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" formControlName="nombre" />
+          @if (form.get('name')?.invalid && form.get('name')?.touched) {
+          <small class="text-danger">Nombre requerido (mínimo 2 letras)</small>
+          }
+        </div>
+        <div class="form-group">
+          <label for="dia">Dia Id</label>
+          <input id="dia" formControlName="dia" />
+          @if (form.get('dia')?.invalid && form.get('dia')?.touched) {
+          <small class="text-danger"></small>
+          }
+        </div>
 
-  <!-- Formulario -->
-  <form>
-    <div class="form-group">
-      <label>
-        Nombre
-        <input type="text" name="nombre" required />
-      </label>
-    </div>
-    <div class="form-group">
-      <label>
-        DíaId
-        <select name="Día">
-      
-        </select>
-      </label>
-    </div>
-
-    <div class="form-group">
-       <label>
-        Porcentaje de Descuento
-        <input type="number" name="Porcentaje de descuento" required />
-      </label>
-    </div>
-    <div class="form-group">
-      <label>
-        Tipo Cliente Id
-        <select name="tipo">
-    
-        </select>
-      </label>
-    </div>
-    <button class=btn type="submit">REGISTRAR</button>
-  </form>
-    
+        <div class="form-group">
+          <label for="procentaje">procentaje Descuento</label>
+          <input id="procentaje" formControlName="procentaje" />
+          @if (form.get('procentaje')?.invalid && form.get('procentaje')?.touched) {
+          <small class="text-danger"></small>
+          }
+        </div>
+        <div class="form-group">
+          <label for="cliente">Tipo Cliente Id</label>
+          <input id="cliente" formControlName="cliente" />
+          @if (form.get('cliente')?.invalid && form.get('procentaje')?.touched) {
+          <small class="text-danger"></small>
+          }
+        </div>
+        <button type="submit" (click)="(form.invalid)">REGISTRAR</button>
+      </form>
+    </section>
+  </main>
+  <div class="button-group">
+    <button (click)="volver()">VOLVER</button>
+  </div>
 </div>
- <div class="button-group">
-      
-      <button class=btn (click)="volver()">VOLVER</button>
-      </div>
-

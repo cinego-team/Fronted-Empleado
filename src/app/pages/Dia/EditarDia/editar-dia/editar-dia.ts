@@ -1,54 +1,67 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { ApiService } from '../../../../services/api.service';
 
 @Component({
   selector: 'app-editar-dia',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './editar-dia.html',
   styleUrls: ['./editar-dia.css'],
 })
 export class EditarDiaComponent implements OnInit {
-   constructor(private router: Router) {}
-  private fb = inject(FormBuilder);
-  private route = inject(ActivatedRoute);
-  // TODO: inyectar tu servicio real, ej:
-  // private generoSrv = inject(GeneroService);
+  dia: any;
+  originalDia: any;
 
-  form = this.fb.group({
-    id: [{ value: '', disabled: true }],        // ID solo lectura
-    nombre: ['', [Validators.required, Validators.minLength(2)]],
-  });
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiService: ApiService
+  ) {}
 
-  get f() { return this.form.controls; }
-
-  ngOnInit(): void {
-    // Si vienes con /genero/editar/:id, lo agarramos y precargamos
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.form.patchValue({ id });
-      // (Opcional) cargar datos desde backend:
-      // this.generoSrv.obtenerPorId(id).subscribe(g =>
-      //   this.form.patchValue({ nombre: g.nombre })
-      // );
-    }
+  ngOnInit() {
+    const diaId = this.route.snapshot.paramMap.get('id');
+    this.initialization(diaId);
   }
 
-  onSubmit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+  async initialization(diaId: string | null): Promise<void> {
+    if (!diaId) {
+      alert('No se proporcionó un ID de genero válido.');
       return;
     }
-    // Como 'id' está disabled, úsalo desde getRawValue()
-    const payload = this.form.getRawValue(); // { id, nombre }
-    console.log('Guardando género:', payload);
-
-    // TODO: this.generoSrv.actualizar(payload.id!, { nombre: payload.nombre! }).subscribe(...)
+    try {
+      const fetched = await this.apiService.getDiaById(+diaId);
+      console.log('Día obtenido:', fetched);
+      this.dia = { ...fetched };
+      this.originalDia = { ...fetched };
+    } catch (error) {
+      alert('Error al obtener la dia:');
+    }
   }
-   volver(){
+  onSave() {
+    const modifiedKeys = Object.keys(this.dia).filter(
+      (key) => key !== 'id' && this.dia[key] !== this.originalDia[key]
+    );
+    if (modifiedKeys.length === 0) {
+      alert('No se cambió ningún dato.');
+    } else if (modifiedKeys.length === Object.keys(this.dia).length - 1) {
+      this.apiService
+        .updateDia(this.dia)
+        .then(() => {
+          alert('Día actualizado correctamente.');
+        })
+        .catch((error) => {
+          console.error('Error al actualizar el día:', error);
+          alert('Error al actualizar el día.');
+        });
+    }
+
+    this.router.navigate(['/dia/lista']);
+  }
+  volver() {
     this.router.navigate(['/dia/lista']);
   }
   inicio() {

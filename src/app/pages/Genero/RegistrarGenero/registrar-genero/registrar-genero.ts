@@ -13,7 +13,7 @@ import { ApiService } from '../../../../services/api.service';
 })
 export class RegistrarGeneroComponent {
   form: FormGroup;
-  restaurant: any;
+  genero: any;
   error: string | null = null;
   constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
     this.form = this.fb.group({

@@ -1,6 +1,16 @@
 export const config = {
   APIPromocionesUrls: {
     baseUrl: 'http://localhost:3005',
+    //dia
+    getDiaById: (id: number) => `/dias/${id}`,
+    getDias: '/dias/',
+    createDia: '/dias/new',
+    updateDia: (id: number) => `/dias/${id}`,
+    //promocion
+    getPromocionById: (id: number) => `/promocion/${id}`,
+    getPromociones: '/promociones/',
+    createPromocion: '/promociones/nueva-promocion',
+    updatePromocion: (id: number) => `/promocion/${id}`,
   },
   APIFuncionesUrls: {
     baseUrl: 'http://localhost:3003',

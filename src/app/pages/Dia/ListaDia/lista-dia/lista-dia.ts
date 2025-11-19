@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ApiService } from '../../../../services/api.service';
 
 interface GeneroRow {
   id: number;
@@ -12,41 +13,70 @@ interface GeneroRow {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './lista-dia.html',
-  styleUrls: ['./lista-dia.css']
+  styleUrls: ['./lista-dia.css'],
 })
 export class ListaDiaComponent {
-  generos: GeneroRow[] = [
-    { id: 1, nombre: 'Lunes' },
-    { id: 2, nombre: 'Martes' },
-    { id: 3, nombre: 'Miercoles' },
-    { id: 4, nombre: 'Jueves' }
-  ];
+  constructor(private router: Router, private readonly apiService: ApiService) {}
+  dias: Array<{
+    id: number;
+    nombre: string;
+  }> = [];
+  selec: number | null = null;
 
-  seleccion?: GeneroRow;
+  ngOnInit(): void {
+    this.initialization();
+  }
+  async initialization(): Promise<void> {
+    const data = await this.apiService.getAllDias();
+    if (data.length === 0) {
+      alert('No hay dias para mostrar.');
+      return;
+    }
+    this.dias = data;
+  }
+  seleccionar(rowId: number) {
+    this.selec = rowId;
+  }
 
-  constructor(private router: Router) {}
+  eliminar() {
+    if (this.selec === null) {
+      alert('Seleccioná un dia  primero.');
+      return;
+    }
 
-  seleccionar(row: GeneroRow) {
-    this.seleccion = row;
+    const selectedC = this.dias[this.selec];
+    if (confirm(`¿Estás seguro de que querés eliminar ?`)) {
+      this.apiService
+        .deleteDia(selectedC.id)
+        .then(() => {
+          alert('Dia eliminada correctamente.');
+          this.dias.splice(this.selec!, 1);
+          this.selec = null;
+        })
+        .catch((error) => {
+          console.error('Error al eliminar', error);
+          alert('Ocurrió un error al eliminar');
+        });
+    }
+  }
+
+  editar() {
+    if (this.selec === null) {
+      alert('Seleccioná uno primero.');
+      return;
+    }
+    const selected = this.dias[this.selec];
+    this.router.navigate(['/dia/editar', selected.id]);
   }
 
   nuevo() {
     this.router.navigate(['/dia/registrar']);
   }
 
-  editar() {
-    
-    this.router.navigate(['dia/editar']);
-  }
-
-  eliminar() {
-    
-  }
-  volver(){
+  volver() {
     this.router.navigate(['/home']);
   }
   inicio() {
     this.router.navigate(['/home']);
   }
 }
-

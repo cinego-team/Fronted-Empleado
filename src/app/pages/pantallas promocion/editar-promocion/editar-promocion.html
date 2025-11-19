@@ -1,57 +1,51 @@
-<header class="topbar">
-    <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()"/>
+<div class="page">
+  <header class="topbar">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
     <div class="user-section">
       <img src="assets/usuario.png" alt="Usuario" class="user-icon" />
       <span>Usuario</span>
     </div>
   </header>
-<div class="container">
-  <!-- Barra superior -->
- 
 
-  <!-- Título -->
-  <div class="register-box">
-  <h2>Editar Promoción</h2>
+  <main class="wrap">
+    <section class="card">
+      <h1>Editar Promocion</h1>
 
-  <!-- Formulario -->
-  <form>
-    <div class="form-row">
-        <label for="id">ID:</label> <div class="id-value"></div> </div>
-    <div class="form-group">
-      <label>
-        Nombre
-        <input type="text" name="nombre" required />
-      </label>
-    </div>
-    <div class="form-group">
-      <label>
-        DíaId
-        <select name="Día">
-      
-        </select>
-      </label>
-    </div>
+      @if (promocion) {
+      <form (ngSubmit)="onSave()">
+        <div class="form-group">
+          <label for="id">ID</label>
+          <div class="readonly-text">{{ promocion.id }}</div>
+        </div>
 
-    <div class="form-group">
-       <label>
-        Porcentaje de Descuento
-        <input type="number" name="Porcentaje de descuento" required />
-      </label>
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input id="name" [(ngModel)]="promocion.name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="diaId">Dia ID</label>
+          <input id="diaId" [(ngModel)]="promocion.diaId" name="diaId" required />
+        </div>
+        <div class="form-group">
+          <label for="porcentaje">Porcentaje Descuento</label>
+          <input
+            id="porcentaje"
+            [(ngModel)]="promocion.porcentajeDescuento"
+            name="porcentaje"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="clienteId">Tipo Cliente ID</label>
+          <input id="clienteId" [(ngModel)]="promocion.clienteId" name="clienteId" required />
+        </div>
+        <button type="submit">GUARDAR</button>
+      </form>
+      }
+    </section>
+
+    <div class="button-group">
+      <button (click)="volver()">VOLVER</button>
     </div>
-    <div class="form-group">
-      <label>
-        Tipo Cliente Id
-        <select name="tipo">
-    
-        </select>
-      </label>
-    </div>
-    <button class=btn type="submit">GUARDAR</button>
-  </form>
+  </main>
 </div>
- <div class="button-group">
-      
-      <button class=btn (click)="volver()">VOLVER</button>
-      </div>
-
-

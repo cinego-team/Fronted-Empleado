@@ -1,41 +1,45 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ApiService } from '../../../../services/api.service';
 
 @Component({
   selector: 'app-registrar-dia',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './registrar-dia.html',  
-  styleUrls: ['./registrar-dia.css']     
+  templateUrl: './registrar-dia.html',
+  styleUrls: ['./registrar-dia.css'],
 })
-
 export class RegistrarDiaComponent {
-  constructor(private router: Router) {}
-  private fb = inject(FormBuilder);
-
-  form = this.fb.group({
-    nombre: ['', [Validators.required, Validators.minLength(2)]],
-  });
-
-  get f() { return this.form.controls; }
-
-  onSubmit() {
+  form: FormGroup;
+  dia: any;
+  error: string | null = null;
+  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
+    this.form = this.fb.group({
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
+    });
+  }
+  onSave() {
     if (this.form.invalid) {
-      this.form.markAllAsTouched();
+      alert('Por favor, completa  los campos correctamente.');
       return;
+    } else if (this.form.valid) {
+      const nombre: string = (this.form.get('nombre')?.value ?? '').toString();
+
+      this.apiService
+        .createDia(nombre)
+        .then(() => {
+          alert('Día creado correctamente.');
+          this.router.navigate(['/dia/lista']);
+        })
+        .catch((error) => {
+          console.error('Error al crear el día:', error);
+          alert('Error al crear el día. Por favor, inténtalo de nuevo más tarde.');
+        });
     }
-
-    const payload = { nombre: this.form.value.nombre?.trim() };
-    console.log('Registrando dia:', payload);
-
-    this.form.reset();
   }
-  volver(){
+  volver() {
     this.router.navigate(['/dia/lista']);
-  }
-  inicio() {
-    this.router.navigate(['/home']);
   }
 }

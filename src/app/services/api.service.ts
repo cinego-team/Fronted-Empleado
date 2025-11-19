@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { config } from '../axios_service/env';
-import { axiosAPIPeliculas } from '../axios_service/axios.client';
+import { axiosAPIPeliculas, axiosAPIPromociones } from '../axios_service/axios.client';
 import { EditPeliculaOutput } from '../pages/pantallas peliculas/editar-pelicula/editar-pelicula.dto';
 import { EditPeliculaInput } from '../pages/pantallas peliculas/editar-pelicula/editar-pelicula.dto';
 import { EditGenero, GeneroInput } from '../pages/Genero/genero.dto';
 import { EditIdioma, IdiomaInput } from '../pages/Idioma/idioma.dto';
 import { EditEstado, EstadoInput } from '../pages/lista estado pelicula/estado-pelicula.dto';
 import { EditClasificacion, ClasificacionInput } from '../pages/Clasificacion/clasificacion.dto';
+import { DiaInput, EditDia } from '../pages/Dia/dia.dto';
+import {
+  EditPromocionInput,
+  EditPromocionOutput,
+} from '../pages/pantallas promocion/promocion.dto';
 @Injectable({
   providedIn: 'root',
 })
@@ -282,5 +287,115 @@ export class ApiService {
       nombre: estado.nombre,
     };
     await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateEstado(estado.id!)}`, data);
+  }
+  //dia
+  async getDiaById(id: number): Promise<{
+    id: number;
+    nombre: string;
+  }> {
+    const datos = (await axiosAPIPromociones.get(config.APIPromocionesUrls.getDiaById(id))).data;
+    return {
+      id: datos.id,
+      nombre: datos.nombre,
+    };
+  }
+  async getAllDias(): Promise<
+    Array<{
+      id: number;
+      nombre: string;
+    }>
+  > {
+    const datos = (await axiosAPIPromociones.get(config.APIPromocionesUrls.getDias)).data;
+
+    const respuesta = datos.map((item: { id: number; nombre: string }) => ({
+      id: item.id,
+      nombre: item.nombre,
+    }));
+
+    return respuesta;
+  }
+  async deleteDia(id: number): Promise<void> {
+    await axiosAPIPromociones.delete(config.APIPromocionesUrls.getDiaById(id));
+  }
+  async createDia(formulario: any): Promise<void> {
+    const nuevoDia: EditDia = {
+      nombre: formulario.get('nombre').value,
+    };
+    await axiosAPIPromociones.post(config.APIPromocionesUrls.createDia, nuevoDia);
+  }
+  async updateDia(dia: DiaInput): Promise<void> {
+    const data: DiaInput = {
+      nombre: dia.nombre,
+    };
+    await axiosAPIPromociones.put(`${config.APIPromocionesUrls.updateDia(dia.id!)}`, data);
+  }
+  //promocion
+  async getPromocionById(id: number): Promise<{
+    id: number;
+    nombre: string;
+    porcentajeDescuento: number;
+    diaId: number;
+    tipoClienteId: number;
+  }> {
+    const datos = (await axiosAPIPromociones.get(config.APIPromocionesUrls.getPromocionById(id)))
+      .data;
+    return {
+      id: datos.id,
+      nombre: datos.nombre,
+      porcentajeDescuento: datos.porcentajeDescuento,
+      diaId: datos.diaId,
+      tipoClienteId: datos.tipoClienteId,
+    };
+  }
+  async getPromociones(): Promise<
+    Array<{
+      id: number;
+      nombre: string;
+      porcentajeDescuento: number;
+      tipoClienteId: number;
+      diaId: number;
+    }>
+  > {
+    const datos = (await axiosAPIPromociones.get(config.APIPromocionesUrls.getPromociones)).data;
+    const respuesta = datos.map(
+      (item: {
+        id: any;
+        nombre: any;
+        porcentajeDescuento: any;
+        tipoClienteId: any;
+        diaId: any;
+      }) => ({
+        id: datos.id,
+        nombre: item.nombre,
+        procentajeDescuento: item.porcentajeDescuento,
+        tipoClienteId: item.tipoClienteId,
+        diaId: item.diaId,
+      })
+    );
+    return respuesta;
+  }
+  async deletePromocion(id: number): Promise<void> {
+    await axiosAPIPromociones.delete(config.APIPromocionesUrls.getPromocionById(id));
+  }
+  async createPromocion(formulario: any): Promise<void> {
+    const nuevaPromocion: EditPromocionOutput = {
+      nombre: formulario.get('nombre').value,
+      porcentajeDescuento: formulario.get('porcentajeDescuento').value,
+      diaId: formulario.get('diaId').value,
+      tipoClienteId: formulario.get('tipoClienteId').value,
+    };
+    await axiosAPIPromociones.post(config.APIPromocionesUrls.createPromocion, nuevaPromocion);
+  }
+  async updatePromocion(promocion: EditPromocionInput): Promise<void> {
+    const data: EditPromocionOutput = {
+      nombre: promocion.nombre,
+      porcentajeDescuento: promocion.porcentajeDescuento,
+      diaId: promocion.diaId,
+      tipoClienteId: promocion.tipoClienteId,
+    };
+    await axiosAPIPromociones.put(
+      `${config.APIPromocionesUrls.updatePromocion(promocion.id!)}`,
+      data
+    );
   }
 }

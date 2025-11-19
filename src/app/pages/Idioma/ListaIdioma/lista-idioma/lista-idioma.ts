@@ -38,7 +38,7 @@ export class ListaIdiomaComponent {
     this.selec = rowId;
   }
 
-  onDelete() {
+  eliminar() {
     if (this.selec === null) {
       alert('Seleccioná un idioma  primero.');
       return;
@@ -60,7 +60,7 @@ export class ListaIdiomaComponent {
         });
     }
   }
-  onEdit() {
+  editar() {
     if (this.selec === null) {
       alert('Seleccioná uno primero.');
       return;
