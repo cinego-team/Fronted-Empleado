@@ -1,6 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule } from "@angular/common"
+import { Component, type OnInit } from "@angular/core"
+import { Router } from "@angular/router"
+import { ApiService } from "../../../services/api.service"
 
 @Component({
   selector: 'app-lista-sala',
@@ -9,16 +10,51 @@ import { Router } from '@angular/router';
   imports: [CommonModule],
 })
 
-export class ListaSala {
-  
-  salas = [
-    { id: 1, numero: '1', disponibilidad: "Disponible", capacidad: 100 },
-    { id: 2, numero: '2', disponibilidad: "Fuera de servicio", capacidad: 150 },
-  ];
+export class ListaSala implements OnInit {
+  salas: Array<{
+    id: number
+    numero: number
+    disponibilidad: string
+    capacidad: number
+  }> = []
 
-  selectedIndex: number | null = null;
+  selectedIndex: number | null = null
+  isLoading = true
+  errorMessage = ""
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private apiService: ApiService,
+  ) {}
+
+  async ngOnInit() {
+    await this.cargarSalas()
+  }
+
+  async cargarSalas() {
+    try {
+      this.isLoading = true
+      this.errorMessage = ""
+
+      const salasBackend = await this.apiService.getAllSalas()
+
+      // Transformar datos del backend al formato del componente
+      this.salas = salasBackend.map((sala) => ({
+        id: sala.id,
+        numero: sala.numero,
+        disponibilidad: sala.disponibilidad ? "Disponible" : "Fuera de servicio",
+        capacidad: sala.capacidad,
+      }))
+
+      console.log("[v0] Salas cargadas:", this.salas)
+    } catch (error) {
+      console.error("[v0] Error al cargar salas:", error)
+      this.errorMessage = "Error al cargar las salas. Por favor, intenta nuevamente."
+      this.salas = []
+    } finally {
+      this.isLoading = false
+    }
+  }
 
   selectRow(index: number) {
     this.selectedIndex = index;

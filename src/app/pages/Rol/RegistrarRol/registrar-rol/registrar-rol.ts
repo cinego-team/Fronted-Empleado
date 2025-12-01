@@ -1,35 +1,46 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { Component } from "@angular/core"
+import { Router } from "@angular/router"
+import { FormBuilder, type FormGroup, Validators } from "@angular/forms"
+import { ApiService } from "../../../../services/api.service"
 
 @Component({
-  selector: 'app-registrar-rol',
+  selector: "app-registrar-rol",
+  imports: [],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './registrar-rol.html',  
-  styleUrls: ['./registrar-rol.css']     
+  templateUrl: "./registrar-rol.html",
+  styleUrl: "./registrar-rol.css",
 })
+export class RegistrarRol {
+  rolForm: FormGroup
+  loading = false
+  errorMessage = ""
 
-export class RegistrarRolComponent {
-  private fb = inject(FormBuilder);
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private apiService: ApiService,
+  ) {
+    this.rolForm = this.fb.group({
+      nombre: ["", [Validators.required, Validators.minLength(3)]],
+    })
+  }
 
-  form = this.fb.group({
-    nombre: ['', [Validators.required, Validators.minLength(2)]],
-  });
-
-  get f() { return this.form.controls; }
-
-  onSubmit() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+  registrar() {
+    if (this.rolForm.invalid) {
+      alert('Por favor, completa  los campos correctamente.');
       return;
+    } else if (this.rolForm.valid) {
+
+      this.apiService
+        .createRol(this.rolForm.value)
+        .then(() => {
+          alert('rol creado correctamente.');
+          this.router.navigate(['/rol']);
+        })
+        .catch((error) => {
+          console.error('Error al crear el rol:', error);
+          alert('Error al crear el rol. Por favor, inténtalo de nuevo más tarde.');
+        });
     }
-
-    const payload = { nombre: this.form.value.nombre?.trim() };
-    // TODO: llamar a tu servicio HTTP para crear el género
-    console.log('Registrando rol:', payload);
-
-    // Reseteo opcional
-    this.form.reset();
   }
 }

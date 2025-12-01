@@ -1,49 +1,67 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { ApiService } from '../../../../services/api.service';
 
 @Component({
   selector: 'app-editar-rol',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './editar-rol.html',
   styleUrls: ['./editar-rol.css'],
 })
 export class EditarRolComponent implements OnInit {
-  private fb = inject(FormBuilder);
-  private route = inject(ActivatedRoute);
-  // TODO: inyectar tu servicio real, ej:
-  // private generoSrv = inject(GeneroService);
+  rol: any;
+  originalrol: any;
 
-  form = this.fb.group({
-    id: [{ value: '', disabled: true }],        // ID solo lectura
-    nombre: ['', [Validators.required, Validators.minLength(2)]],
-  });
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiService: ApiService
+  ) {}
 
-  get f() { return this.form.controls; }
-
-  ngOnInit(): void {
-    // Si vienes con /genero/editar/:id, lo agarramos y precargamos
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.form.patchValue({ id });
-      // (Opcional) cargar datos desde backend:
-      // this.generoSrv.obtenerPorId(id).subscribe(g =>
-      //   this.form.patchValue({ nombre: g.nombre })
-      // );
-    }
+  ngOnInit() {
+    const rolId = this.route.snapshot.paramMap.get('id');
+    this.initialization(rolId);
   }
 
-  onSubmit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+  async initialization(rolId: string | null): Promise<void> {
+    if (!rolId) {
+      alert('No se proporcionó un ID de rol válido.');
       return;
     }
-    // Como 'id' está disabled, úsalo desde getRawValue()
-    const payload = this.form.getRawValue(); // { id, nombre }
-    console.log('Guardando género:', payload);
+    try {
+      const fetched = await this.apiService.getRolesById(+rolId);
+      console.log('rol obtenido:', fetched);
+      this.rol = { ...fetched };
+      this.originalrol = { ...fetched };
+    } catch (error) {
+      alert('Error al obtener el rol:');
+    }
+  }
+  onSave() {
+    const modifiedKeys = Object.keys(this.rol).filter(
+      (key) => key !== 'id' && this.rol[key] !== this.originalrol[key]
+    );
+    if (modifiedKeys.length === 0) {
+      alert('No se cambió ningún dato.');
+    } else if (modifiedKeys.length === Object.keys(this.rol).length - 1) {
+      this.apiService
+        .updateRol(this.rol)
+        .then(() => {
+          alert('rol actualizado correctamente.');
+        })
+        .catch((error) => {
+          console.error('Error al actualizar el rol:', error);
+          alert('Error al actualizar el rol.');
+        });
+    }
 
-    // TODO: this.generoSrv.actualizar(payload.id!, { nombre: payload.nombre! }).subscribe(...)
+    this.router.navigate(['/rol/lista']);
+  }
+  volver() {
+    this.router.navigate(['/rol/lista']);
   }
 }

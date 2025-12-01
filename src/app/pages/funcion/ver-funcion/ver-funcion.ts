@@ -1,27 +1,73 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-
+import { Component, type OnInit } from "@angular/core"
+import { CommonModule } from "@angular/common"
+import { ActivatedRoute, Router } from "@angular/router"
+import { ApiService } from "../../../services/api.service"
 
 @Component({
-  selector: 'app-ver-funcion',
+  selector: "app-ver-funcion",
   standalone: true,
-  templateUrl: './ver-funcion.html',
-  styleUrl: './ver-funcion.css',
   imports: [CommonModule],
+  templateUrl: "./ver-funcion.html",
+  styleUrls: ["./ver-funcion.css"],
 })
+export class VerFuncionComponent implements OnInit {
+  funcion: {
+    id: number
+    pelicula: string
+    fecha: Date
+    hora: Date
+    disponible: string
+    sala: number
+    formato: string
+  } | null = null
 
-export class VerFuncion {
- constructor(private router: Router) {}
+  isLoading = true
+  errorMessage = ""
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiService: ApiService,
+  ) {}
+
+  ngOnInit() {
+    const funcionId = this.route.snapshot.paramMap.get("id")
+    if (funcionId) {
+      this.cargarFuncion(+funcionId)
+    } else {
+      this.errorMessage = "No se proporcionó un ID de función válido."
+      this.isLoading = false
+    }
+  }
+
+  async cargarFuncion(id: number): Promise<void> {
+    try {
+      this.isLoading = true
+      this.errorMessage = ""
+
+      this.funcion = await this.apiService.getFuncionById(id)
+
+      console.log("[v0] Función cargada:", this.funcion)
+    } catch (error) {
+      console.error("[v0] Error al cargar función:", error)
+      this.errorMessage = "Error al cargar la función. Por favor, intenta nuevamente."
+      this.funcion = null
+    } finally {
+      this.isLoading = false
+    }
+  }
 
   volver() {
-    // Aquí va la lógica para guardar el nuevo formato
-    console.log('Regreando a la lista...');
-
-    // Redirigir a la lista
-    this.router.navigate(['/funciones']);
+    this.router.navigate(["/lista-funcion"])
   }
+
+  editar() {
+    if (this.funcion) {
+      this.router.navigate(["/editar-funcion", this.funcion.id])
+    }
+  }
+
   inicio() {
-    this.router.navigate(['/home']);
+    this.router.navigate(["/home"])
   }
 }

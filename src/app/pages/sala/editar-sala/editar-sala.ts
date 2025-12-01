@@ -1,40 +1,67 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-editar-sala',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './editar-sala.html',
-  styleUrl: './editar-sala.css' 
+  styleUrls: ['./editar-sala.css'],
 })
-export class EditarSala implements OnInit {
-  salaForm: FormGroup | undefined;
-  salaId!: number;
+export class EditarsalaComponent implements OnInit {
+  sala: any;
+  originalsala: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder) {
-    this.salaForm = this.fb.group({
-      id: [''],       // Aquí irá el id
-      nombre: [''],
-      capacidad: ['']
-    });}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiService: ApiService
+  ) {}
 
-  ngOnInit(): void {
-    const salaId = Number(this.route.snapshot.paramMap.get('id'));
-    if (this.salaForm) {
-      this.salaForm.patchValue({ id: salaId });
+  ngOnInit() {
+    const salaId = this.route.snapshot.paramMap.get('id');
+    this.initialization(salaId);
+  }
+
+  async initialization(salaId: string | null): Promise<void> {
+    if (!salaId) {
+      alert('No se proporcionó un ID de sala válido.');
+      return;
+    }
+    try {
+      const fetched = await this.apiService.getSalaById(+salaId);
+      console.log('sala obtenido:', fetched);
+      this.sala = { ...fetched };
+      this.originalsala = { ...fetched };
+    } catch (error) {
+      alert('Error al obtener el sala:');
     }
   }
+  onSave() {
+    const modifiedKeys = Object.keys(this.sala).filter(
+      (key) => key !== 'id' && this.sala[key] !== this.originalsala[key]
+    );
+    if (modifiedKeys.length === 0) {
+      alert('No se cambió ningún dato.');
+    } else if (modifiedKeys.length === Object.keys(this.sala).length - 1) {
+      this.apiService
+        .updateSala(this.sala)
+        .then(() => {
+          alert('sala actualizado correctamente.');
+        })
+        .catch((error) => {
+          console.error('Error al actualizar el sala:', error);
+          alert('Error al actualizar el sala.');
+        });
+    }
 
-  guardar() {
-    // Aquí podrías agregar la lógica para guardar los cambios
-    console.log('Sala guardado', this.salaId);
-
-    // Redirigir a la lista
-    this.router.navigate(['/lista-sala']);
+    this.router.navigate(['/sala/lista']);
   }
-
+  volver() {
+    this.router.navigate(['/sala/lista']);
+  }
 }
-
-

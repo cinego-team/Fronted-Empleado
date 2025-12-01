@@ -1,6 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule } from "@angular/common"
+import { Component, type OnInit } from "@angular/core"
+import { Router } from "@angular/router"
+import { ApiService } from "../../../services/api.service"
 
 @Component({
   selector: 'app-lista-funcion',
@@ -9,22 +10,63 @@ import { Router } from '@angular/router';
   imports: [CommonModule],
 })
 
-export class ListaFuncion {
-  
-  funciones = [
-    { id: 1, pelicula: 'Superman', fecha: "15/09", hora: "17:30", disponible: "Disponible", sala: 1, formato: "2D" },
-    { id: 1, pelicula: 'Superman', fecha: "16/09", hora: "20:30", disponible: "Proximamente", sala: 4, formato: "3D" },
-  ];
+export class Listafuncion implements OnInit {
+  funciones: Array<{
+    id: number;
+    pelicula: string; 
+    fecha: Date; 
+    hora: Date;
+    disponible: string; 
+    sala: number; 
+    formato: string
+  }> = []
 
-  selectedIndex: number | null = null;
+  selectedIndex: number | null = null
+  isLoading = true
+  errorMessage = ""
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private apiService: ApiService,
+  ) {}
+
+  async ngOnInit() {
+    await this.cargarfunciones()
+  }
+
+  async cargarfunciones() {
+    try {
+      this.isLoading = true
+      this.errorMessage = ""
+
+      const funcionesBackend = await this.apiService.getAllFunciones()
+
+      // Transformar datos del backend al formato del componente
+      this.funciones = funcionesBackend.map((funcion) => ({
+      id: funcion.id,
+      pelicula: funcion.pelicula,
+      fecha: funcion.fecha,
+      hora: funcion.hora,
+      disponible: funcion.disponible,
+      sala: funcion.sala,
+      formato: funcion.formato
+      }))
+
+      console.log("[v0] funciones cargadas:", this.funciones)
+    } catch (error) {
+      console.error("[v0] Error al cargar funcions:", error)
+      this.errorMessage = "Error al cargar las funcions. Por favor, intenta nuevamente."
+      this.funciones = []
+    } finally {
+      this.isLoading = false
+    }
+  }
 
   selectRow(index: number) {
     this.selectedIndex = index;
   }
 
-  /*editarFuncion() {
+  editarfuncion() {
     if (this.selectedIndex !== null) {
       const id = this.funciones[this.selectedIndex].id;
       this.router.navigate(['/editar-funcion', id]);
@@ -32,30 +74,10 @@ export class ListaFuncion {
       alert('Selecciona una funcion primero');
     }
   }
-    */
-   editarFuncion() {
-    this.router.navigate(['/editar-funcion']);
-  }
-
-  nuevaFuncion() {
+  nuevafuncion() {
   this.router.navigate(['/registrar-funcion']);
   }
-  /*ver() {
-    if (this.selectedIndex !== null) {
-      const id = this.funciones[this.selectedIndex].id;
-      this.router.navigate(['/ver-funcion', id]);
-    } else {
-      alert('Selecciona una funcion primero');
-    }
-  }
-  */
-  ver() {
-    this.router.navigate(['/funcion']);
-  }
-  volver() {
-    this.router.navigate(['/home']);
-  }
-  inicio() {
-    this.router.navigate(['/home']);
+  irListaFuncion() {
+    this.router.navigate(['/lista-funcion']);
   }
 }

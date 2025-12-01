@@ -14,9 +14,17 @@ export const config = {
   },
   APIFuncionesUrls: {
     baseUrl: 'http://localhost:3003',
+    getFunciones: '/funciones/',
+    getFuncionById: (id: number) => `/funcion/${id}`,
+    createFuncion: '/funcion/nueva-funcion',
+    updateFuncion: (id: number) => `/funcion/${id}`,
   },
   APIUsuarioUrls: {
     baseUrl: 'http://localhost:3004',
+    getAllRoles: '/roles/',
+    getRolById: (id: number) => `/roles/${id}`,
+    createRol: '/roles/new',
+    updateRol: (id: number) => `/roles/${id}`,
   },
   APIPeliculasUrls: {
     baseUrl: 'http://localhost:3001',
@@ -44,8 +52,14 @@ export const config = {
     getEstados: '/estados/',
     createEstado: '/estados/new',
     updateEstado: (id: number) => `/estados/${id}`,
+    //salas
+    getAllSalas: '/salas/',
+    createSalas: '/salas/new',
+    getSalaById: (id: number) => `/salas/${id}`,
+    updateSala: (id: number) => `/salas/${id}`,
   },
   APIVentasUrls: {
     baseUrl: 'http://localhost:3002',
+    getVentas: '/venta/',
   },
 };
