@@ -42,7 +42,7 @@ axiosAPIPeliculas.interceptors.request.use((config) => {
 });
 //usuario
 export const axiosAPIUsuario = axios.create({
-  baseURL: config.APIUsuarioUrls.baseUrl,
+  baseURL: config.APIUsuariosUrls.baseUrl,
   headers: {
     'Content-Type': 'application/json',
   },

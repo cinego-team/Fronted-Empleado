@@ -1,31 +1,58 @@
-<div class="container">
-  <!-- Header con logo y usuario -->
-  <header class="header">
-    <div class="logo">
-      <img src="assets/logo.png" alt="CineGo Logo"  />
-    </div>
-    <div class="user">
-      <i class="icon-user"></i>
+<div class="page">
+  <header class="topbar">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
+    <div class="user-section">
+      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
       <span>Usuario</span>
     </div>
   </header>
 
-  <!-- Contenedor principal -->
-  <main class="form-container">
-    <h2>Registrar Formato</h2>
+  <main class="wrap">
+    <section class="card">
+      <h1>Registrar Formato</h1>
 
-    <form>
-      <div class="form-group">
-        <label for="nombre">Nombre</label>
-        <input id="nombre" type="text" />
-      </div>
+      <form [formGroup]="form" (ngSubmit)="onSave()">
+        @if (error) {
+        <div class="alert alert-danger">{{ error }}</div>
+        }
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" formControlName="nombre" />
+          @if (form.get('name')?.invalid && form.get('name')?.touched) {
+          <small class="text-danger">Nombre requerido (mínimo 2 letras)</small>
+          }
+        </div>
+        <div class="form-group">
+          <label for="precio">Precio</label>
+          <input
+            type="number"
+            id="precio"
+            class="form-control"
+            formControlName="precio"
+            step="0.01"
+            min="0"
+            placeholder="Ingrese el precio"
+          />
 
-      <div class="form-group">
-        <label for="precio">Precio</label>
-        <input id="precio" type="number" />
-      </div>
+          <!-- Mensajes de error -->
+          <div
+            *ngIf="form.get('precio')?.touched && form.get('precio')?.invalid"
+            class="text-danger"
+          >
+            <small *ngIf="form.get('precio')?.errors?.['required']">
+              El precio es obligatorio.
+            </small>
+            <small *ngIf="form.get('precio')?.errors?.['pattern']">
+              El precio debe ser un número válido (máximo 2 decimales).
+            </small>
+          </div>
+        </div>
 
-      <button type="submit" class="btn-registrar" (click)="registrar()">Registrar</button>
-    </form>
+        <button type="submit" (click)="(form.invalid)">REGISTRAR</button>
+      </form>
+    </section>
   </main>
+  <div class="button-group">
+    <button (click)="volver()">VOLVER</button>
+  </div>
 </div>

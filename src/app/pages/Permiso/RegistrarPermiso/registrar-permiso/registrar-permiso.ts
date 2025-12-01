@@ -1,35 +1,47 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ApiService } from '../../../../services/api.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-registrar-permiso',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './registrar-permiso.html',  
-  styleUrls: ['./registrar-permiso.css']     
+  templateUrl: './registrar-permiso.html',
+  styleUrls: ['./registrar-permiso.css'],
 })
-
 export class RegistrarPermisoComponent {
-  private fb = inject(FormBuilder);
-
-  form = this.fb.group({
-    nombre: ['', [Validators.required, Validators.minLength(2)]],
-  });
-
-  get f() { return this.form.controls; }
-
-  onSubmit() {
+  form: FormGroup;
+  genero: any;
+  error: string | null = null;
+  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
+    this.form = this.fb.group({
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
+    });
+  }
+  onSave() {
     if (this.form.invalid) {
-      this.form.markAllAsTouched();
+      alert('Por favor, completa  los campos correctamente.');
       return;
+    } else if (this.form.valid) {
+      const nombre: string = (this.form.get('nombre')?.value ?? '').toString();
+
+      this.apiService
+        .createGenero(nombre)
+        .then(() => {
+          alert('Permiso creado correctamente.');
+          this.router.navigate(['/permisos']);
+        })
+        .catch((error) => {
+          console.error('Error al crear el permiso:', error);
+          alert('Error al crear el permiso. Por favor, inténtalo de nuevo más tarde.');
+        });
     }
+  }
 
-    const payload = { nombre: this.form.value.nombre?.trim() };
-    // TODO: llamar a tu servicio HTTP para crear el idioma
-    console.log('Registrando Permiso:', payload);
-
-    // Reseteo opcional
-    this.form.reset();
+  volver() {
+    this.router.navigate(['/permisos']);
   }
 }

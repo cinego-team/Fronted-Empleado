@@ -1,21 +1,55 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ApiService } from '../../../services/api.service';
+import { FormatoInput } from '../formato.dto';
 
 @Component({
   selector: 'app-registrar-formato',
-  imports: [],
+  imports: [CommonModule, ReactiveFormsModule],
   standalone: true,
   templateUrl: './registrar-formato.html',
-  styleUrl: './registrar-formato.css'
+  styleUrl: './registrar-formato.css',
 })
 export class RegistrarFormato {
- constructor(private router: Router) {}
+  form: FormGroup;
+  formato: any;
+  error: string | null = null;
+  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
+    this.form = this.fb.group({
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
+      precio: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^\d+(\.\d{1,2})?$/), // números + hasta 2 decimales
+        ],
+      ],
+    });
+  }
+  onSave() {
+    if (this.form.invalid) {
+      alert('Por favor, completa  los campos correctamente.');
+      return;
+    } else if (this.form.valid) {
+      const nombre: string = (this.form.get('nombre')?.value ?? '').toString();
+      const precio: number = parseFloat(this.form.get('precio')?.value ?? '0');
 
-  registrar() {
-    // Aquí va la lógica para guardar el nuevo formato
-    console.log('Formato registrado');
+      this.apiService
+        .create(FormatoInput)
+        .then(() => {
+          alert('formato creado correctamente.');
+          this.router.navigate(['/formatos']);
+        })
+        .catch((error) => {
+          console.error('Error al crear el formato:', error);
+          alert('Error al crear el formato. Por favor, inténtalo de nuevo más tarde.');
+        });
+    }
+  }
 
-    // Redirigir a la lista
-    this.router.navigate(['/']);
+  volver() {
+    this.router.navigate(['/formatos']);
   }
 }

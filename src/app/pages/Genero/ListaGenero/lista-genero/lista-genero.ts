@@ -71,7 +71,7 @@ export class ListaGeneroComponent {
       return;
     }
     const selected = this.generos[this.selec];
-    this.router.navigate(['/editar-estado-pelicula', selected.id]);
+    this.router.navigate(['/editar-genero', selected.id]);
   }
 
   volver() {

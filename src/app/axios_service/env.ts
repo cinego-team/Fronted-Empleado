@@ -14,13 +14,24 @@ export const config = {
   },
   APIFuncionesUrls: {
     baseUrl: 'http://localhost:3003',
+    findOne: (id: number) => `/formato/${id}`,
+    findAll: '/formatos/',
+    create: '/formatos/',
+    update: (id: number) => `/formato/${id}`,
     getFunciones: '/funciones/',
     getFuncionById: (id: number) => `/funcion/${id}`,
     createFuncion: '/funcion/nueva-funcion',
     updateFuncion: (id: number) => `/funcion/${id}`,
   },
-  APIUsuarioUrls: {
+  APIUsuariosUrls: {
     baseUrl: 'http://localhost:3004',
+    register: 'usuario/register',
+    login: 'usuario/login',
+    //permiso
+    getPermisoById: (id: number) => `/permisos/${id}`,
+    getPermisos: '/permisos/',
+    createPermiso: '/permisos/new',
+    updatePermiso: (id: number) => `/permisos/${id}`,
     getAllRoles: '/roles/',
     getRolById: (id: number) => `/roles/${id}`,
     createRol: '/roles/new',

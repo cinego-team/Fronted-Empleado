@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
 import { config } from '../axios_service/env';
+import {
+  axiosAPIFuncionesYsalas,
+  axiosAPIPeliculas,
+  axiosAPIPromociones,
+  axiosAPIUsuario,
+} from '../axios_service/axios.client';
 import { axiosAPIFuncionesYsalas, axiosAPIPeliculas, axiosAPIPromociones, axiosAPIUsuario, axiosAPIVentas } from '../axios_service/axios.client';
 import { EditPeliculaOutput } from '../pages/pantallas peliculas/editar-pelicula/editar-pelicula.dto';
 import { EditPeliculaInput } from '../pages/pantallas peliculas/editar-pelicula/editar-pelicula.dto';
@@ -10,6 +16,17 @@ import { RolInput } from '../pages/Rol/rol-dto';
 import { EditIdioma, IdiomaInput } from '../pages/Idioma/idioma.dto';
 import { EditEstado, EstadoInput } from '../pages/lista estado pelicula/estado-pelicula.dto';
 import { EditClasificacion, ClasificacionInput } from '../pages/Clasificacion/clasificacion.dto';
+import { RegisterEmpleadoDTO } from '../pages/register/registerEmpleado.dto';
+import {
+  EditPromocionInput,
+  EditPromocionOutput,
+} from '../pages/pantallas promocion/promocion.dto';
+import { Observable, BehaviorSubject } from 'rxjs'; //sacado del tp de restaurant
+import { NewPermiso } from '../pages/Permiso/newPermiso.dto';
+import { FormatoInput, FormatoOutput } from '../pages/formato/formato.dto';
+@Injectable({
+  providedIn: 'root',
+})
 import {EditPromocionInput,EditPromocionOutput,} from '../pages/pantallas promocion/promocion.dto';
 
 @Injectable({providedIn: 'root',})
@@ -287,6 +304,7 @@ export class ApiService {
     };
     await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateEstado(estado.id!)}`, data);
   }
+
   //dia
   async getDiaById(id: number): Promise<{
     id: number;
@@ -368,6 +386,116 @@ export class ApiService {
       data
     );
   }
+  //register
+  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+  private hasToken(): boolean {
+    return !!localStorage.getItem('access_token');
+  }
+  async register(credentials: RegisterEmpleadoDTO): Promise<any> {
+    const respuesta = (await axiosAPIUsuario.post(config.APIUsuariosUrls.register, credentials))
+      .data;
+    const token = respuesta.access_token;
+    const refreshToken = respuesta.refresh_token;
+    if (token) {
+      localStorage.setItem('access_token', token);
+      localStorage.setItem('refresh_token', refreshToken);
+      this.loggedIn.next(true);
+    }
+    return respuesta;
+  }
+  async login(credentials: { email: string; password: string }): Promise<any> {
+    const respuesta = (await axiosAPIUsuario.post(config.APIUsuariosUrls.login, credentials)).data;
+    const token = respuesta.accessToken;
+    const refreshToken = respuesta.refreshToken;
+    if (token) {
+      localStorage.setItem('access_token', token);
+      localStorage.setItem('refresh_token', refreshToken);
+      this.loggedIn.next(true);
+    }
+    return respuesta;
+  }
+  //permiso
+
+  async getPermisoById(id: number): Promise<{
+    id: number;
+    nombre: string;
+  }> {
+    const datos = (await axiosAPIUsuario.get(config.APIUsuariosUrls.getPermisoById(id))).data;
+    return {
+      id: datos.id,
+      nombre: datos.nombre,
+    };
+  }
+  async getAllPermisos(): Promise<
+    Array<{
+      id: number;
+      nombre: string;
+    }>
+  > {
+    const datos = (await axiosAPIUsuario.get(config.APIUsuariosUrls.getPermisos)).data;
+
+    const respuesta = datos.map((item: { id: number; nombre: string }) => ({
+      id: item.id,
+      nombre: item.nombre,
+    }));
+
+    return respuesta;
+  }
+
+  async createPermiso(formulario: any): Promise<void> {
+    const nuevoPermiso: NewPermiso = {
+      nombre: formulario.get('nombre').value,
+    };
+    await axiosAPIUsuario.post(config.APIUsuariosUrls.createPermiso, nuevoPermiso);
+  }
+  //formato
+  async findOne(id: number): Promise<{
+    id: number;
+    nombre: string;
+    precio: number;
+  }> {
+    const datos = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.findOne(id))).data;
+    return {
+      id: datos.id,
+      nombre: datos.nombre,
+      precio: datos.precio,
+    };
+  }
+  async findAll(): Promise<
+    Array<{
+      id: number;
+      nombre: string;
+      precio: number;
+    }>
+  > {
+    const datos = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.findAll)).data;
+
+    const respuesta = datos.map((item: { id: number; nombre: string; precio: number }) => ({
+      id: item.id,
+      nombre: item.nombre,
+      precio: item.precio,
+    }));
+
+    return respuesta;
+  }
+  async delete(id: number): Promise<void> {
+    await axiosAPIFuncionesYsalas.delete(config.APIFuncionesUrls.findOne(id));
+  }
+  async create(formulario: any): Promise<void> {
+    const nuevoFormato: FormatoInput = {
+      nombre: formulario.get('nombre').value,
+      precio: formulario.get('precio').value,
+    };
+    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.create, nuevoFormato);
+  }
+  async update(formato: FormatoOutput): Promise<void> {
+    const data: FormatoInput = {
+      nombre: formato.nombre,
+      precio: formato.precio,
+    };
+    await axiosAPIFuncionesYsalas.put(`${config.APIFuncionesUrls.update(formato.id!)}`, data);
+  }
+}
   //ventas
   async getVentas(): Promise<Array<{
   nroVenta: number;

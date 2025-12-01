@@ -1,17 +1,33 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { Router, RouterLink } from '@angular/router';
+import { ApiService } from '../../services/api.service';
+import { FormsModule } from '@angular/forms';
+import { TokenTimeoutService } from '../../services/tokeTimeout.service';
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
- constructor(private router: Router) {}
-  OnLogin() {
-    this.router.navigate(['/home']);
+  email: string = '';
+  password: string = '';
+
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private tokenTimeoutService: TokenTimeoutService
+  ) {}
+
+  onLogin() {
+    this.apiService
+      .login({ email: this.email, password: this.password })
+      .then(() => {
+        this.tokenTimeoutService.startCountdown();
+        this.router.navigate(['/home']);
+      })
+      .catch((error) => {
+        alert('Login fallido. Verifica tus credenciales.');
+      });
   }
 }
-
-
