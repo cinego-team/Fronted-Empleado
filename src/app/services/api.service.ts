@@ -6,7 +6,7 @@ import {
   axiosAPIPromociones,
   axiosAPIUsuario,
 } from '../axios_service/axios.client';
-import { axiosAPIFuncionesYsalas, axiosAPIPeliculas, axiosAPIPromociones, axiosAPIUsuario, axiosAPIVentas } from '../axios_service/axios.client';
+
 import { EditPeliculaOutput } from '../pages/pantallas peliculas/editar-pelicula/editar-pelicula.dto';
 import { EditPeliculaInput } from '../pages/pantallas peliculas/editar-pelicula/editar-pelicula.dto';
 import { EditGenero, GeneroInput } from '../pages/Genero/genero.dto';
@@ -27,7 +27,7 @@ import { FormatoInput, FormatoOutput } from '../pages/formato/formato.dto';
 @Injectable({
   providedIn: 'root',
 })
-import {EditPromocionInput,EditPromocionOutput,} from '../pages/pantallas promocion/promocion.dto';
+
 
 @Injectable({providedIn: 'root',})
 
