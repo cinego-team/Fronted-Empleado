@@ -5,6 +5,7 @@ import {
   axiosAPIPeliculas,
   axiosAPIPromociones,
   axiosAPIUsuario,
+  axiosAPIVentas,
 } from '../axios_service/axios.client';
 
 import { EditPeliculaOutput } from '../pages/pantallas peliculas/editar-pelicula/editar-pelicula.dto';
@@ -27,10 +28,7 @@ import { FormatoInput, FormatoOutput } from '../pages/formato/formato.dto';
 @Injectable({
   providedIn: 'root',
 })
-
-
-@Injectable({providedIn: 'root',})
-
+@Injectable({ providedIn: 'root' })
 export class ApiService {
   constructor() {}
   //peliculas
@@ -316,7 +314,7 @@ export class ApiService {
       nombre: datos.nombre,
     };
   }
-  
+
   //promocion
   async getPromocionById(id: number): Promise<{
     id: number;
@@ -495,20 +493,21 @@ export class ApiService {
     };
     await axiosAPIFuncionesYsalas.put(`${config.APIFuncionesUrls.update(formato.id!)}`, data);
   }
-}
+
   //ventas
-  async getVentas(): Promise<Array<{
-  nroVenta: number;
-  fecha: Date;
-  hora: Date;
-  total: number;
-  promocionId?: number;
-      
-    }>> {
+  async getVentas(): Promise<
+    Array<{
+      nroVenta: number;
+      fecha: Date;
+      hora: Date;
+      total: number;
+      promocionId?: number;
+    }>
+  > {
     try {
       const response = await axiosAPIVentas.get(config.APIVentasUrls.getVentas);
       const datos = response.data;
-      
+
       return datos.map((item: any) => ({
         nroVenta: item.nroVenta,
         fecha: new Date(item.fecha),
@@ -520,174 +519,180 @@ export class ApiService {
       console.error('Error al obtener ventas:', error);
       return [];
     }
-}
-//salas
-async getAllSalas(): Promise<Array<{
-    id: number, 
-    numero: number, 
-    disponibilidad: string, 
-    capacidad: number,
-  }>> {
+  }
+  //salas
+  async getAllSalas(): Promise<
+    Array<{
+      id: number;
+      numero: number;
+      disponibilidad: string;
+      capacidad: number;
+    }>
+  > {
     try {
       const response = await axiosAPIPeliculas.get(config.APIPeliculasUrls.getAllSalas);
       const datos = response.data;
-      
+
       return datos.map((item: any) => ({
-        id: item.id, 
-        numero: item.numero, 
-        disponibilidad: item.disponibilidad, 
+        id: item.id,
+        numero: item.numero,
+        disponibilidad: item.disponibilidad,
         capacidad: item.capacidad,
       }));
     } catch (error) {
       console.error('Error al obtener salas:', error);
       return [];
     }
-}
-async getSalaById (id: number): Promise<{
-    id: number, 
-    numero: number, 
-    disponibilidad: string, 
-    capacidad: number,
+  }
+  async getSalaById(id: number): Promise<{
+    id: number;
+    numero: number;
+    disponibilidad: string;
+    capacidad: number;
   }> {
     const item = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getSalaById(id))).data;
     return {
-        id: item.id, 
-        numero: item.nummero, 
-        disponibilidad: item.disponibilidad, 
-        capacidad: item.capacidad,
+      id: item.id,
+      numero: item.nummero,
+      disponibilidad: item.disponibilidad,
+      capacidad: item.capacidad,
     };
   }
 
-async createSala(salaData: {
-    nroSala: number
-    capacidad: number
-    estaDisponible: boolean
+  async createSala(salaData: {
+    nroSala: number;
+    capacidad: number;
+    estaDisponible: boolean;
   }): Promise<void> {
-    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createSalas, salaData)
+    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createSalas, salaData);
   }
 
-  async updateSala (sala: SalaInput): Promise<void> {
+  async updateSala(sala: SalaInput): Promise<void> {
     const data: SalaInput = {
       nroSala: sala.nroSala,
       capacidad: sala.capacidad,
-      estaDisponible: sala.estaDisponible
+      estaDisponible: sala.estaDisponible,
     };
     await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateSala(sala.id!)}`, data);
   }
 
   //funciones
-  async getAllFunciones(): Promise<Array<{
-  id: number, 
-  pelicula: string, 
-  fecha: Date, 
-  hora: Date, 
-  disponible: string, 
-  sala: number, 
-  formato: string
-  }>> {
+  async getAllFunciones(): Promise<
+    Array<{
+      id: number;
+      pelicula: string;
+      fecha: Date;
+      hora: Date;
+      disponible: string;
+      sala: number;
+      formato: string;
+    }>
+  > {
     try {
       const response = await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getFunciones);
       const datos = response.data;
-      
+
       return datos.map((item: any) => ({
-        id: item.id, 
-        pelicula: item.pelicula, 
-        fecha: item.fecha, 
-        hora: item.fecha, 
-        disponible: item.disponible, 
-        sala: item.sala, 
-        formato: item.formato
+        id: item.id,
+        pelicula: item.pelicula,
+        fecha: item.fecha,
+        hora: item.fecha,
+        disponible: item.disponible,
+        sala: item.sala,
+        formato: item.formato,
       }));
     } catch (error) {
       console.error('Error al obtener funciones:', error);
       return [];
     }
-}
-async getFuncionById (id: number): Promise<{
-    id: number, 
-    pelicula: string, 
-    fecha: Date, 
-    hora: Date, 
-    disponible: string, 
-    sala: number, 
-    formato: string
+  }
+  async getFuncionById(id: number): Promise<{
+    id: number;
+    pelicula: string;
+    fecha: Date;
+    hora: Date;
+    disponible: string;
+    sala: number;
+    formato: string;
   }> {
-    const item = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getFuncionById(id))).data;
+    const item = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getFuncionById(id)))
+      .data;
     return {
-        id: item.id, 
-        pelicula: item.pelicula, 
-        fecha: item.fecha, 
-        hora: item.fecha, 
-        disponible: item.disponible, 
-        sala: item.sala, 
-        formato: item.formato
+      id: item.id,
+      pelicula: item.pelicula,
+      fecha: item.fecha,
+      hora: item.fecha,
+      disponible: item.disponible,
+      sala: item.sala,
+      formato: item.formato,
     };
   }
 
-async createFuncion(funcionData: {
-    pelicula: string, 
-    fecha: Date, 
-    hora: Date, 
-    disponible: string, 
-    sala: number, 
-    formato: string
+  async createFuncion(funcionData: {
+    pelicula: string;
+    fecha: Date;
+    hora: Date;
+    disponible: string;
+    sala: number;
+    formato: string;
   }): Promise<void> {
-    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createFuncion, funcionData)
+    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createFuncion, funcionData);
   }
 
-  async updateFuncion (funcion: FuncionInput): Promise<void> {
+  async updateFuncion(funcion: FuncionInput): Promise<void> {
     const data: FuncionInput = {
-      pelicula: funcion.pelicula, 
-      fecha: funcion.fecha, 
-      hora: funcion.hora, 
-      disponible: funcion.disponible, 
-      sala: funcion.sala, 
-      formato: funcion.formato
+      pelicula: funcion.pelicula,
+      fecha: funcion.fecha,
+      hora: funcion.hora,
+      disponible: funcion.disponible,
+      sala: funcion.sala,
+      formato: funcion.formato,
     };
-    await axiosAPIFuncionesYsalas.put(`${config.APIFuncionesUrls.updateFuncion(funcion.id!)}`, data);
+    await axiosAPIFuncionesYsalas.put(
+      `${config.APIFuncionesUrls.updateFuncion(funcion.id!)}`,
+      data
+    );
   }
 
   //Roles
-  async getAllRoles(): Promise<Array<{
-    id: number, 
-    nombre: string, 
-  }>> {
+  async getAllRoles(): Promise<
+    Array<{
+      id: number;
+      nombre: string;
+    }>
+  > {
     try {
-      const response = await axiosAPIUsuario.get(config.APIUsuarioUrls.getAllRoles);
+      const response = await axiosAPIUsuario.get(config.APIUsuariosUrls.getAllRoles);
       const datos = response.data;
-      
+
       return datos.map((item: any) => ({
-        id: item.id, 
+        id: item.id,
         nombre: item.nombre,
       }));
     } catch (error) {
       console.error('Error al obtener roles:', error);
       return [];
     }
-}
-async getRolesById (id: number): Promise<{
-    id: number, 
-    nombre : string
+  }
+  async getRolesById(id: number): Promise<{
+    id: number;
+    nombre: string;
   }> {
-    const item = (await axiosAPIUsuario.get(config.APIUsuarioUrls.getRolById(id))).data;
+    const item = (await axiosAPIUsuario.get(config.APIUsuariosUrls.getRolById(id))).data;
     return {
-        id: item.number, 
-        nombre: item.nombre,
+      id: item.number,
+      nombre: item.nombre,
     };
   }
 
-async createRol(rolData: {
-    nombre: string
-  }): Promise<void> {
-    await axiosAPIUsuario.post(config.APIUsuarioUrls.createRol, rolData)
+  async createRol(rolData: { nombre: string }): Promise<void> {
+    await axiosAPIUsuario.post(config.APIUsuariosUrls.createRol, rolData);
   }
 
-  async updateRol (rol: RolInput): Promise<void> {
+  async updateRol(rol: RolInput): Promise<void> {
     const data: RolInput = {
-      nombre: rol.nombre
+      nombre: rol.nombre,
     };
-    await axiosAPIUsuario.put(`${config.APIUsuarioUrls.updateRol(rol.id!)}`, data);
+    await axiosAPIUsuario.put(`${config.APIUsuariosUrls.updateRol(rol.id!)}`, data);
   }
 }
-
- 
