@@ -64,4 +64,7 @@ export class EditarGeneroComponent implements OnInit {
   volver() {
     this.router.navigate(['/genero/lista']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

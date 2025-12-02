@@ -10,7 +10,7 @@ import { ApiService } from "../../../../services/api.service"
   templateUrl: "./registrar-rol.html",
   styleUrl: "./registrar-rol.css",
 })
-export class RegistrarRol {
+export class RegistrarRolComponent {
   rolForm: FormGroup
   loading = false
   errorMessage = ""

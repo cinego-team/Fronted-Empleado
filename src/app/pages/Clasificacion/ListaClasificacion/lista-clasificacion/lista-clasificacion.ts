@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../../services/api.service';
 
-interface GeneroRow {
+interface ClasificacionRow {
   id: number;
   nombre: string;
 }
@@ -29,7 +29,7 @@ export class ListaClasificacionComponent {
   async initialization(): Promise<void> {
     const data = await this.apiService.getAllClasificaciones();
     if (data.length === 0) {
-      alert('No hay generos para mostrar.');
+      alert('No hay clasificaciones para mostrar.');
       return;
     }
     this.clasificaciones = data;
@@ -70,13 +70,10 @@ export class ListaClasificacionComponent {
       return;
     }
     const selected = this.clasificaciones[this.selec];
-    this.router.navigate(['/editar-estado-pelicula', selected.id]);
+    this.router.navigate(['/clasificacion/editar', selected.id]);
   }
   volver() {
     this.router.navigate(['/home']);
   }
 
-  inicio() {
-    this.router.navigate(['/home']);
-  }
 }

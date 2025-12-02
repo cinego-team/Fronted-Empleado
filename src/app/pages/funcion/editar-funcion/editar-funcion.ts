@@ -12,7 +12,7 @@ import { ApiService } from '../../../services/api.service';
   templateUrl: './editar-funcion.html',
   styleUrls: ['./editar-funcion.css'],
 })
-export class EditarFuncionComponent implements OnInit {
+export class EditarFuncion implements OnInit {
   funcion: any;
   originalfuncion: any;
 
@@ -41,7 +41,7 @@ export class EditarFuncionComponent implements OnInit {
       alert('Error al obtener el funcion:');
     }
   }
-  onSave() {
+  editar() {
     const modifiedKeys = Object.keys(this.funcion).filter(
       (key) => key !== 'id' && this.funcion[key] !== this.originalfuncion[key]
     );
@@ -62,7 +62,7 @@ export class EditarFuncionComponent implements OnInit {
     this.router.navigate(['/funcion/lista']);
   }
    volver() {
-    this.router.navigate(['/funciones']);
+    this.router.navigate(['/funcion/lista']);
   }
   inicio() {
     this.router.navigate(['/home']);

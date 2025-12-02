@@ -31,7 +31,7 @@ export class RegistrarGeneroComponent {
         .createGenero(nombre)
         .then(() => {
           alert('Género creado correctamente.');
-          this.router.navigate(['/genero']);
+          this.router.navigate(['/genero/lista']);
         })
         .catch((error) => {
           console.error('Error al crear el género:', error);
@@ -41,6 +41,10 @@ export class RegistrarGeneroComponent {
   }
 
   volver() {
-    this.router.navigate(['/generos']);
+    this.router.navigate(['/genero/lista']);
+  }
+
+  inicio() {
+    this.router.navigate(['/home']);
   }
 }

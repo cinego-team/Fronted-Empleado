@@ -10,7 +10,7 @@ import { ApiService } from "../../../services/api.service"
   templateUrl: "./registrar-funcion.html",
   styleUrl: "./registrar-funcion.css",
 })
-export class Registrarfuncion {
+export class RegistrarFuncion {
   funcionForm: FormGroup
   loading = false
   errorMessage = ""
@@ -37,12 +37,16 @@ export class Registrarfuncion {
         .createFuncion(this.funcionForm.value)
         .then(() => {
           alert('funcion creado correctamente.');
-          this.router.navigate(['/funcion']);
+          this.router.navigate(['/funcion/lista']);
         })
         .catch((error) => {
           console.error('Error al crear el funcion:', error);
           alert('Error al crear el funcion. Por favor, inténtalo de nuevo más tarde.');
         });
     }
+  }
+
+  volver() {
+    this.router.navigate(['/funcion/lista']);
   }
 }

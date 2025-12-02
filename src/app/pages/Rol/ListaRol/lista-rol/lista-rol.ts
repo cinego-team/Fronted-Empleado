@@ -10,7 +10,7 @@ import { ApiService } from "../../../../services/api.service"
   imports: [CommonModule],
 })
 
-export class ListaRol implements OnInit {
+export class ListaRolComponent implements OnInit {
   roles: Array<{
     id: number
     nombre: string

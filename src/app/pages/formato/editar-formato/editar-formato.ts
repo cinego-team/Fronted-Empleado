@@ -62,4 +62,7 @@ export class EditarFormatoComponent implements OnInit {
   volver() {
     this.router.navigate(['/formato/lista']);
   }
+  inicio() {
+    this.router.navigate(['/home']);
+  }
 }

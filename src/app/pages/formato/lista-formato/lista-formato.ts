@@ -39,11 +39,11 @@ export class ListaFormatoComponent {
       return;
     }
 
-    const selectedC = this.formatos[this.selec];
+    const selectedF = this.formatos[this.selec];
 
     if (confirm(`¿Estás seguro de que querés eliminar ?`)) {
       this.apiService
-        .delete(selectedC.id)
+        .delete(selectedF.id)
         .then(() => {
           alert('Formato eliminado correctamente.');
           this.formatos.splice(this.selec!, 1);
@@ -66,13 +66,11 @@ export class ListaFormatoComponent {
       return;
     }
     const selected = this.formatos[this.selec];
-    this.router.navigate(['/editar-formato', selected.id]);
+    this.router.navigate(['/formato/editar', selected.id]);
   }
 
   volver() {
     this.router.navigate(['/home']);
   }
-  inicio() {
-    this.router.navigate(['/home']);
-  }
+  
 }

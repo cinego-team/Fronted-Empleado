@@ -71,13 +71,10 @@ export class ListaGeneroComponent {
       return;
     }
     const selected = this.generos[this.selec];
-    this.router.navigate(['/editar-genero', selected.id]);
+    this.router.navigate(['/genero/editar', selected.id]);
   }
 
   volver() {
-    this.router.navigate(['/home']);
-  }
-  inicio() {
     this.router.navigate(['/home']);
   }
 }

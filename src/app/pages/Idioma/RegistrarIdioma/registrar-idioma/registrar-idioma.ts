@@ -13,7 +13,6 @@ import { ApiService } from '../../../../services/api.service';
 })
 export class RegistrarIdiomaComponent {
   form: FormGroup;
-  restaurant: any;
   error: string | null = null;
   constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
     this.form = this.fb.group({
@@ -28,7 +27,7 @@ export class RegistrarIdiomaComponent {
       const nombre: string = (this.form.get('nombre')?.value ?? '').toString();
 
       this.apiService
-        .createGenero(nombre)
+        .createIdioma(nombre)
         .then(() => {
           alert('Idioma creado correctamente.');
           this.router.navigate(['/idioma/lista']);
@@ -42,5 +41,8 @@ export class RegistrarIdiomaComponent {
 
   volver() {
     this.router.navigate(['/idioma/lista']);
+  }
+  inicio() {
+    this.router.navigate(['/home']);
   }
 }

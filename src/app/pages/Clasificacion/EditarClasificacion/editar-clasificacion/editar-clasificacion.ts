@@ -28,7 +28,7 @@ export class EditarClasificacionComponent implements OnInit {
 
   async initialization(clasificacionId: string | null): Promise<void> {
     if (!clasificacionId) {
-      alert('No se proporcionó un ID de genero válido.');
+      alert('No se proporcionó un ID de clasificacion válido.');
       return;
     }
     try {
@@ -62,5 +62,8 @@ export class EditarClasificacionComponent implements OnInit {
   }
   volver() {
     this.router.navigate(['/clasificacion/lista']);
+  }
+  inicio() {
+    this.router.navigate(['/home']);
   }
 }

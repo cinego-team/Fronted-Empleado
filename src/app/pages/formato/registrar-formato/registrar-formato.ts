@@ -39,7 +39,7 @@ export class RegistrarFormato {
       this.apiService
         .create(FormatoInput)
         .then(() => {
-          alert('formato creado correctamente.');
+          alert('Formato creado correctamente.');
           this.router.navigate(['/formatos']);
         })
         .catch((error) => {
@@ -50,6 +50,9 @@ export class RegistrarFormato {
   }
 
   volver() {
-    this.router.navigate(['/formatos']);
+    this.router.navigate(['/formato/lista']);
+  }
+   inicio() {
+    this.router.navigate(['/home']);
   }
 }

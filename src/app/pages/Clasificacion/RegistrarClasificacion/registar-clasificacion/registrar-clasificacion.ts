@@ -13,7 +13,6 @@ import { ApiService } from '../../../../services/api.service';
 })
 export class RegistrarClasificacionComponent {
   form: FormGroup;
-  restaurant: any;
   error: string | null = null;
   constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
     this.form = this.fb.group({
@@ -28,7 +27,7 @@ export class RegistrarClasificacionComponent {
       const nombre: string = (this.form.get('nombre')?.value ?? '').toString();
 
       this.apiService
-        .createGenero(nombre)
+        .createClasificacion(nombre)
         .then(() => {
           alert('Clasificación creada correctamente.');
           this.router.navigate(['/clasificaciones']);
@@ -41,6 +40,9 @@ export class RegistrarClasificacionComponent {
   }
 
   volver() {
-    this.router.navigate(['/clasificaciones']);
+    this.router.navigate(['/clasificacion/lista']);
+  }
+  inicio() {
+    this.router.navigate(['/home']);
   }
 }

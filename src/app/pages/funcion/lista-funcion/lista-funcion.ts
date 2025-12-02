@@ -10,7 +10,7 @@ import { ApiService } from "../../../services/api.service"
   imports: [CommonModule],
 })
 
-export class Listafuncion implements OnInit {
+export class ListaFuncion implements OnInit {
   funciones: Array<{
     id: number;
     pelicula: string; 
@@ -31,10 +31,10 @@ export class Listafuncion implements OnInit {
   ) {}
 
   async ngOnInit() {
-    await this.cargarfunciones()
+    await this.cargarFunciones()
   }
 
-  async cargarfunciones() {
+  async cargarFunciones() {
     try {
       this.isLoading = true
       this.errorMessage = ""
@@ -54,8 +54,8 @@ export class Listafuncion implements OnInit {
 
       console.log("[v0] funciones cargadas:", this.funciones)
     } catch (error) {
-      console.error("[v0] Error al cargar funcions:", error)
-      this.errorMessage = "Error al cargar las funcions. Por favor, intenta nuevamente."
+      console.error("[v0] Error al cargar funciones:", error)
+      this.errorMessage = "Error al cargar las funciones. Por favor, intenta nuevamente."
       this.funciones = []
     } finally {
       this.isLoading = false
@@ -69,15 +69,25 @@ export class Listafuncion implements OnInit {
   editarfuncion() {
     if (this.selectedIndex !== null) {
       const id = this.funciones[this.selectedIndex].id;
-      this.router.navigate(['/editar-funcion', id]);
+      this.router.navigate(['/funcion/editar', id]);
     } else {
       alert('Selecciona una funcion primero');
     }
   }
-  nuevafuncion() {
-  this.router.navigate(['/registrar-funcion']);
+  ver() {
+    if (this.selectedIndex !== null) {
+      const id = this.funciones[this.selectedIndex].id;
+      this.router.navigate(['/funcion/ver', id]);
+    } else {
+      alert('Selecciona una funcion primero');
+    }
   }
-  irListaFuncion() {
-    this.router.navigate(['/lista-funcion']);
+
+  nuevafuncion() {
+  this.router.navigate(['/funcion/registrar']);
+  }
+
+  volver() {
+    this.router.navigate(['/home']);
   }
 }

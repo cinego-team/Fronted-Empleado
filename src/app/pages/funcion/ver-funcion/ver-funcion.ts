@@ -10,7 +10,7 @@ import { ApiService } from "../../../services/api.service"
   templateUrl: "./ver-funcion.html",
   styleUrls: ["./ver-funcion.css"],
 })
-export class VerFuncionComponent implements OnInit {
+export class VerFuncion implements OnInit {
   funcion: {
     id: number
     pelicula: string
@@ -58,13 +58,7 @@ export class VerFuncionComponent implements OnInit {
   }
 
   volver() {
-    this.router.navigate(["/lista-funcion"])
-  }
-
-  editar() {
-    if (this.funcion) {
-      this.router.navigate(["/editar-funcion", this.funcion.id])
-    }
+    this.router.navigate(["/funcion/lista"])
   }
 
   inicio() {

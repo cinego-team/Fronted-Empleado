@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../../services/api.service';
 
-interface GeneroRow {
+interface Idioma {
   id: number;
   nombre: string;
 }
@@ -50,7 +50,7 @@ export class ListaIdiomaComponent {
       this.apiService
         .deleteIdioma(selectedC.id)
         .then(() => {
-          alert('Genero eliminada correctamente.');
+          alert('Idioma eliminada correctamente.');
           this.idiomas.splice(this.selec!, 1);
           this.selec = null;
         })
@@ -66,7 +66,7 @@ export class ListaIdiomaComponent {
       return;
     }
     const selectedIdioma = this.idiomas[this.selec];
-    this.router.navigate(['/editar-estado-pelicula', selectedIdioma.id]);
+    this.router.navigate(['/idioma/editar', selectedIdioma.id]);
   }
 
   nuevo() {
@@ -76,7 +76,5 @@ export class ListaIdiomaComponent {
   volver() {
     this.router.navigate(['/home']);
   }
-  inicio() {
-    this.router.navigate(['/home']);
-  }
+ 
 }
