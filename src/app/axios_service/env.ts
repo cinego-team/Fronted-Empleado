@@ -14,14 +14,21 @@ export const config = {
   },
   APIFuncionesUrls: {
     baseUrl: 'http://localhost:3003',
+    //formato
     findOne: (id: number) => `/formato/${id}`,
     findAll: '/formatos/',
     create: '/formatos/',
     update: (id: number) => `/formato/${id}`,
+    //funcion
     getFunciones: '/funciones/',
     getFuncionById: (id: number) => `/funcion/${id}`,
     createFuncion: '/funcion/nueva-funcion',
     updateFuncion: (id: number) => `/funcion/${id}`,
+    //salas
+    getAllSalas: '/salas/',
+    createSalas: '/salas/new',
+    getSalaById: (id: number) => `/salas/${id}`,
+    updateSala: (id: number) => `/salas/${id}`,
   },
   APIUsuariosUrls: {
     baseUrl: 'http://localhost:3004',
@@ -32,10 +39,16 @@ export const config = {
     getPermisos: '/permisos/',
     createPermiso: '/permisos/new',
     updatePermiso: (id: number) => `/permisos/${id}`,
+    //rol
     getAllRoles: '/roles/',
     getRolById: (id: number) => `/roles/${id}`,
     createRol: '/roles/new',
     updateRol: (id: number) => `/roles/${id}`,
+    //tipo cliente
+    getTipoClienteById: (id: number) => `/tipos-clientes/${id}`,
+    getTiposClientes: '/tipos-clientes/',
+    createTipoCliente: '/tipos-clientes/new',
+    updateTipoCliente: (id: number) => `/tipos-clientes/${id}`,
   },
   APIPeliculasUrls: {
     baseUrl: 'http://localhost:3001',
@@ -63,11 +76,6 @@ export const config = {
     getEstados: '/estados/',
     createEstado: '/estados/new',
     updateEstado: (id: number) => `/estados/${id}`,
-    //salas
-    getAllSalas: '/salas/',
-    createSalas: '/salas/new',
-    getSalaById: (id: number) => `/salas/${id}`,
-    updateSala: (id: number) => `/salas/${id}`,
   },
   APIVentasUrls: {
     baseUrl: 'http://localhost:3002',

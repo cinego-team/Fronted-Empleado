@@ -1,43 +1,69 @@
-
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { ApiService } from '../../../services/api.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-editar-tipo-cliente',
-  imports: [CommonModule,
-    ReactiveFormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './editar-tipo-cliente.html',
-  styleUrl: './editar-tipo-cliente.css'
+  styleUrl: './editar-tipo-cliente.css',
 })
 export class EditarTipoCliente implements OnInit {
-      form!: FormGroup;
+  tipoCliente: any;
+  originalTipoCliente: any;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiService: ApiService
+  ) {}
 
-  ngOnInit(): void {
-    // Inicializamos el formulario con validaciones
-    this.form = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(2)]]
-    });
+  ngOnInit() {
+    const tipoClienteId = this.route.snapshot.paramMap.get('id');
+    this.initialization(tipoClienteId);
   }
 
-  // Getter para usar f.nombre en el HTML
-  get f() {
-    return this.form.controls;
-  }
-
-  // Método al enviar el formulario
-  onSubmit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched(); // Muestra errores si hay campos inválidos
+  async initialization(tipoClienteId: string | null): Promise<void> {
+    if (!tipoClienteId) {
+      alert('No se proporcionó un ID de tipo de cliente válido.');
       return;
     }
+    try {
+      const fetched = await this.apiService.getTipoClienteById(+tipoClienteId);
+      console.log('Tipo de cliente obtenido:', fetched);
+      this.tipoCliente = { ...fetched };
+      this.originalTipoCliente = { ...fetched };
+    } catch (error) {
+      alert('Error al obtener el tipo de cliente:');
+    }
+  }
+  onSave() {
+    const modifiedKeys = Object.keys(this.tipoCliente).filter(
+      (key) => key !== 'id' && this.tipoCliente[key] !== this.originalTipoCliente[key]
+    );
+    if (modifiedKeys.length === 0) {
+      alert('No se cambió ningún dato.');
+    } else if (modifiedKeys.length === Object.keys(this.tipoCliente).length - 1) {
+      this.apiService
+        .updateTipoCliente(this.tipoCliente)
+        .then(() => {
+          alert('Tipo de cliente actualizado correctamente.');
+        })
+        .catch((error) => {
+          console.error('Error al actualizar el tipo de cliente:', error);
+          alert('Error al actualizar el tipo de cliente.');
+        });
+    }
 
-    console.log('Formulario válido, datos:', this.form.value);
-
-    // Aquí podrías enviar al backend y luego resetear
-    this.form.reset();
+    this.router.navigate(['/tipo-cliente/lista']);
+  }
+  volver() {
+    this.router.navigate(['/tipo-cliente/lista']);
+  }
+  inicio() {
+    this.router.navigate(['/home']);
   }
 }
-

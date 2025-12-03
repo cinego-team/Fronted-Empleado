@@ -2,46 +2,49 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-registrar-tipo-cliente',
-  imports: [CommonModule,
-    ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './registrar-tipo-cliente.html',
-  styleUrl: './registrar-tipo-cliente.css'
+  styleUrl: './registrar-tipo-cliente.css',
 })
-export class RegistrarTipoCliente implements OnInit {
-form!: FormGroup;
-
-  constructor(private fb: FormBuilder) {}
-
-  ngOnInit(): void {
-    // Inicializamos el formulario con un campo "codigo"
+export class RegistrarTipoCliente {
+  form: FormGroup;
+  tipoCliente: any;
+  error: string | null = null;
+  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
     this.form = this.fb.group({
-      codigo: ['', [Validators.required, Validators.minLength(6)]]
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
+  onSave() {
+    if (this.form.invalid) {
+      alert('Por favor, completa  los campos correctamente.');
+      return;
+    } else if (this.form.valid) {
+      const nombre: string = (this.form.get('nombre')?.value ?? '').toString();
 
-  // Getter para acceder fácilmente a los controles desde el HTML
-  get f() {
-    return this.form.controls;
+      this.apiService
+        .createTipoCliente(nombre)
+        .then(() => {
+          alert('Tipo Cliente creado correctamente.');
+          this.router.navigate(['/tipo-cliente/lista']);
+        })
+        .catch((error) => {
+          console.error('Error al crear el tipo cliente:', error);
+          alert('Error al crear el tipo cliente. Por favor, inténtalo de nuevo más tarde.');
+        });
+    }
   }
 
-  // Método que se ejecuta al enviar el formulario
-  onSubmit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched(); // Marca errores
-      return;
-    }
+  volver() {
+    this.router.navigate(['/tipo-cliente/lista']);
+  }
 
-    const codigo = this.form.value.codigo;
-    console.log('Código ingresado:', codigo);
-
-    // Aquí podrías hacer la llamada a tu servicio API para validar o registrar la entrada
-    // this.miServicio.registrarEntrada(codigo).subscribe(...);
-
-    this.form.reset(); // Limpiamos el formulario después de registrar
+  inicio() {
+    this.router.navigate(['/home']);
   }
 }
-
-

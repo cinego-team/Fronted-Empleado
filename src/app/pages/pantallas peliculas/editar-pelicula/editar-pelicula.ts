@@ -107,7 +107,7 @@ export class EditarPelicula implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['/peliculas']);
+    this.router.navigate(['/pelicula/lista']);
   }
   inicio() {
     this.router.navigate(['/home']);
@@ -135,7 +135,7 @@ export class EditarPelicula implements OnInit {
       .updatePelicula(peliculaActualizada)
       .then(() => {
         alert('Película actualizada correctamente.');
-        this.router.navigate(['/peliculas']);
+        this.router.navigate(['/pelicula/lista']);
       })
       .catch((error) => {
         console.error('Error al actualizar la película:', error);

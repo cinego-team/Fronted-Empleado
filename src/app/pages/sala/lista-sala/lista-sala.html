@@ -19,17 +19,21 @@
           <th>ID</th>
           <th>Nro</th>
           <th>Disponibilidad</th>
+          <th>Cantidad Filas</th>
           <th>Capacidad</th>
         </tr>
       </thead>
-        <tbody>
-        <tr *ngFor="let sala of salas; let i = index"
-            [class.selected]="selectedIndex === i"
-            (click)="selectRow(i)">
-            <td>{{ sala.id }}</td>
-            <td>{{ sala.numero }}</td>
-            <td>{{ sala.disponibilidad }}</td>
-            <td>{{ sala.capacidad }}</td>
+      <tbody>
+        <tr
+          *ngFor="let sala of salas; let i = index"
+          [class.selected]="selectedIndex === i"
+          (click)="selectRow(i)"
+        >
+          <td>{{ sala.id }}</td>
+          <td>{{ sala.numero }}</td>
+          <td>{{ sala.disponibilidad }}</td>
+          <td>{{ sala.fila }}</td>
+          <td>{{ sala.capacidad }}</td>
         </tr>
       </tbody>
     </table>
@@ -38,12 +42,10 @@
   <!-- Botones -->
   <div class="botones">
     <button class="btn" (click)="nuevaSala()">NUEVA SALA</button>
-    <button class="btn">ELIMINAR</button>
+    <button class="btn" (click)="eliminar()">ELIMINAR</button>
     <button class="btn" (click)="editarSala()">EDITAR</button>
   </div>
 
   <!-- Flecha de navegación -->
-  <div class="flecha" (click)="irListaFuncion()">
-  &#10132;
-  </div>
+  <div class="flecha" (click)="volver()">&#10132;</div>
 </div>

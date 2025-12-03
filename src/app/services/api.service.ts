@@ -25,6 +25,10 @@ import {
 import { Observable, BehaviorSubject } from 'rxjs'; //sacado del tp de restaurant
 import { NewPermiso } from '../pages/Permiso/newPermiso.dto';
 import { FormatoInput, FormatoOutput } from '../pages/formato/formato.dto';
+import {
+  EditTipoCliente,
+  TipoClienteInput,
+} from '../pages/pantallas tipo-cliente/tipos-cliente.dto';
 @Injectable({
   providedIn: 'root',
 })
@@ -68,11 +72,12 @@ export class ApiService {
       sinopsis: string;
       director: string;
       duracion: number;
-      fechaEsterno: string;
+      fechaEstreno: string;
       idioma: string;
       genero: string;
-      clasificación: string;
+      clasificacion: string;
       estado: string;
+      urlImagen: string;
     }>
   > {
     const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculas)).data;
@@ -83,22 +88,24 @@ export class ApiService {
         sinopsis: any;
         director: any;
         duracion: any;
-        fechaEsterno: any;
+        fechaEstreno: any;
         idioma: any;
         genero: any;
-        clasificación: any;
+        clasificacion: any;
         estado: any;
+        urlImagen: any;
       }) => ({
-        id: datos.id,
+        id: item.id,
         titulo: item.titulo,
         sinopsis: item.sinopsis,
         director: item.director,
         duracion: item.duracion,
-        fechaEsterno: item.fechaEsterno,
+        fechaEstreno: item.fechaEstreno,
         idioma: item.idioma,
         genero: item.genero,
-        clasificación: item.clasificación,
+        clasificacion: item.clasificacion,
         estado: item.estado,
+        urlImagen: item.urlImagen,
       })
     );
     return respuesta;
@@ -301,18 +308,6 @@ export class ApiService {
       nombre: estado.nombre,
     };
     await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateEstado(estado.id!)}`, data);
-  }
-
-  //dia
-  async getDiaById(id: number): Promise<{
-    id: number;
-    nombre: string;
-  }> {
-    const datos = (await axiosAPIPromociones.get(config.APIPromocionesUrls.getDiaById(id))).data;
-    return {
-      id: datos.id,
-      nombre: datos.nombre,
-    };
   }
 
   //promocion
@@ -526,17 +521,19 @@ export class ApiService {
       id: number;
       numero: number;
       disponibilidad: string;
+      fila: number;
       capacidad: number;
     }>
   > {
     try {
-      const response = await axiosAPIPeliculas.get(config.APIPeliculasUrls.getAllSalas);
+      const response = await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getAllSalas);
       const datos = response.data;
 
       return datos.map((item: any) => ({
         id: item.id,
         numero: item.numero,
         disponibilidad: item.disponibilidad,
+        fila: item.fila,
         capacidad: item.capacidad,
       }));
     } catch (error) {
@@ -548,32 +545,39 @@ export class ApiService {
     id: number;
     numero: number;
     disponibilidad: string;
-    capacidad: number;
+    fila: number;
+    butaca: number;
   }> {
-    const item = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getSalaById(id))).data;
+    const item = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getSalaById(id))).data;
     return {
       id: item.id,
-      numero: item.nummero,
+      numero: item.numero,
       disponibilidad: item.disponibilidad,
-      capacidad: item.capacidad,
+      fila: item.fila,
+      butaca: item.butaca,
     };
   }
 
   async createSala(salaData: {
-    nroSala: number;
-    capacidad: number;
-    estaDisponible: boolean;
+    numero: number;
+    disponibilidad: string;
+    fila: number;
+    butaca: number;
   }): Promise<void> {
-    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createSalas, salaData);
+    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createSalas, salaData);
   }
 
   async updateSala(sala: SalaInput): Promise<void> {
     const data: SalaInput = {
-      nroSala: sala.nroSala,
-      capacidad: sala.capacidad,
-      estaDisponible: sala.estaDisponible,
+      numero: sala.numero,
+      disponibilidad: sala.disponibilidad,
+      fila: sala.fila,
+      butaca: sala.butaca,
     };
-    await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateSala(sala.id!)}`, data);
+    await axiosAPIFuncionesYsalas.put(`${config.APIFuncionesUrls.updateSala(sala.id!)}`, data);
+  }
+  async deleteSala(id: number): Promise<void> {
+    await axiosAPIFuncionesYsalas.delete(config.APIFuncionesUrls.getSalaById(id));
   }
 
   //funciones
@@ -694,5 +698,46 @@ export class ApiService {
       nombre: rol.nombre,
     };
     await axiosAPIUsuario.put(`${config.APIUsuariosUrls.updateRol(rol.id!)}`, data);
+  }
+  //tipo cliente
+  async getTipoClienteById(id: number): Promise<{
+    id: number;
+    nombre: string;
+  }> {
+    const datos = (await axiosAPIUsuario.get(config.APIUsuariosUrls.getTipoClienteById(id))).data;
+    return {
+      id: datos.id,
+      nombre: datos.nombre,
+    };
+  }
+  async getAllTiposClientes(): Promise<
+    Array<{
+      id: number;
+      nombre: string;
+    }>
+  > {
+    const datos = (await axiosAPIUsuario.get(config.APIUsuariosUrls.getTiposClientes)).data;
+
+    const respuesta = datos.map((item: { id: number; nombre: string }) => ({
+      id: item.id,
+      nombre: item.nombre,
+    }));
+
+    return respuesta;
+  }
+  async deleteTipoCliente(id: number): Promise<void> {
+    await axiosAPIUsuario.delete(config.APIUsuariosUrls.getTipoClienteById(id));
+  }
+  async createTipoCliente(formulario: any): Promise<void> {
+    const nuevoTipoCliente: EditTipoCliente = {
+      nombre: formulario.get('nombre').value,
+    };
+    await axiosAPIUsuario.post(config.APIUsuariosUrls.createTipoCliente, nuevoTipoCliente);
+  }
+  async updateTipoCliente(tipoCliente: TipoClienteInput): Promise<void> {
+    const data: TipoClienteInput = {
+      nombre: tipoCliente.nombre,
+    };
+    await axiosAPIUsuario.put(`${config.APIUsuariosUrls.updateTipoCliente(tipoCliente.id!)}`, data);
   }
 }

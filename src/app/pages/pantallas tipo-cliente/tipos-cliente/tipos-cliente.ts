@@ -7,32 +7,31 @@ import { GlobalStatusService } from '../../../services/global-status.service';
   selector: 'app-tipos-cliente',
   imports: [],
   templateUrl: './tipos-cliente.html',
-  styleUrl: './tipos-cliente.css'
+  styleUrl: './tipos-cliente.css',
 })
 export class TiposCliente {
-constructor(
+  constructor(
     private router: Router,
     private readonly apiService: ApiService,
     private readonly globalStatusService: GlobalStatusService
-   
-  ) { }
+  ) {}
   tiposCliente: Array<{
-    id:number;
+    id: number;
     nombre: string;
-  }> =[];
-   selectedRow: number | null = null;
+  }> = [];
+  selectedRow: number | null = null;
   actualPage: number = 1;
   ngOnInit(): void {
     this.initialization();
   }
-   async initialization(): Promise<void> {
+  async initialization(): Promise<void> {
     this.globalStatusService.setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 500)); //Decorativo
-    const data = await this.apiService.getTiposCliente();
+    await new Promise((resolve) => setTimeout(resolve, 500)); //Decorativo
+    const data = await this.apiService.getAllTiposClientes();
     if (data.length === 0) {
       alert('No hay tipos cliente para mostrar.');
       this.globalStatusService.setLoading(false);
-      this.actualPage --;
+      this.actualPage--;
       return;
     }
     this.tiposCliente = data;
@@ -43,7 +42,7 @@ constructor(
   }
 
   onNew() {
-    this.router.navigate(['/registrar-tipo-cliente']);
+    this.router.navigate(['/tipo-cliente/registrar']);
   }
 
   onEdit() {
@@ -52,7 +51,7 @@ constructor(
       return;
     }
     const selectedTipoCliente = this.tiposCliente[this.selectedRow];
-    this.router.navigate(['/editar-tipo-cliente', selectedTipoCliente.id]);
+    this.router.navigate(['/tipo-cliente/editar', selectedTipoCliente.id]);
   }
 
   onDelete() {
@@ -61,12 +60,16 @@ constructor(
       return;
     }
     const selectedTiposCliente = this.tiposCliente[this.selectedRow];
-    if (confirm(`¿Estás seguro de que querés eliminar el tipo cliente ${selectedTiposCliente.nombre} (ID: ${selectedTiposCliente.id})?`)) {
+    if (
+      confirm(
+        `¿Estás seguro de que querés eliminar el tipo cliente ${selectedTiposCliente.nombre} (ID: ${selectedTiposCliente.id})?`
+      )
+    ) {
       this.apiService.deleteTipoCliente(selectedTiposCliente.id).then(() => {
         alert('Tipo cliente eliminado correctamente.');
         this.tiposCliente.splice(this.selectedRow!, 1);
         this.selectedRow = null;
-      })
+      });
     }
   }
 }

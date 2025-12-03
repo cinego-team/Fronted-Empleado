@@ -13,7 +13,7 @@ import { ApiService } from './../../../services/api.service';
 })
 export class RegistrarEstadoPeliculaComponent {
   form: FormGroup;
-  restaurant: any;
+  estado: any;
   error: string | null = null;
   constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
     this.form = this.fb.group({
@@ -28,19 +28,19 @@ export class RegistrarEstadoPeliculaComponent {
       const nombre: string = (this.form.get('nombre')?.value ?? '').toString();
 
       this.apiService
-        .createGenero(nombre)
+        .createEstado(nombre)
         .then(() => {
-          alert('Idioma creado correctamente.');
-          this.router.navigate(['/idioma/lista']);
+          alert('Estado creado correctamente.');
+          this.router.navigate(['/estado-pelicula/lista']);
         })
         .catch((error) => {
-          console.error('Error al crear el idioma:', error);
-          alert('Error al crear el idioma. Por favor, inténtalo de nuevo más tarde.');
+          console.error('Error al crear el estado:', error);
+          alert('Error al crear el estado. Por favor, inténtalo de nuevo más tarde.');
         });
     }
   }
 
   volver() {
-    this.router.navigate(['/estados-peliculas']);
+    this.router.navigate(['/estado-pelicula/lista']);
   }
 }

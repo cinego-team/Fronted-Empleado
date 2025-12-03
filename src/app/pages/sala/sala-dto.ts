@@ -1,10 +1,13 @@
 export class EditSala {
-nroSala?: number
-capacidad?: number
-estaDisponible?: boolean}
+  numero?: number;
+  disponibilidad?: string;
+  fila?: number;
+  butaca?: number;
+}
 export class SalaInput {
   id?: number;
-  nroSala?: number
-  capacidad?: number
-  estaDisponible?: boolean
+  numero?: number;
+  disponibilidad?: string;
+  fila?: number;
+  butaca?: number;
 }

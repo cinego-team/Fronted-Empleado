@@ -56,7 +56,7 @@ export class EstadosPeliculas {
   }
 
   onNew() {
-    this.router.navigate(['/registrar-estado-pelicula']);
+    this.router.navigate(['/estado-pelicula/registrar']);
   }
 
   onEdit() {
@@ -65,7 +65,7 @@ export class EstadosPeliculas {
       return;
     }
     const selectedEstado = this.estados[this.selec];
-    this.router.navigate(['/editar-estado-pelicula', selectedEstado.id]);
+    this.router.navigate(['/estado-pelicula/editar', selectedEstado.id]);
   }
 
   onBack() {

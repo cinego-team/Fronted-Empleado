@@ -37,7 +37,7 @@ export class RegistrarPromocion {
         .createPromocion(nombre)
         .then(() => {
           alert('Promoción creada correctamente.');
-          this.router.navigate(['/promociones']);
+          this.router.navigate(['/promocion/lista']);
         })
         .catch((error) => {
           console.error('Error al crear la promoción:', error);
@@ -46,6 +46,6 @@ export class RegistrarPromocion {
     }
   }
   volver() {
-    this.router.navigate(['/promociones']);
+    this.router.navigate(['/promocion/lista']);
   }
 }

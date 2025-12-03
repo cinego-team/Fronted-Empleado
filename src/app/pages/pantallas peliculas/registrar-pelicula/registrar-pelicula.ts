@@ -53,7 +53,7 @@ export class RegistrarPelicula implements OnInit {
   }
 
   OnBack() {
-    this.router.navigate(['/peliculas']);
+    this.router.navigate(['/pelicula/lista']);
   }
   inicio() {
     this.router.navigate(['/home']);
@@ -78,7 +78,7 @@ export class RegistrarPelicula implements OnInit {
       await this.apiService.createPelicula(pelicula);
 
       alert('Película creada correctamente.');
-      this.router.navigate(['/peliculas']);
+      this.router.navigate(['/pelicula/lista']);
     } catch (error) {
       console.error('Error al crear la película:', error);
       alert('Error al crear la película. Por favor, inténtalo de nuevo más tarde.');

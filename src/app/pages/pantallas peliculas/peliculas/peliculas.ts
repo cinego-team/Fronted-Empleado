@@ -20,15 +20,17 @@ export class PeliculaListaComponent {
 
   peliculas: Array<{
     id: number;
+
     titulo: string;
     sinopsis: string;
     director: string;
     duracion: number;
-    fechaEsterno: string;
+    fechaEstreno: string;
     idioma: string;
     genero: string;
-    clasificación: string;
+    clasificacion: string;
     estado: string;
+    urlImagen: string;
   }> = [];
   selectedRow: number | null = null;
   actualPage: number = 1;
@@ -59,7 +61,7 @@ export class PeliculaListaComponent {
   }
 
   onNew() {
-    this.router.navigate(['/registrar-pelicula']);
+    this.router.navigate(['/pelicula/registrar']);
   }
 
   onEdit() {
@@ -68,15 +70,7 @@ export class PeliculaListaComponent {
       return;
     }
     const selectedRestaurant = this.peliculas[this.selectedRow];
-    this.router.navigate(['/pelicula/edit', selectedRestaurant.id]);
-  }
-  onView(): void {
-    if (this.selectedRow === null) {
-      alert('Seleccioná una película primero.');
-      return;
-    }
-    const selectedPelicula = this.peliculas[this.selectedRow];
-    this.router.navigate(['/pelicula', selectedPelicula.id]);
+    this.router.navigate(['/pelicula/editar', selectedRestaurant.id]);
   }
 
   onDelete(): void {

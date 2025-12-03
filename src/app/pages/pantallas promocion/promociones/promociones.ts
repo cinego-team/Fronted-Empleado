@@ -44,7 +44,7 @@ export class Promociones {
   }
 
   onNew() {
-    this.router.navigate(['/registrar-promocion']);
+    this.router.navigate(['/promocion/registrar']);
   }
 
   onEdit() {
@@ -53,7 +53,7 @@ export class Promociones {
       return;
     }
     const selectedPromocion = this.promociones[this.selectedRow];
-    this.router.navigate(['/editar-promocion', selectedPromocion.id]);
+    this.router.navigate(['/promocion/editar', selectedPromocion.id]);
   }
 
   onDelete() {

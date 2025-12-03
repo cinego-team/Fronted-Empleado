@@ -57,10 +57,10 @@ export class EditarPromocion {
         });
     }
 
-    this.router.navigate(['/promociones']);
+    this.router.navigate(['/promocione/lista']);
   }
   volver() {
-    this.router.navigate(['/promociones']);
+    this.router.navigate(['/promocione/lista']);
   }
   inicio() {
     this.router.navigate(['/home']);

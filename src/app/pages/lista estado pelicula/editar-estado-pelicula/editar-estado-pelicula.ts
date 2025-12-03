@@ -58,10 +58,10 @@ export class EditarEstadoPelicula implements OnInit {
         });
     }
 
-    this.router.navigate(['/estados-peliculas']);
+    this.router.navigate(['/estado-pelicula/lista']);
   }
 
   volver() {
-    this.router.navigate(['/estados-peliculas']);
+    this.router.navigate(['/estado-pelicula/lista']);
   }
 }
