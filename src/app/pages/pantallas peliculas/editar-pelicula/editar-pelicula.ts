@@ -112,6 +112,7 @@ export class EditarPelicula implements OnInit {
   inicio() {
     this.router.navigate(['/home']);
   }
+<<<<<<< Updated upstream
   onSave(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -142,4 +143,9 @@ export class EditarPelicula implements OnInit {
         alert('Error al actualizar la película.');
       });
   }
+=======
+  
+>>>>>>> Stashed changes
 }
+
+
