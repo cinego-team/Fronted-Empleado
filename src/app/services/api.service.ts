@@ -110,8 +110,122 @@ export class ApiService {
         );
         return respuesta;
     }
+<<<<<<< Updated upstream
     async deletePelicula(id: number): Promise<void> {
         await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getPeliculaById(id));
+=======
+    return respuesta;
+  }
+  //permiso
+
+  async getPermisoById(id: number): Promise<{
+    id: number;
+    nombre: string;
+  }> {
+    const datos = (await axiosAPIUsuario.get(config.APIUsuariosUrls.getPermisoById(id))).data;
+    return {
+      id: datos.id,
+      nombre: datos.nombre,
+    };
+  }
+    async deletePermiso(id: number): Promise<void> {
+    await axiosAPIUsuario.delete(config.APIUsuariosUrls.getPermisoById(id));
+  }
+  async getAllPermisos(): Promise<
+    Array<{
+      id: number;
+      nombre: string;
+    }>
+  > {
+    const datos = (await axiosAPIUsuario.get(config.APIUsuariosUrls.getPermisos)).data;
+
+    const respuesta = datos.map((item: { id: number; nombre: string }) => ({
+      id: item.id,
+      nombre: item.nombre,
+    }));
+
+    return respuesta;
+  }
+
+  async createPermiso(formulario: any): Promise<void> {
+    const nuevoPermiso: NewPermiso = {
+      nombre: formulario.get('nombre').value,
+    };
+    await axiosAPIUsuario.post(config.APIUsuariosUrls.createPermiso, nuevoPermiso);
+  }
+  //formato
+  async findOne(id: number): Promise<{
+    id: number;
+    nombre: string;
+    precio: number;
+  }> {
+    const datos = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.findOne(id))).data;
+    return {
+      id: datos.id,
+      nombre: datos.nombre,
+      precio: datos.precio,
+    };
+  }
+  async findAll(): Promise<
+    Array<{
+      id: number;
+      nombre: string;
+      precio: number;
+    }>
+  > {
+    const datos = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.findAll)).data;
+
+    const respuesta = datos.map((item: { id: number; nombre: string; precio: number }) => ({
+      id: item.id,
+      nombre: item.nombre,
+      precio: item.precio,
+    }));
+
+    return respuesta;
+  }
+  async delete(id: number): Promise<void> {
+    await axiosAPIFuncionesYsalas.delete(config.APIFuncionesUrls.findOne(id));
+  }
+  async create(formulario: any): Promise<void> {
+    const nuevoFormato: FormatoInput = {
+      nombre: formulario.get('nombre').value,
+      precio: formulario.get('precio').value,
+    };
+    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.create, nuevoFormato);
+  }
+  async update(formato: FormatoOutput): Promise<void> {
+    const data: FormatoInput = {
+      nombre: formato.nombre,
+      precio: formato.precio,
+    };
+    await axiosAPIFuncionesYsalas.put(`${config.APIFuncionesUrls.update(formato.id!)}`, data);
+  }
+
+  //ventas
+  async getVentas(): Promise<
+    Array<{
+      nroVenta: number;
+      fecha: Date;
+      hora: Date;
+      total: number;
+      promocionId?: number;
+    }>
+  > {
+    try {
+      const response = await axiosAPIVentas.get(config.APIVentasUrls.getVentas);
+      const datos = response.data;
+
+      return datos.map((item: any) => ({
+        nroVenta: item.nroVenta,
+        fecha: new Date(item.fecha),
+        hora: new Date(item.hora),
+        total: item.total,
+        promocionId: item.promocionId,
+      }));
+    } catch (error) {
+      console.error('Error al obtener ventas:', error);
+      return [];
+>>>>>>> Stashed changes
     }
     async createPelicula(formulario: any): Promise<void> {
         const nuevaPelicula: EditPeliculaOutput = {

@@ -43,13 +43,13 @@ export class ListaPermisoComponent {
     const selectedC = this.permisos[this.selec];
 
     if (confirm(`¿Estás seguro de que querés eliminar ?`)) {
-      this.apiService
-        .deleteGenero(selectedC.id)
-        .then(() => {
-          alert('Permiso eliminado correctamente.');
-          this.permisos.splice(this.selec!, 1);
-          this.selec = null;
-        })
+          this.apiService
+            .deletePermiso(selectedC.id)
+            .then(() => {
+              alert('Permiso eliminado correctamente.');
+              this.permisos.splice(this.selec!, 1);
+              this.selec = null;
+          })
         .catch((error) => {
           console.error('Error al eliminar', error);
           alert('Ocurrió un error al eliminar');

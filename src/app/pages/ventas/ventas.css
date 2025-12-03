@@ -10,17 +10,17 @@
 :host{
   display:block;
   min-height:100vh;
-  background: #4F1917;       /* fondo bordó */
+  background: #4F1917;       
   color:#fff;
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 }
 
 .container {
-  position: auto;
+  position: relative;
   width: 100%; 
-  height: auto;
+  min-height: 100vh;
   background-color: #4f1917;
-  display: auto;
+  display: flex;
   flex-direction: column;  
   justify-content: space-between;
   box-sizing: border-box;
@@ -71,7 +71,8 @@ h1 {
 
 .tabla-formatos {
   border-collapse: collapse;
-  width: 250%;
+  width: 100%;
+  max-width: 1000px;
   background-color: #e9e0e0;
   color: #541b1b;
   border-radius: 10px;

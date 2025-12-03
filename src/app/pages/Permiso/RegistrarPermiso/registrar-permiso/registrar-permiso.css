@@ -17,7 +17,7 @@
   height: 50px;
 }
 
-.user {
+.user-section {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -86,7 +86,7 @@
   background: #ffe9e9;
 }
 
-.error {
+.text-danger {
   width: min(520px, 80vw);
   color: #ffd3d3;
   font-size: 12px;

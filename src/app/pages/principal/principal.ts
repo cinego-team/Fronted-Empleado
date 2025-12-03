@@ -17,7 +17,7 @@ export class Principal {
      this.router.navigate(['/funciones']);
   }
   onButacas(){
-     this.router.navigate(['butaca/butaca']);
+     this.router.navigate(['/butaca/butaca']);
   }
   onIdiomas(){
      this.router.navigate(['/idioma/lista']);

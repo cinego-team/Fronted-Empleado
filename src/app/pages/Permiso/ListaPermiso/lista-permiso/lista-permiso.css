@@ -7,17 +7,17 @@
 }
 
 .container {
-  position: auto;
-  width: 100%;
-  height: auto;
+  position: relative;         
+  min-height: 100vh;           
   background-color: #4f1917;
-  display: auto;
+  display: flex;             
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
   padding: 40px;
   overflow: hidden;
 }
+
 
 .topbar {
   display: flex;
@@ -61,12 +61,12 @@ h1 {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  background: #f3e9e9; /* fondo claro de la tabla */
-  border-radius: 16px; /* redondeo contenedor */
-  overflow: hidden; /* respeta bordes redondeados */
+  background: #f3e9e9; 
+  border-radius: 16px; 
+  overflow: hidden; 
 }
 .tabla thead tr {
-  background: #eac4c1; /* encabezado rosado */
+  background: #eac4c1; 
 }
 .tabla th,
 .tabla td {
@@ -93,7 +93,7 @@ h1 {
   background: #f0e3e3;
   cursor: pointer;
 }
-.tabla tbody tr.sel {
+.tabla tbody tr.selected {
   background: #ead6d4;
   outline: 2px solid #eac4c1;
 }

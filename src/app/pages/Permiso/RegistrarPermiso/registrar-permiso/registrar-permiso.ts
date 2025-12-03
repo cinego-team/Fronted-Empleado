@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,7 +14,6 @@ import { CommonModule } from '@angular/common';
 })
 export class RegistrarPermisoComponent {
   form: FormGroup;
-  genero: any;
   error: string | null = null;
   constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
     this.form = this.fb.group({
@@ -29,7 +28,7 @@ export class RegistrarPermisoComponent {
       const nombre: string = (this.form.get('nombre')?.value ?? '').toString();
 
       this.apiService
-        .createGenero(nombre)
+        .createPermiso(nombre)
         .then(() => {
           alert('Permiso creado correctamente.');
           this.router.navigate(['/permisos']);

@@ -89,6 +89,15 @@ select {
 .dni-row input {
   flex: 1;
 }
+/* Mensajes de error */
+.error {
+  margin-top: -4px;
+}
+
+.text-danger {
+  color: #ffdddd;
+  font-size: 0.8rem;
+}
 
 /* Botón */
 .btn-register {

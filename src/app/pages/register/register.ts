@@ -24,7 +24,7 @@ export class Register {
 
       email: ['', [Validators.required, Validators.email]],
 
-      contraseña: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(3)]],
 
       dia: ['', Validators.required],
       mes: ['', Validators.required],
@@ -32,7 +32,7 @@ export class Register {
 
       telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{6,15}$/)]],
 
-      rol: [
+      rolId: [
         '',
         [
           Validators.required,
@@ -83,14 +83,14 @@ export class Register {
     const apellido = this.form.value.apellido;
 
     const email = this.form.value.email;
-    const contrasenia = this.form.value.contrasenia;
+    const password= this.form.value.password;
     const dia = this.form.value.dia;
     const mes = this.form.value.mes;
     const anio = this.form.value.anio;
     const telefono = this.form.value.telefono;
     const roleId = this.form.value.roleId;
     console.log('Email:', email);
-    console.log('Constraseña:', contrasenia);
+    console.log('Constraseña:', password);
     console.log('Nombre:', nombre);
     console.log('Apellido:', apellido);
     console.log('Día:', dia);
@@ -100,7 +100,7 @@ export class Register {
     console.log('Rol:', roleId);
 
     this.apiService
-      .register({ email, contrasenia, nombre, apellido, dia, mes, anio, telefono, roleId })
+      .register({ email, password, nombre, apellido, dia, mes, anio, telefono, roleId })
       .then(() => {
         this.successMessage = 'Registro exitoso. Redirigiendo...';
         setTimeout(() => {
