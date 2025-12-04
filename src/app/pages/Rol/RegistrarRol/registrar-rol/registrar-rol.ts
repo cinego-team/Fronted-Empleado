@@ -1,28 +1,28 @@
-import { Component } from "@angular/core"
-import { Router } from "@angular/router"
-import { FormBuilder, type FormGroup, Validators } from "@angular/forms"
-import { ApiService } from "../../../../services/api.service"
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, type FormGroup, Validators } from '@angular/forms';
+import { ApiServiceUsuario } from '../../../../services/api.service.usuario';
 
 @Component({
-  selector: "app-registrar-rol",
+  selector: 'app-registrar-rol',
   imports: [],
   standalone: true,
-  templateUrl: "./registrar-rol.html",
-  styleUrl: "./registrar-rol.css",
+  templateUrl: './registrar-rol.html',
+  styleUrl: './registrar-rol.css',
 })
 export class RegistrarRolComponent {
-  rolForm: FormGroup
-  loading = false
-  errorMessage = ""
+  rolForm: FormGroup;
+  loading = false;
+  errorMessage = '';
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private apiService: ApiService,
+    private apiService: ApiServiceUsuario
   ) {
     this.rolForm = this.fb.group({
-      nombre: ["", [Validators.required, Validators.minLength(3)]],
-    })
+      nombre: ['', [Validators.required, Validators.minLength(3)]],
+    });
   }
 
   registrar() {
@@ -30,7 +30,6 @@ export class RegistrarRolComponent {
       alert('Por favor, completa  los campos correctamente.');
       return;
     } else if (this.rolForm.valid) {
-
       this.apiService
         .createRol(this.rolForm.value)
         .then(() => {

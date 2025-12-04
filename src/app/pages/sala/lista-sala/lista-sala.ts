@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../services/api.service';
+import { ApiServiceFunciones } from '../../../services/api.service.funciones';
 
 @Component({
   selector: 'app-lista-sala',
@@ -23,7 +23,7 @@ export class ListaSala implements OnInit {
   isLoading = true;
   errorMessage = '';
 
-  constructor(private router: Router, private apiService: ApiService) {}
+  constructor(private router: Router, private apiService: ApiServiceFunciones) {}
 
   async ngOnInit() {
     await this.cargarSalas();
@@ -67,9 +67,11 @@ export class ListaSala implements OnInit {
       alert('Selecciona una sala primero');
     }
   }
+
   nuevaSala() {
     this.router.navigate(['sala/registrar']);
   }
+
   eliminar() {
     if (this.selectedIndex === null) {
       alert('Seleccioná una sala primero.');

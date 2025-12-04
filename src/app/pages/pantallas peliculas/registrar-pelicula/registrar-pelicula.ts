@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ApiService } from '../../../services/api.service';
+import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 
 @Component({
   selector: 'app-registrar-pelicula',
@@ -19,7 +19,11 @@ export class RegistrarPelicula implements OnInit {
   generos: any[] = [];
   idiomas: any[] = [];
 
-  constructor(private router: Router, private fb: FormBuilder, private apiService: ApiService) {}
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private apiService: ApiServicePelicula
+  ) {}
   async ngOnInit(): Promise<void> {
     this.form = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(2)]],
@@ -55,9 +59,11 @@ export class RegistrarPelicula implements OnInit {
   OnBack() {
     this.router.navigate(['/pelicula/lista']);
   }
+
   inicio() {
     this.router.navigate(['/home']);
   }
+
   async onSave() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();

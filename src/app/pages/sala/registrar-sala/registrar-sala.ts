@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { ApiService } from '../../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiServiceFunciones } from '../../../services/api.service.funciones';
 @Component({
   selector: 'app-registrar-sala',
   imports: [CommonModule, ReactiveFormsModule],
@@ -16,7 +15,11 @@ export class RegistrarSala {
   loading = false;
   errorMessage: string | null = null;
 
-  constructor(private router: Router, private fb: FormBuilder, private apiService: ApiService) {
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private apiService: ApiServiceFunciones
+  ) {
     this.form = this.fb.group({
       numero: ['', [Validators.required, Validators.min(1)]],
       dipsponibilidad: [true, Validators.required],
@@ -28,6 +31,7 @@ export class RegistrarSala {
     { label: 'Disponible', value: true },
     { label: 'No disponible', value: false },
   ];
+
   registrar() {
     if (this.form.invalid) {
       alert('Por favor, completa  los campos correctamente.');
@@ -45,6 +49,7 @@ export class RegistrarSala {
         });
     }
   }
+
   volver() {
     this.router.navigate(['/salas']);
   }

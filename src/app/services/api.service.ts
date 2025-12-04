@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 import { config } from '../axios_service/env';
 import {
   axiosAPIFuncionesYsalas,
@@ -741,4 +741,4 @@ export class ApiService {
     };
     await axiosAPIUsuario.put(`${config.APIUsuariosUrls.updateTipoCliente(tipoCliente.id!)}`, data);
   }
-}
+}/*/

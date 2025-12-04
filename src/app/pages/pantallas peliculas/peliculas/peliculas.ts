@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../services/api.service';
 import { GlobalStatusService } from '../../../services/global-status.service';
+import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 
 @Component({
   selector: 'app-peliculas',
@@ -14,7 +14,7 @@ import { GlobalStatusService } from '../../../services/global-status.service';
 export class PeliculaListaComponent {
   constructor(
     private router: Router,
-    private readonly apiService: ApiService,
+    private readonly apiService: ApiServicePelicula,
     private readonly globalStatusService: GlobalStatusService
   ) {}
 
@@ -38,6 +38,7 @@ export class PeliculaListaComponent {
   ngOnInit(): void {
     this.initialization();
   }
+
   async initialization(): Promise<void> {
     this.globalStatusService.setLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 500)); // decorativo
@@ -90,6 +91,7 @@ export class PeliculaListaComponent {
   onBack() {
     this.router.navigate(['/home']);
   }
+
   inicio() {
     this.router.navigate(['/home']);
   }

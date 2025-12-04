@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../services/api.service';
 import { GlobalStatusService } from '../../../services/global-status.service';
+import { ApiServiceUsuario } from '../../../services/api.service.usuario';
 
 @Component({
   selector: 'app-tipos-cliente',
@@ -12,7 +12,7 @@ import { GlobalStatusService } from '../../../services/global-status.service';
 export class TiposCliente {
   constructor(
     private router: Router,
-    private readonly apiService: ApiService,
+    private readonly apiService: ApiServiceUsuario,
     private readonly globalStatusService: GlobalStatusService
   ) {}
   tiposCliente: Array<{
@@ -21,9 +21,11 @@ export class TiposCliente {
   }> = [];
   selectedRow: number | null = null;
   actualPage: number = 1;
+
   ngOnInit(): void {
     this.initialization();
   }
+
   async initialization(): Promise<void> {
     this.globalStatusService.setLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 500)); //Decorativo
@@ -37,6 +39,7 @@ export class TiposCliente {
     this.tiposCliente = data;
     this.globalStatusService.setLoading(false);
   }
+
   selectRow(rowId: number) {
     this.selectedRow = rowId;
   }

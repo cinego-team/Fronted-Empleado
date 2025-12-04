@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ApiService } from '../../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiServicePromociones } from '../../../services/api.service.promociones';
 @Component({
   selector: 'app-editar-promocion',
   standalone: true,
@@ -17,7 +17,7 @@ export class EditarPromocion {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiServicePromociones
   ) {}
 
   ngOnInit() {
@@ -39,6 +39,7 @@ export class EditarPromocion {
       alert('Error al obtener la promocion:');
     }
   }
+
   onSave() {
     const modifiedKeys = Object.keys(this.promocion).filter(
       (key) => key !== 'id' && this.promocion[key] !== this.originalPromocion[key]
@@ -59,9 +60,11 @@ export class EditarPromocion {
 
     this.router.navigate(['/promocione/lista']);
   }
+
   volver() {
     this.router.navigate(['/promocione/lista']);
   }
+
   inicio() {
     this.router.navigate(['/home']);
   }

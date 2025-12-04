@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiServiceUsuario } from '../../services/api.service.usuario';
 interface RegisterResponse {
   message?: string;
   access_token?: string;
@@ -17,7 +17,11 @@ export class Register {
   form: FormGroup;
   errorMessage: string | null = null;
   successMessage: string | null = null;
-  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiServiceUsuario,
+    private router: Router
+  ) {
     this.form = this.fb.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
@@ -73,6 +77,7 @@ export class Register {
       this.anios.push(año);
     }
   }
+
   onRegister() {
     if (this.form.invalid) {
       this.errorMessage = 'Por favor, completa todos los campos correctamente.';
@@ -83,7 +88,7 @@ export class Register {
     const apellido = this.form.value.apellido;
 
     const email = this.form.value.email;
-    const password= this.form.value.password;
+    const password = this.form.value.password;
     const dia = this.form.value.dia;
     const mes = this.form.value.mes;
     const anio = this.form.value.anio;

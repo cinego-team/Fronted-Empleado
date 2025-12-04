@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../services/api.service';
 import { GlobalStatusService } from '../../../services/global-status.service';
+import { ApiServicePromociones } from '../../../services/api.service.promociones';
 @Component({
   selector: 'app-promociones',
   imports: [],
@@ -11,7 +11,7 @@ import { GlobalStatusService } from '../../../services/global-status.service';
 export class Promociones {
   constructor(
     private router: Router,
-    private readonly apiService: ApiService,
+    private readonly apiService: ApiServicePromociones,
     private readonly globalStatusService: GlobalStatusService
   ) {}
   promociones: Array<{
@@ -23,9 +23,11 @@ export class Promociones {
   }> = [];
   selectedRow: number | null = null;
   actualPage: number = 1;
+
   ngOnInit(): void {
     this.initialization();
   }
+
   async initialization(): Promise<void> {
     this.globalStatusService.setLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 500)); //Decorativo
@@ -39,6 +41,7 @@ export class Promociones {
     this.promociones = data;
     this.globalStatusService.setLoading(false);
   }
+
   selectRow(rowId: number) {
     this.selectedRow = rowId;
   }
@@ -74,9 +77,11 @@ export class Promociones {
       });
     }
   }
+
   onBack() {
     this.router.navigate(['/home']);
   }
+
   inicio() {
     this.router.navigate(['/home']);
   }

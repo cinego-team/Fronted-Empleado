@@ -1,75 +1,76 @@
-import { Component, OnInit } from "@angular/core"
-import { ActivatedRoute } from "@angular/router"
-import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms"
-import { CommonModule } from "@angular/common"
-import { ApiService } from "../../../services/api.service"
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-
+import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 @Component({
-  selector: "app-pelicula",
+  selector: 'app-pelicula',
   standalone: true, // si tu proyecto usa standalone components
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: "./pelicula.html",
-  styleUrls: ["./pelicula.css"], // ✅ corregido (plural)
+  templateUrl: './pelicula.html',
+  styleUrls: ['./pelicula.css'], // ✅ corregido (plural)
 })
 export class Pelicula implements OnInit {
-  peliculaForm!: FormGroup
-  peliculaId!: number
-  pelicula: any = {} // ✅ agregado para usar en el template
-  
-selectedPelicula: any | null = null;   
+  peliculaForm!: FormGroup;
+  peliculaId!: number;
+  pelicula: any = {}; // ✅ agregado para usar en el template
 
+  selectedPelicula: any | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private apiService: ApiService,
+    private apiService: ApiServicePelicula,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
-    selectRow(p: any) {                    
+  selectRow(p: any) {
     this.selectedPelicula = p;
   }
 
   async ngOnInit() {
     // 1. Obtener ID desde la ruta
-    this.peliculaId = Number(this.route.snapshot.paramMap.get("id"))
+    this.peliculaId = Number(this.route.snapshot.paramMap.get('id'));
 
     // 2. Inicializar formulario vacío
     this.peliculaForm = this.fb.group({
-      id: [""],
-      titulo: [""],
-      estado: [""],
-      duracion: [""],
-      clasificacion: [""],
-      fechaEstreno: [""],
-      genero: [""],
-      director: [""],
-      idioma: [""],
-      sinopsis: [""],
-      imagen: [""], // ✅ agregué imagen porque en tu HTML la usás
-    })
+      id: [''],
+      titulo: [''],
+      estado: [''],
+      duracion: [''],
+      clasificacion: [''],
+      fechaEstreno: [''],
+      genero: [''],
+      director: [''],
+      idioma: [''],
+      sinopsis: [''],
+      imagen: [''],
+    });
 
     // 3. Llamar al servicio
     try {
-      this.pelicula = await this.apiService.getPeliculaById(this.peliculaId)
+      this.pelicula = await this.apiService.getPeliculaById(this.peliculaId);
 
       // Actualizar el form también (por si luego querés edición)
-      this.peliculaForm.patchValue(this.pelicula)
+      this.peliculaForm.patchValue(this.pelicula);
     } catch (err) {
-      console.error("Error cargando la película", err)
+      console.error('Error cargando la película', err);
     }
   }
+
   onEdit() {
-  if (!this.selectedPelicula) {
-    alert('Seleccioná una película primero.');
-    return;
+    if (!this.selectedPelicula) {
+      alert('Seleccioná una película primero.');
+      return;
+    }
+    this.router.navigate(['/peliculas/editar', this.selectedPelicula.id]); // ruta con :id
   }
-  this.router.navigate(['/peliculas/editar', this.selectedPelicula.id]); // ruta con :id
-}
- onBack() {
+
+  onBack() {
     this.router.navigate(['/peliculas']);
   }
+
   inicio() {
     this.router.navigate(['/home']);
   }

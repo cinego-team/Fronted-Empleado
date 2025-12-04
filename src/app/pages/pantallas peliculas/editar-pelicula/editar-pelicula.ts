@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../../services/api.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EditPeliculaOutput } from './editar-pelicula.dto';
+import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 
 @Component({
   selector: 'app-editar-pelicula',
@@ -26,7 +26,7 @@ export class EditarPelicula implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private apiService: ApiService,
+    private apiService: ApiServicePelicula,
     private fb: FormBuilder
   ) {}
 
@@ -112,7 +112,7 @@ export class EditarPelicula implements OnInit {
   inicio() {
     this.router.navigate(['/home']);
   }
-<<<<<<< Updated upstream
+
   onSave(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -143,9 +143,4 @@ export class EditarPelicula implements OnInit {
         alert('Error al actualizar la película.');
       });
   }
-=======
-  
->>>>>>> Stashed changes
 }
-
-

@@ -1,9 +1,9 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../../services/api.service';
 import { CommonModule } from '@angular/common';
+import { ApiServiceUsuario } from '../../../../services/api.service.usuario';
 
 @Component({
   selector: 'app-registrar-permiso',
@@ -15,11 +15,16 @@ import { CommonModule } from '@angular/common';
 export class RegistrarPermisoComponent {
   form: FormGroup;
   error: string | null = null;
-  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiServiceUsuario,
+    private router: Router
+  ) {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
+
   onSave() {
     if (this.form.invalid) {
       alert('Por favor, completa  los campos correctamente.');

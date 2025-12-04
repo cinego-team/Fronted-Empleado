@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
-import { ApiService } from '../../../services/api.service';
+import { ApiServicePromociones } from '../../../services/api.service.promociones';
 
 @Component({
   selector: 'app-registrar-promocion',
@@ -15,7 +15,11 @@ export class RegistrarPromocion {
   form: FormGroup;
   promocion: any;
   error: string | null = null;
-  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiServicePromociones,
+    private router: Router
+  ) {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       diaId: ['', [Validators.required]],
@@ -23,6 +27,7 @@ export class RegistrarPromocion {
       cliente: ['', [Validators.required]],
     });
   }
+
   onSave() {
     if (this.form.invalid) {
       alert('Por favor, completa  los campos correctamente.');
@@ -45,6 +50,7 @@ export class RegistrarPromocion {
         });
     }
   }
+
   volver() {
     this.router.navigate(['/promocion/lista']);
   }

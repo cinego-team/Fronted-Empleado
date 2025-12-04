@@ -1,8 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
-import { ApiService } from '../../../../services/api.service';
+import { ApiServiceUsuario } from '../../../../services/api.service.usuario';
 
 @Component({
   selector: 'app-lista-permiso',
@@ -12,7 +11,7 @@ import { ApiService } from '../../../../services/api.service';
   styleUrls: ['./lista-permiso.css'],
 })
 export class ListaPermisoComponent {
-  constructor(private router: Router, private readonly apiService: ApiService) {}
+  constructor(private router: Router, private readonly apiService: ApiServiceUsuario) {}
   permisos: Array<{
     id: number;
     nombre: string;
@@ -22,6 +21,7 @@ export class ListaPermisoComponent {
   ngOnInit(): void {
     this.initialization();
   }
+
   async initialization(): Promise<void> {
     const data = await this.apiService.getAllPermisos();
     if (data.length === 0) {
@@ -30,6 +30,7 @@ export class ListaPermisoComponent {
     }
     this.permisos = data;
   }
+
   seleccionar(rowId: number) {
     this.selec = rowId;
   }
@@ -43,13 +44,13 @@ export class ListaPermisoComponent {
     const selectedC = this.permisos[this.selec];
 
     if (confirm(`¿Estás seguro de que querés eliminar ?`)) {
-          this.apiService
-            .deletePermiso(selectedC.id)
-            .then(() => {
-              alert('Permiso eliminado correctamente.');
-              this.permisos.splice(this.selec!, 1);
-              this.selec = null;
-          })
+      this.apiService
+        .deletePermiso(selectedC.id)
+        .then(() => {
+          alert('Permiso eliminado correctamente.');
+          this.permisos.splice(this.selec!, 1);
+          this.selec = null;
+        })
         .catch((error) => {
           console.error('Error al eliminar', error);
           alert('Ocurrió un error al eliminar');
@@ -64,6 +65,7 @@ export class ListaPermisoComponent {
   volver() {
     this.router.navigate(['/home']);
   }
+
   inicio() {
     this.router.navigate(['/home']);
   }

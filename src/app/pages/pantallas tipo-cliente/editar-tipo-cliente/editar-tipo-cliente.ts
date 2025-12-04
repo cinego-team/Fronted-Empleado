@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../services/api.service';
 import { ActivatedRoute } from '@angular/router';
+import { ApiServiceUsuario } from '../../../services/api.service.usuario';
 
 @Component({
   selector: 'app-editar-tipo-cliente',
@@ -18,7 +18,7 @@ export class EditarTipoCliente implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiServiceUsuario
   ) {}
 
   ngOnInit() {
@@ -40,6 +40,7 @@ export class EditarTipoCliente implements OnInit {
       alert('Error al obtener el tipo de cliente:');
     }
   }
+
   onSave() {
     const modifiedKeys = Object.keys(this.tipoCliente).filter(
       (key) => key !== 'id' && this.tipoCliente[key] !== this.originalTipoCliente[key]
@@ -60,9 +61,11 @@ export class EditarTipoCliente implements OnInit {
 
     this.router.navigate(['/tipo-cliente/lista']);
   }
+
   volver() {
     this.router.navigate(['/tipo-cliente/lista']);
   }
+
   inicio() {
     this.router.navigate(['/home']);
   }

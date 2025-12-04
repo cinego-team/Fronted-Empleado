@@ -1,9 +1,9 @@
 <div class="page">
   <header class="topbar">
-    <img src="assets/logo.png" alt="CineGo" class="logo" />
-    <div class="user">
-      <span class="icon">👤</span>
-      <span class="label">Usuario</span>
+    <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()" />
+    <div class="user-section">
+      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
+      <span>Usuario</span>
     </div>
   </header>
 
@@ -11,7 +11,7 @@
     <section class="card">
       <h1>Editar Rol</h1>
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+      <form [formGroup]="form" (ngSubmit)="onSave()" class="form">
         <div class="pill">
           <label>ID:</label>
           <input id="id" type="text" formControlName="" />
