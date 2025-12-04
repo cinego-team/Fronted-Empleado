@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ApiService } from '../../../services/api.service';
+
+import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 
 @Component({
   selector: 'app-editar-estado-pelicula',
@@ -18,7 +19,7 @@ export class EditarEstadoPelicula implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiServicePelicula
   ) {}
 
   ngOnInit() {
@@ -40,6 +41,7 @@ export class EditarEstadoPelicula implements OnInit {
       alert('Error al obtener el estado:');
     }
   }
+
   onSave() {
     const modifiedKeys = Object.keys(this.estado).filter(
       (key) => key !== 'id' && this.estado[key] !== this.originalEstado[key]

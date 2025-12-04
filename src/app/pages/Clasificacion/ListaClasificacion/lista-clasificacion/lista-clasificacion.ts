@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../../../../services/api.service';
+
+import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
 
 interface ClasificacionRow {
   id: number;
@@ -16,7 +17,7 @@ interface ClasificacionRow {
   styleUrls: ['./lista-clasificacion.css'],
 })
 export class ListaClasificacionComponent {
-  constructor(private router: Router, private readonly apiService: ApiService) {}
+  constructor(private router: Router, private readonly apiService: ApiServicePelicula) {}
   clasificaciones: Array<{
     id: number;
     nombre: string;
@@ -26,6 +27,7 @@ export class ListaClasificacionComponent {
   ngOnInit(): void {
     this.initialization();
   }
+
   async initialization(): Promise<void> {
     const data = await this.apiService.getAllClasificaciones();
     if (data.length === 0) {
@@ -34,6 +36,7 @@ export class ListaClasificacionComponent {
     }
     this.clasificaciones = data;
   }
+
   seleccionar(rowId: number) {
     this.selec = rowId;
   }
@@ -60,6 +63,7 @@ export class ListaClasificacionComponent {
         });
     }
   }
+
   nuevo() {
     this.router.navigate(['/clasificacion/registrar']);
   }
@@ -72,8 +76,8 @@ export class ListaClasificacionComponent {
     const selected = this.clasificaciones[this.selec];
     this.router.navigate(['/clasificacion/editar', selected.id]);
   }
+
   volver() {
     this.router.navigate(['/home']);
   }
-
 }

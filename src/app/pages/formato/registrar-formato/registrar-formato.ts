@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../../../services/api.service';
+
 import { FormatoInput } from '../formato.dto';
+import { ApiServiceFunciones } from '../../../services/api.service.funciones';
 
 @Component({
   selector: 'app-registrar-formato',
@@ -16,7 +17,11 @@ export class RegistrarFormato {
   form: FormGroup;
   formato: any;
   error: string | null = null;
-  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiServiceFunciones,
+    private router: Router
+  ) {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       precio: [
@@ -28,6 +33,7 @@ export class RegistrarFormato {
       ],
     });
   }
+
   onSave() {
     if (this.form.invalid) {
       alert('Por favor, completa  los campos correctamente.');
@@ -52,7 +58,8 @@ export class RegistrarFormato {
   volver() {
     this.router.navigate(['/formato/lista']);
   }
-   inicio() {
+
+  inicio() {
     this.router.navigate(['/home']);
   }
 }

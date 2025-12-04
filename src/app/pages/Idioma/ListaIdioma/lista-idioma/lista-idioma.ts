@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../../../../services/api.service';
+
+import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
 
 interface Idioma {
   id: number;
@@ -16,7 +17,7 @@ interface Idioma {
   styleUrls: ['./lista-idioma.css'],
 })
 export class ListaIdiomaComponent {
-  constructor(private router: Router, private readonly apiService: ApiService) {}
+  constructor(private router: Router, private readonly apiService: ApiServicePelicula) {}
   idiomas: Array<{
     id: number;
     nombre: string;
@@ -26,6 +27,7 @@ export class ListaIdiomaComponent {
   ngOnInit(): void {
     this.initialization();
   }
+
   async initialization(): Promise<void> {
     const data = await this.apiService.getAllIdiomas();
     if (data.length === 0) {
@@ -34,6 +36,7 @@ export class ListaIdiomaComponent {
     }
     this.idiomas = data;
   }
+
   seleccionar(rowId: number) {
     this.selec = rowId;
   }
@@ -60,6 +63,7 @@ export class ListaIdiomaComponent {
         });
     }
   }
+
   editar() {
     if (this.selec === null) {
       alert('Seleccioná uno primero.');
@@ -76,5 +80,4 @@ export class ListaIdiomaComponent {
   volver() {
     this.router.navigate(['/home']);
   }
- 
 }

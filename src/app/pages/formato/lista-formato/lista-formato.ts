@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../services/api.service';
+
+import { ApiServiceFunciones } from '../../../services/api.service.funciones';
 
 @Component({
   selector: 'app-lista-formato',
@@ -10,7 +11,7 @@ import { ApiService } from '../../../services/api.service';
   imports: [CommonModule],
 })
 export class ListaFormatoComponent {
-  constructor(private router: Router, private readonly apiService: ApiService) {}
+  constructor(private router: Router, private readonly apiService: ApiServiceFunciones) {}
   formatos: Array<{
     id: number;
     nombre: string;
@@ -21,6 +22,7 @@ export class ListaFormatoComponent {
   ngOnInit(): void {
     this.initialization();
   }
+
   async initialization(): Promise<void> {
     const data = await this.apiService.findAll();
     if (data.length === 0) {
@@ -29,6 +31,7 @@ export class ListaFormatoComponent {
     }
     this.formatos = data;
   }
+
   seleccionar(rowId: number) {
     this.selec = rowId;
   }
@@ -72,5 +75,4 @@ export class ListaFormatoComponent {
   volver() {
     this.router.navigate(['/home']);
   }
-  
 }

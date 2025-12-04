@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../../services/api.service';
+import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
 
 @Component({
   selector: 'app-registrar-clasificacion',
@@ -14,11 +14,16 @@ import { ApiService } from '../../../../services/api.service';
 export class RegistrarClasificacionComponent {
   form: FormGroup;
   error: string | null = null;
-  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiServicePelicula,
+    private router: Router
+  ) {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
+
   onSave() {
     if (this.form.invalid) {
       alert('Por favor, completa  los campos correctamente.');
@@ -42,6 +47,7 @@ export class RegistrarClasificacionComponent {
   volver() {
     this.router.navigate(['/clasificacion/lista']);
   }
+
   inicio() {
     this.router.navigate(['/home']);
   }

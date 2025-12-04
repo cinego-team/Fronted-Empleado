@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { ApiService } from '../../services/api.service';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TokenTimeoutService } from '../../services/tokeTimeout.service';
+import { ApiServiceUsuario } from '../../services/api.service.usuario';
 @Component({
   selector: 'app-login',
   imports: [FormsModule],
@@ -14,7 +14,7 @@ export class LoginComponent {
   password: string = '';
 
   constructor(
-    private apiService: ApiService,
+    private apiService: ApiServiceUsuario,
     private router: Router,
     private tokenTimeoutService: TokenTimeoutService
   ) {}

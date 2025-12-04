@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../services/api.service';
+import { ApiServiceFunciones } from '../../../services/api.service.funciones';
 
 @Component({
   selector: 'app-editar-funcion',
@@ -19,7 +19,7 @@ export class EditarFuncion implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiServiceFunciones
   ) {}
 
   ngOnInit() {
@@ -41,6 +41,7 @@ export class EditarFuncion implements OnInit {
       alert('Error al obtener el funcion:');
     }
   }
+
   editar() {
     const modifiedKeys = Object.keys(this.funcion).filter(
       (key) => key !== 'id' && this.funcion[key] !== this.originalfuncion[key]
@@ -61,9 +62,11 @@ export class EditarFuncion implements OnInit {
 
     this.router.navigate(['/funcion/lista']);
   }
-   volver() {
+
+  volver() {
     this.router.navigate(['/funcion/lista']);
   }
+
   inicio() {
     this.router.navigate(['/home']);
   }

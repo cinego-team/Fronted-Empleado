@@ -1,30 +1,30 @@
-import { Component } from "@angular/core"
-import { Router } from "@angular/router"
-import { FormBuilder, type FormGroup, Validators } from "@angular/forms"
-import { ApiService } from "../../../services/api.service"
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, type FormGroup, Validators } from '@angular/forms';
+import { ApiServiceFunciones } from '../../../services/api.service.funciones';
 
 @Component({
-  selector: "app-registrar-funcion",
+  selector: 'app-registrar-funcion',
   imports: [],
   standalone: true,
-  templateUrl: "./registrar-funcion.html",
-  styleUrl: "./registrar-funcion.css",
+  templateUrl: './registrar-funcion.html',
+  styleUrl: './registrar-funcion.css',
 })
 export class RegistrarFuncion {
-  funcionForm: FormGroup
-  loading = false
-  errorMessage = ""
+  funcionForm: FormGroup;
+  loading = false;
+  errorMessage = '';
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private apiService: ApiService,
+    private apiService: ApiServiceFunciones
   ) {
     this.funcionForm = this.fb.group({
-      nrofuncion: ["", [Validators.required, Validators.min(1)]],
-      capacidad: ["", [Validators.required, Validators.min(1)]],
+      nrofuncion: ['', [Validators.required, Validators.min(1)]],
+      capacidad: ['', [Validators.required, Validators.min(1)]],
       estaDisponible: [true],
-    })
+    });
   }
 
   registrar() {
@@ -32,7 +32,6 @@ export class RegistrarFuncion {
       alert('Por favor, completa  los campos correctamente.');
       return;
     } else if (this.funcionForm.valid) {
-
       this.apiService
         .createFuncion(this.funcionForm.value)
         .then(() => {

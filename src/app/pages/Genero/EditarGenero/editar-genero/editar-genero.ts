@@ -1,9 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../../services/api.service';
+import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
 
 @Component({
   selector: 'app-editar-genero',
@@ -19,7 +19,7 @@ export class EditarGeneroComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiServicePelicula
   ) {}
 
   ngOnInit() {
@@ -41,6 +41,7 @@ export class EditarGeneroComponent implements OnInit {
       alert('Error al obtener el genero:');
     }
   }
+
   onSave() {
     const modifiedKeys = Object.keys(this.genero).filter(
       (key) => key !== 'id' && this.genero[key] !== this.originalGenero[key]
@@ -61,9 +62,11 @@ export class EditarGeneroComponent implements OnInit {
 
     this.router.navigate(['/genero/lista']);
   }
+
   volver() {
     this.router.navigate(['/genero/lista']);
   }
+
   inicio() {
     this.router.navigate(['/home']);
   }

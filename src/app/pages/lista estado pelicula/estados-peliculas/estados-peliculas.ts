@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../services/api.service';
-import { GlobalStatusService } from '../../../services/global-status.service';
+import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 
 @Component({
   selector: 'app-estados-peliculas',
@@ -10,7 +9,7 @@ import { GlobalStatusService } from '../../../services/global-status.service';
   styleUrl: './estados-peliculas.css',
 })
 export class EstadosPeliculas {
-  constructor(private router: Router, private readonly apiService: ApiService) {}
+  constructor(private router: Router, private readonly apiService: ApiServicePelicula) {}
   estados: Array<{
     id: number;
     nombre: string;
@@ -28,6 +27,7 @@ export class EstadosPeliculas {
     }
     this.estados = data;
   }
+
   seleccionar(rowId: number) {
     this.selec = rowId;
   }
@@ -71,6 +71,7 @@ export class EstadosPeliculas {
   onBack() {
     this.router.navigate(['/home']);
   }
+
   inicio() {
     this.router.navigate(['/home']);
   }

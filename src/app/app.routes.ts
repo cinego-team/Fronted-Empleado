@@ -62,7 +62,6 @@ export const routes: Routes = [
   //tipos cliente
   { path: 'tipo-cliente/registrar', component: RegistrarTipoCliente },
   { path: 'tipo-cliente/editar', component: EditarTipoCliente },
-
   { path: 'tipo-cliente/lista', component: TiposCliente },
 
   { path: 'ventas', component: Ventas },

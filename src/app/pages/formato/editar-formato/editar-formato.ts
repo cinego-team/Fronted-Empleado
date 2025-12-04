@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../../services/api.service';
+import { ApiServiceFunciones } from '../../../services/api.service.funciones';
 
 @Component({
   selector: 'app-editar-formato',
@@ -17,7 +17,7 @@ export class EditarFormatoComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiServiceFunciones
   ) {}
 
   ngOnInit() {
@@ -59,9 +59,11 @@ export class EditarFormatoComponent implements OnInit {
 
     this.router.navigate(['/formato/lista']);
   }
+
   volver() {
     this.router.navigate(['/formato/lista']);
   }
+
   inicio() {
     this.router.navigate(['/home']);
   }

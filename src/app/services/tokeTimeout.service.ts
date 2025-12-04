@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
+import { ApiServiceUsuario } from './api.service.usuario';
 
 @Injectable({ providedIn: 'root' })
 export class TokenTimeoutService {
   private timeoutRef!: ReturnType<typeof setTimeout>;
   private timeoutMs = 15 * 60 * 1000; // 15 minutos, duracion del token
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiServiceUsuario) {}
 
   startCountdown() {
     this.clear(); // por si ya estaba corriendo

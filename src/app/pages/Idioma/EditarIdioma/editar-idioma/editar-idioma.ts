@@ -1,9 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../../services/api.service';
+import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
 
 @Component({
   selector: 'app-editar-idioma',
@@ -19,7 +19,7 @@ export class EditarIdiomaComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiServicePelicula
   ) {}
 
   ngOnInit() {
@@ -41,6 +41,7 @@ export class EditarIdiomaComponent implements OnInit {
       alert('Error al obtener el idioma:');
     }
   }
+
   onSave() {
     const modifiedKeys = Object.keys(this.idioma).filter(
       (key) => key !== 'id' && this.idioma[key] !== this.originalIdioma[key]
@@ -61,9 +62,11 @@ export class EditarIdiomaComponent implements OnInit {
 
     this.router.navigate(['/idioma/lista']);
   }
+
   volver() {
     this.router.navigate(['/idioma/lista']);
   }
+
   inicio() {
     this.router.navigate(['/home']);
   }

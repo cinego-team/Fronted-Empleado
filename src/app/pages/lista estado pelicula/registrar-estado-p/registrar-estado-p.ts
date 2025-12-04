@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ApiService } from './../../../services/api.service';
+
+import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 
 @Component({
   selector: 'app-registrar-estado',
@@ -15,11 +16,16 @@ export class RegistrarEstadoPeliculaComponent {
   form: FormGroup;
   estado: any;
   error: string | null = null;
-  constructor(private fb: FormBuilder, private apiService: ApiService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiServicePelicula,
+    private router: Router
+  ) {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
+
   onSave() {
     if (this.form.invalid) {
       alert('Por favor, completa  los campos correctamente.');
