@@ -2,12 +2,12 @@ export class EditPromocionInput {
   id?: number;
   nombre?: string;
   porcentajeDescuento?: number;
-  tipoClienteId?: number;
-  diaId?: number;
+  tipoCliente?: string;
+  dia?: string;
 }
 export class EditPromocionOutput {
   nombre?: string;
   porcentajeDescuento?: number;
-  diaId?: number;
-  tipoClienteId?: number;
+  dia?: string;
+  tipoCliente?: string;
 }

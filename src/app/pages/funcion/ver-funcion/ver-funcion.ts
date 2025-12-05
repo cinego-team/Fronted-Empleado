@@ -17,8 +17,11 @@ export class VerFuncion implements OnInit {
     fecha: Date;
     hora: Date;
     disponible: string;
-    sala: number;
-    formato: string;
+    NumeroSala: number;
+    formato: {
+      nombre: string;
+      precio: number;
+    };
   } | null = null;
 
   isLoading = true;
@@ -30,33 +33,20 @@ export class VerFuncion implements OnInit {
     private apiService: ApiServiceFunciones
   ) {}
 
-  ngOnInit() {
-    const funcionId = this.route.snapshot.paramMap.get('id');
-    if (funcionId) {
-      this.cargarFuncion(+funcionId);
-    } else {
-      this.errorMessage = 'No se proporcionó un ID de función válido.';
-      this.isLoading = false;
-    }
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.apiService
+      .getFuncionById(id)
+      .then((data) => {
+        this.funcion = data;
+        this.isLoading = false;
+      })
+      .catch((err) => {
+        this.errorMessage = 'Error al cargar la función';
+        this.isLoading = false;
+      });
   }
-
-  async cargarFuncion(id: number): Promise<void> {
-    try {
-      this.isLoading = true;
-      this.errorMessage = '';
-
-      this.funcion = await this.apiService.getFuncionById(id);
-
-      console.log('[v0] Función cargada:', this.funcion);
-    } catch (error) {
-      console.error('[v0] Error al cargar función:', error);
-      this.errorMessage = 'Error al cargar la función. Por favor, intenta nuevamente.';
-      this.funcion = null;
-    } finally {
-      this.isLoading = false;
-    }
-  }
-
   volver() {
     this.router.navigate(['/funcion/lista']);
   }

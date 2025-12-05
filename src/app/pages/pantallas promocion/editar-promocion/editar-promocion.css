@@ -32,83 +32,68 @@
   height: 48px;
 }
 
-/* Layout */
+/* CONTENEDOR PRINCIPAL */
 .wrap {
   display: grid;
   place-items: center;
   padding: 24px;
 }
+
+/* CARD */
 .card {
-  width: min(1000px, 92vw);
-  background: #7d1c16; /* panel rojo oscuro */
+  width: min(900px, 92vw);
+  background: #7d1c16; /* rojo oscuro */
   border-radius: 24px;
-  padding: 36px 28px 40px;
+  padding: 36px 28px 28px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
+
 .card h1 {
   text-align: center;
-  margin: 0 0 18px;
+  margin: 0 0 28px;
   font-size: 28px;
   font-weight: 700;
   color: #ffffff;
 }
 
+/* FORM */
 .form {
   display: grid;
   justify-items: center;
-  gap: 16px;
-  color: #ffffff;
+  gap: 14px;
 }
 
-/* “Píldora” ID */
-.pill {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #eac4c1;
-  color: #5a2422;
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-weight: 700;
-}
-.pill input {
-  width: 110px;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: #5a2422;
-  font-weight: 700;
+.form label {
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: #fff;
 }
 
-/* Nombre */
-.lbl {
-  margin-top: 6px;
-}
-input[type='text'] {
-  width: min(560px, 82vw);
-  padding: 12px 16px;
+.form input {
+  width: min(520px, 80vw);
+  padding: 10px 14px;
   border-radius: 999px;
   border: none;
   outline: none;
-  background: #eac4c1;
+  background: #eac4c1; /* rosado claro */
   color: #300;
   font-size: 16px;
 }
-input.invalid {
+
+.form input.invalid {
   outline: 2px solid #ffd1d1;
   background: #ffe9e9;
 }
 
 .error {
-  width: min(560px, 82vw);
+  width: min(520px, 80vw);
   color: #ffd3d3;
   font-size: 12px;
   text-align: left;
   margin-top: -6px;
 }
 
-/* Botón */
-button {
+.form button {
   background-color: #f2dede;
   color: #541b1b;
   border: none;
@@ -117,11 +102,13 @@ button {
   cursor: pointer;
   font-weight: bold;
 }
-button:disabled {
+
+.form button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
-button:not(:disabled):active {
+
+.form button:not(:disabled):active {
   transform: translateY(1px);
 }
 .button-group {

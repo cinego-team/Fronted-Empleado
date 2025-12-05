@@ -1,54 +1,53 @@
-
-  <header class="topbar">
-    <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="volver()" />
-    <div class="user-section">
-      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
-      <span>Usuario</span>
-    </div>
-  </header>
-
-  <!-- Título -->
-  <h1 class="titulo">FUNCIONES</h1>
-
-  <!-- Tabla -->
-  <div class="tabla-container">
-    <table class="tabla-funciones">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Pelicula</th>
-          <th>Fecha</th>
-          <th>Hora</th>
-          <th>Disponible</th>
-          <th>Sala</th>
-          <th>Formato</th>
-        </tr>
-      </thead>
-        <tbody>
-        <tr *ngFor="let funcion of funciones; let i = index"
-            [class.selected]="selectedIndex === i"
-            (click)="selectRow(i)">
-            <td>{{ funcion.id }}</td>
-            <td>{{ funcion.pelicula }}</td>
-            <td>{{ funcion.fecha }}</td>
-            <td>{{ funcion.hora }}</td>
-            <td>{{ funcion.disponible }}</td>
-            <td>{{ funcion.sala }}</td>
-            <td>{{ funcion.formato }}</td>
-            
-        </tr>
-      </tbody>
-    </table>
+<header class="topbar">
+  <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="volver()" />
+  <div class="user-section">
+    <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
+    <span>Usuario</span>
   </div>
+</header>
 
-  <!-- Botones -->
-  <div class="botones">
-    <button class="btn" (click)="volver()">VOLVER</button>
-    <button class="btn" (click)="nuevafuncion()">NUEVA</button>
-    <button class="btn" (click)="editarfuncion()">EDITAR</button>
-    <button class="btn">ELIMINAR</button>
-    <button class="btn" (click)="ver()">VER</button>
-  </div>
+<!-- Título -->
+<h1 class="titulo">FUNCIONES</h1>
 
-  
+<!-- Tabla -->
+<div class="tabla-container">
+  <table class="tabla-funciones">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Pelicula</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Disponible</th>
+        <th>Numero de Sala</th>
+        <th>Nombre Formate</th>
+        <th>Precio entrada</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let funcion of funciones; let i = index"
+        [class.selected]="selectedIndex === i"
+        (click)="selectRow(i)"
+      >
+        <td>{{ funcion.id }}</td>
+        <td>{{ funcion.pelicula }}</td>
+        <td>{{ funcion.fecha }}</td>
+        <td>{{ funcion.hora }}</td>
+        <td>{{ funcion.disponible }}</td>
+        <td>{{ funcion.sala }}</td>
+        <td>{{ funcion.formato.nombre }}</td>
+        <td>{{ funcion.formato.precio }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
+<!-- Botones -->
+<div class="botones">
+  <button class="btn" (click)="volver()">VOLVER</button>
+  <button class="btn" (click)="nuevafuncion()">NUEVA</button>
+  <button class="btn" (click)="editarfuncion()">EDITAR</button>
+  <button class="btn">ELIMINAR</button>
+  <button class="btn" (click)="ver()">VER</button>
+</div>

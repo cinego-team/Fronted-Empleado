@@ -18,8 +18,8 @@ export class Promociones {
     id: number;
     nombre: string;
     porcentajeDescuento: number;
-    tipoClienteId: number;
-    diaId: number;
+    tipoCliente: string;
+    dia: string;
   }> = [];
   selectedRow: number | null = null;
   actualPage: number = 1;

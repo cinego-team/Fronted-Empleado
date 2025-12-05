@@ -16,8 +16,11 @@ export class ListaFuncion implements OnInit {
     fecha: Date;
     hora: Date;
     disponible: string;
-    sala: number;
-    formato: string;
+    sala: { numeroSala: number };
+    formato: {
+      nombre: string;
+      precio: number;
+    };
   }> = [];
 
   selectedIndex: number | null = null;
@@ -44,13 +47,13 @@ export class ListaFuncion implements OnInit {
         fecha: funcion.fecha,
         hora: funcion.hora,
         disponible: funcion.disponible,
-        sala: funcion.sala,
-        formato: funcion.formato,
+        sala: { numeroSala: funcion.NumeroSala }, // anidado
+        formato: { nombre: funcion.formato.nombre, precio: funcion.formato.precio }, // anidado
       }));
 
-      console.log('[v0] funciones cargadas:', this.funciones);
+      console.log(' funciones cargadas:', this.funciones);
     } catch (error) {
-      console.error('[v0] Error al cargar funciones:', error);
+      console.error('Error al cargar funciones:', error);
       this.errorMessage = 'Error al cargar las funciones. Por favor, intenta nuevamente.';
       this.funciones = [];
     } finally {
@@ -74,7 +77,7 @@ export class ListaFuncion implements OnInit {
   ver() {
     if (this.selectedIndex !== null) {
       const id = this.funciones[this.selectedIndex].id;
-      this.router.navigate(['/funcion/ver', id]);
+      this.router.navigate(['/funcion/funcion', id]);
     } else {
       alert('Selecciona una funcion primero');
     }

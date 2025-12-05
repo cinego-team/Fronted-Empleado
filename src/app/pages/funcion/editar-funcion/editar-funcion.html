@@ -1,34 +1,39 @@
 <!-- Header con logo y usuario -->
 <header class="topbar">
-    <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()"/>
-    <div class="user-section">
-      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
-      <span>Usuario</span>
-    </div>
-  </header>
-  <div class="container">
-  
-
+  <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()" />
+  <div class="user-section">
+    <img src="/assets/usuario.png" alt="Usuario" class="user-icon" /> <span>Usuario</span>
+  </div>
+</header>
+<div class="container">
   <!-- Formulario principal -->
   <main class="form-card">
     <h2>Editar Función</h2>
+    <form [formGroup]="form" (ngSubmit)="editar()">
+      <div class="form-groupId">
+        <label for="id">ID</label>
+        <input id="id" type="text" [value]="form.get('id')?.value" disabled />
+      </div>
 
-    <form>
-        <div class="form-groupId">
-            <label for="id"></label>
-            <input id="id" type="text"  placeholder="ID:" disabled />
-        </div>
       <div class="form-row">
         <div class="form-group">
           <label for="pelicula">Película</label>
-          <select id="pelicula">
-            <option>Seleccione la pelicula</option>
+          <select id="pelicula" formControlName="pelicula">
+            <option value="" disabled>Seleccione la película</option>
+            @for (p of peliculas; track p.id) {
+            <option [value]="p.id">{{ p.titulo }}</option>
+            }
           </select>
         </div>
+
         <div class="form-group">
           <label for="formato">Formato</label>
-          <select id="formato">
-            <option>Seleccione el formato</option>
+          <select id="formato" formControlName="formato">
+            <option [ngValue]="null" disabled selected>Seleccione el formato</option>
+
+            <option *ngFor="let f of formatos" [ngValue]="f">
+              {{ f.nombre }} - ${{ f.precio }}
+            </option>
           </select>
         </div>
       </div>
@@ -36,16 +41,16 @@
       <div class="form-row">
         <div class="form-group fecha">
           <label for="fecha">Fecha</label>
-          <div class="fecha-inputs">
-            <select><option>Día</option></select>
-            <select><option>Mes</option></select>
-            <select><option>Año</option></select>
-          </div>
+          <input formControlName="fecha" type="date" id="fecha" />
         </div>
+
         <div class="form-group">
           <label for="sala">Sala</label>
-          <select id="sala">
-            <option>Seleccione la sala</option>
+          <select id="sala" formControlName="sala">
+            <option value="" disabled>Seleccione la sala</option>
+            @for (s of salas; track s.numeroSala) {
+            <option [value]="s.numeroSala">Sala {{ s.numeroSala }}</option>
+            }
           </select>
         </div>
       </div>
@@ -53,25 +58,21 @@
       <div class="form-row">
         <div class="form-group">
           <label for="hora">Hora</label>
-          <input type="time" id="hora" />
+          <input type="time" id="hora" formControlName="hora" />
         </div>
+
         <div class="form-group">
           <label for="disponible">Disponible</label>
-          <select id="disponible">
-            <option>Fuera de cartelera</option>
-            <option>En cartelera</option>
-            <option>Proximo estreno</option>
-
+          <select id="disponible" formControlName="disponible">
+            <option [value]="true">Disponible</option>
+            <option [value]="false">No Disponible</option>
           </select>
         </div>
       </div>
 
       <div class="form-actions">
-      <button type="submit" class="btn" (click)="editar()">GUARDAR</button>
+        <button type="submit" class="btn">GUARDAR</button>
       </div>
     </form>
   </main>
-   <div class="botones">
-    <button class="btn" (click)="volver()">VOLVER</button>
-    </div>
 </div>

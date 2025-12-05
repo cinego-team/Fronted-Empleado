@@ -6,14 +6,14 @@ import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 
 @Component({
   selector: 'app-registrar-pelicula',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './registrar-pelicula.html',
   styleUrl: './registrar-pelicula.css',
 })
 export class RegistrarPelicula implements OnInit {
   form!: FormGroup;
-  restaurant: any;
-  error: string | null = null;
+
   estados: any[] = [];
   clasificaciones: any[] = [];
   generos: any[] = [];
@@ -24,28 +24,25 @@ export class RegistrarPelicula implements OnInit {
     private fb: FormBuilder,
     private apiService: ApiServicePelicula
   ) {}
-  async ngOnInit(): Promise<void> {
-    this.form = this.fb.group({
-      titulo: ['', [Validators.required, Validators.minLength(2)]],
-      duracion: ['', [Validators.required, Validators.min(0)]],
-      fechaEstrenoDia: [''],
-      fechaEstrenoMes: [''],
-      fechaEstrenoAnio: [''],
-      director: [''],
-      sinopsis: [''],
-      urlImagen: [
-        [
-          '',
-          Validators.required,
-          Validators.pattern(/^https?:\/\/.+\.(jpg|jpeg|png|gif)(\?.*)?$/i),
-        ],
-      ],
 
-      estado: [''],
-      clasificacion: [''],
-      genero: [''],
-      idioma: [''],
+  async ngOnInit(): Promise<void> {
+    // Formulario nuevo
+    this.form = this.fb.group({
+      titulo: ['', Validators.required],
+      duracion: ['', Validators.required],
+      fechaEstreno: ['', Validators.required],
+      director: ['', Validators.required],
+      sinopsis: ['', Validators.required],
+      urlImagen: ['', Validators.required],
+
+      // IDs seleccionados
+      estado: ['', Validators.required],
+      clasificacion: ['', Validators.required],
+      genero: ['', Validators.required],
+      idioma: ['', Validators.required],
     });
+
+    // Cargar listas desde backend
     try {
       this.estados = await this.apiService.getAllEstados();
       this.clasificaciones = await this.apiService.getAllClasificaciones();
@@ -72,22 +69,36 @@ export class RegistrarPelicula implements OnInit {
     }
 
     try {
-      const { fechaEstrenoDia, fechaEstrenoMes, fechaEstrenoAnio, ...rest } = this.form.value;
+      const data = this.form.value;
 
-      const fechaEstreno = `${fechaEstrenoAnio}-${String(fechaEstrenoMes).padStart(
-        2,
-        '0'
-      )}-${String(fechaEstrenoDia).padStart(2, '0')}`;
+      // Convertir ID → nombre (lo que necesita tu DTO)
+      const peliculaParaEnviar = {
+        titulo: data.titulo,
+        sinopsis: data.sinopsis,
+        director: data.director,
+        duracion: data.duracion,
+        fechaEstreno: data.fechaEstreno,
+        urlImagen: data.urlImagen,
 
-      const pelicula = { ...rest, fechaEstreno };
+        estado: this.estados.find((e) => e.id === Number(data.estado))?.nombre,
+        clasificacion: this.clasificaciones.find((c) => c.id === Number(data.clasificacion))
+          ?.nombre,
+        genero: this.generos.find((g) => g.id === Number(data.genero))?.nombre,
+        idioma: this.idiomas.find((i) => i.id === Number(data.idioma))?.nombre,
 
-      await this.apiService.createPelicula(pelicula);
+        empleado: {
+          nombre: 'Sistema', // O lo que quieras enviar
+          apellido: 'Auto',
+        },
+      };
+
+      await this.apiService.createPelicula(peliculaParaEnviar);
 
       alert('Película creada correctamente.');
       this.router.navigate(['/pelicula/lista']);
     } catch (error) {
-      console.error('Error al crear la película:', error);
-      alert('Error al crear la película. Por favor, inténtalo de nuevo más tarde.');
+      console.error('Error al crear película:', error);
+      alert('Error al crear la película.');
     }
   }
 }

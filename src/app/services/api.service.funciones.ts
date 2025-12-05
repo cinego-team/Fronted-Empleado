@@ -3,7 +3,7 @@ import { config } from '../axios_service/env';
 import { axiosAPIFuncionesYsalas } from '../axios_service/axios.client';
 import { SalaInput } from '../pages/sala/sala-dto';
 import { FormatoInput, FormatoOutput } from '../pages/formato/formato.dto';
-import { FuncionInput } from '../pages/funcion/funcion-dto';
+import { EditFuncion, FuncionInput } from '../pages/funcion/funcion-dto';
 @Injectable({ providedIn: 'root' })
 export class ApiServiceFunciones {
   constructor() {}
@@ -127,23 +127,38 @@ export class ApiServiceFunciones {
       fecha: Date;
       hora: Date;
       disponible: string;
-      sala: number;
-      formato: string;
+      NumeroSala: number;
+      formato: {
+        nombre: string;
+        precio: number;
+      };
     }>
   > {
     try {
       const response = await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getFunciones);
       const datos = response.data;
 
-      return datos.map((item: any) => ({
-        id: item.id,
-        pelicula: item.pelicula,
-        fecha: item.fecha,
-        hora: item.fecha,
-        disponible: item.disponible,
-        sala: item.sala,
-        formato: item.formato,
-      }));
+      return datos.map(
+        (item: {
+          id: any;
+          pelicula: any;
+          fecha: any;
+          hora: any;
+          disponible: any;
+          sala: { numeroSala: any };
+
+          formato: { nombre: any; precio: any };
+        }) => ({
+          id: item.id,
+          pelicula: item.pelicula,
+          fecha: item.fecha,
+          hora: item.fecha,
+          disponible: item.disponible,
+          numeroSala: item.sala.numeroSala,
+          nombre: item.formato.nombre,
+          precio: item.formato.precio,
+        })
+      );
     } catch (error) {
       console.error('Error al obtener funciones:', error);
       return [];
@@ -155,8 +170,11 @@ export class ApiServiceFunciones {
     fecha: Date;
     hora: Date;
     disponible: string;
-    sala: number;
-    formato: string;
+    NumeroSala: number;
+    formato: {
+      nombre: string;
+      precio: number;
+    };
   }> {
     const item = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getFuncionById(id)))
       .data;
@@ -166,20 +184,29 @@ export class ApiServiceFunciones {
       fecha: item.fecha,
       hora: item.fecha,
       disponible: item.disponible,
-      sala: item.sala,
-      formato: item.formato,
+      NumeroSala: item.sala.numeroSala,
+      formato: {
+        nombre: item.formato.nombre,
+        precio: item.formato.precio,
+      },
     };
   }
 
-  async createFuncion(funcionData: {
-    pelicula: string;
-    fecha: Date;
-    hora: Date;
-    disponible: string;
-    sala: number;
-    formato: string;
-  }): Promise<void> {
-    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createFuncion, funcionData);
+  async createFuncion(formulario: any): Promise<void> {
+    const nuevaFuncion: EditFuncion = {
+      pelicula: formulario.get('pelicula').value,
+      fecha: formulario.get('fecha').value,
+      hora: formulario.get('hora').value,
+      disponible: formulario.get('disponibilidad').value,
+      sala: {
+        numeroSala: formulario.get('sala').value,
+      },
+      formato: {
+        nombre: formulario.get('formato').value,
+        precio: formulario.get('precio').value,
+      },
+    };
+    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createFuncion, nuevaFuncion);
   }
 
   async updateFuncion(funcion: FuncionInput): Promise<void> {
@@ -189,7 +216,10 @@ export class ApiServiceFunciones {
       hora: funcion.hora,
       disponible: funcion.disponible,
       sala: funcion.sala,
-      formato: funcion.formato,
+      formato: {
+        nombre: funcion.formato?.nombre,
+        precio: funcion.formato?.precio,
+      },
     };
     await axiosAPIFuncionesYsalas.put(
       `${config.APIFuncionesUrls.updateFuncion(funcion.id!)}`,

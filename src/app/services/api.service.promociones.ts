@@ -12,8 +12,8 @@ export class ApiServicePromociones {
     id: number;
     nombre: string;
     porcentajeDescuento: number;
-    diaId: number;
-    tipoClienteId: number;
+    dia: string;
+    tipoCliente: string;
   }> {
     const datos = (await axiosAPIPromociones.get(config.APIPromocionesUrls.getPromocionById(id)))
       .data;
@@ -21,8 +21,8 @@ export class ApiServicePromociones {
       id: datos.id,
       nombre: datos.nombre,
       porcentajeDescuento: datos.porcentajeDescuento,
-      diaId: datos.diaId,
-      tipoClienteId: datos.tipoClienteId,
+      dia: datos.dia,
+      tipoCliente: datos.tipoCliente,
     };
   }
   async getPromociones(): Promise<
@@ -30,24 +30,18 @@ export class ApiServicePromociones {
       id: number;
       nombre: string;
       porcentajeDescuento: number;
-      tipoClienteId: number;
-      diaId: number;
+      tipoCliente: string;
+      dia: string;
     }>
   > {
     const datos = (await axiosAPIPromociones.get(config.APIPromocionesUrls.getPromociones)).data;
     const respuesta = datos.map(
-      (item: {
-        id: any;
-        nombre: any;
-        porcentajeDescuento: any;
-        tipoClienteId: any;
-        diaId: any;
-      }) => ({
-        id: datos.id,
+      (item: { id: any; nombre: any; porcentajeDescuento: any; tipoCliente: any; dia: any }) => ({
+        id: item.id,
         nombre: item.nombre,
-        procentajeDescuento: item.porcentajeDescuento,
-        tipoClienteId: item.tipoClienteId,
-        diaId: item.diaId,
+        porcentajeDescuento: item.porcentajeDescuento,
+        tipoCliente: item.tipoCliente,
+        dia: item.dia,
       })
     );
     return respuesta;
@@ -59,8 +53,8 @@ export class ApiServicePromociones {
     const nuevaPromocion: EditPromocionOutput = {
       nombre: formulario.get('nombre').value,
       porcentajeDescuento: formulario.get('porcentajeDescuento').value,
-      diaId: formulario.get('diaId').value,
-      tipoClienteId: formulario.get('tipoClienteId').value,
+      dia: formulario.get('dia').value,
+      tipoCliente: formulario.get('tipoCliente').value,
     };
     await axiosAPIPromociones.post(config.APIPromocionesUrls.createPromocion, nuevaPromocion);
   }
@@ -68,12 +62,27 @@ export class ApiServicePromociones {
     const data: EditPromocionOutput = {
       nombre: promocion.nombre,
       porcentajeDescuento: promocion.porcentajeDescuento,
-      diaId: promocion.diaId,
-      tipoClienteId: promocion.tipoClienteId,
+      dia: promocion.dia,
+      tipoCliente: promocion.tipoCliente,
     };
     await axiosAPIPromociones.put(
       `${config.APIPromocionesUrls.updatePromocion(promocion.id!)}`,
       data
     );
+  }
+  async getAllDias(): Promise<
+    Array<{
+      id: number;
+      nombre: string;
+    }>
+  > {
+    const datos = (await axiosAPIPromociones.get(config.APIPromocionesUrls.getDias)).data;
+
+    const respuesta = datos.map((item: { id: number; nombre: string }) => ({
+      id: item.id,
+      nombre: item.nombre,
+    }));
+
+    return respuesta;
   }
 }

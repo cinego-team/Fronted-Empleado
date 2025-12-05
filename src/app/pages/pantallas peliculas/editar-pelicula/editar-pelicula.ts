@@ -1,146 +1,143 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { EditPeliculaOutput } from './editar-pelicula.dto';
 import { ApiServicePelicula } from '../../../services/api.service.pelicula';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-editar-pelicula',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  selector: 'app-edit-pelicula',
   templateUrl: './editar-pelicula.html',
   styleUrls: ['./editar-pelicula.css'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
 })
-export class EditarPelicula implements OnInit {
-  pelicula: any;
-  originalPelicula: any;
+export class EditPeliculaComponent implements OnInit {
+  peliculaId!: number;
+  pelicula: any = null;
   form!: FormGroup;
-
-  estados: any[] = [];
-  clasificaciones: any[] = [];
-  generos: any[] = [];
   idiomas: any[] = [];
+  generos: any[] = [];
+  clasificaciones: any[] = [];
+  estados: any[] = [];
   anios: number[] = [];
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private apiService: ApiServicePelicula,
+    private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    const peliculaId = this.route.snapshot.paramMap.get('id');
-    this.initialization(peliculaId);
+    this.peliculaId = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.generarAnios();
+    this.crearFormulario();
+    this.cargarListas();
+    this.cargarPelicula();
   }
 
-  async initialization(peliculaId: string | null): Promise<void> {
-    if (!peliculaId) {
-      alert('No se proporcionó un ID de película válido.');
-      return;
-    }
-
-    try {
-      // 1Obtener la película
-      const fetched = await this.apiService.getPeliculaById(+peliculaId);
-      console.log('Película obtenida:', fetched);
-      this.pelicula = { ...fetched };
-      this.originalPelicula = { ...fetched };
-
-      //  Crear el formulario
-      // Normalizar posibles valores que pueden venir como objeto o como id directo
-      const estadoId =
-        fetched.estado && typeof fetched.estado === 'object'
-          ? (fetched.estado as any).id
-          : fetched.estado;
-      const clasificacionId =
-        fetched.clasificacion && typeof fetched.clasificacion === 'object'
-          ? (fetched.clasificacion as any).id
-          : fetched.clasificacion;
-      const generoId =
-        fetched.genero && typeof fetched.genero === 'object'
-          ? (fetched.genero as any).id
-          : fetched.genero;
-      const idiomaId =
-        fetched.idioma && typeof fetched.idioma === 'object'
-          ? (fetched.idioma as any).id
-          : fetched.idioma;
-
-      this.form = this.fb.group({
-        titulo: [fetched.titulo || '', [Validators.required, Validators.minLength(2)]],
-        duracion: [fetched.duracion || '', [Validators.required, Validators.min(1)]],
-        fechaEstrenoDia: [new Date(fetched.fechaEstreno).getDate()],
-        fechaEstrenoMes: [new Date(fetched.fechaEstreno).getMonth() + 1],
-        fechaEstrenoAnio: [new Date(fetched.fechaEstreno).getFullYear()],
-        director: [fetched.director || '', Validators.required],
-        sinopsis: [fetched.sinopsis || ''],
-        urlImagen: [
-          fetched.urlImagen || '',
-          [Validators.required, Validators.pattern(/^https?:\/\/.+\.(jpg|jpeg|png|gif)(\?.*)?$/i)],
-        ],
-        estado: [estadoId || ''],
-        clasificacion: [clasificacionId || ''],
-        genero: [generoId || ''],
-        idioma: [idiomaId || ''],
-      });
-
-      // Cargar listas para los selects
-      const [estados, clasificaciones, generos, idiomas] = await Promise.all([
-        this.apiService.getAllEstados(),
-        this.apiService.getAllClasificaciones(),
-        this.apiService.getAllGeneros(),
-        this.apiService.getAllIdiomas(),
-      ]);
-      this.estados = estados;
-      this.clasificaciones = clasificaciones;
-      this.generos = generos;
-      this.idiomas = idiomas;
-
-      //  Generar lista de años (para el select)
-      const currentYear = new Date().getFullYear();
-      this.anios = Array.from({ length: 100 }, (_, i) => currentYear - i);
-    } catch (error) {
-      console.error('Error en initialization:', error);
-      alert('Error al obtener la película o cargar datos del backend.');
-    }
+  // FORMULARIO REACTIVO
+  crearFormulario(): void {
+    this.form = this.fb.group({
+      titulo: ['', Validators.required],
+      estado: ['', Validators.required],
+      duracion: ['', Validators.required],
+      clasificacion: ['', Validators.required],
+      fechaEstrenoDia: ['', Validators.required],
+      fechaEstrenoMes: ['', Validators.required],
+      fechaEstrenoAnio: ['', Validators.required],
+      genero: ['', Validators.required],
+      director: ['', Validators.required],
+      idioma: ['', Validators.required],
+      sinopsis: ['', Validators.required],
+      urlImagen: ['', Validators.required],
+    });
   }
 
-  onBack() {
-    this.router.navigate(['/pelicula/lista']);
+  generarAnios(): void {
+    const anioActual = new Date().getFullYear();
+    for (let a = anioActual; a >= 1900; a--) this.anios.push(a);
   }
-  inicio() {
-    this.router.navigate(['/home']);
+
+  // Cargar listas del backend
+  cargarListas(): void {
+    this.apiService.getAllIdiomas().then((data) => (this.idiomas = data));
+    this.apiService.getAllGeneros().then((data) => (this.generos = data));
+    this.apiService.getAllClasificaciones().then((data) => (this.clasificaciones = data));
+    this.apiService.getAllEstados().then((data) => (this.estados = data));
   }
+
+  // Cargar película existente
+  cargarPelicula(): void {
+    this.apiService.getPeliculaById(this.peliculaId).then((data) => {
+      this.pelicula = {
+        id: data.id,
+        titulo: data.titulo,
+        sinopsis: data.sinopsis,
+        director: data.director,
+        duracion: data.duracion,
+        fechaEstreno: data.fechaEstreno,
+        idioma: data.idioma.nombre,
+        genero: data.genero.nombre,
+        clasificacion: data.clasificacion.nombre,
+        estado: data.estado.nombre,
+        empleado: { id: 1 },
+        urlImagen: data.urlImagen,
+      };
+
+      this.setFechaEstreno(data.fechaEstreno);
+    });
+  }
+
+  //convertir la fecha
+  setFechaEstreno(fecha: string): void {
+    const d = new Date(fecha);
+    this.form.patchValue({
+      fechaEstrenoDia: d.getDate(),
+      fechaEstrenoMes: d.getMonth() + 1,
+      fechaEstrenoAnio: d.getFullYear(),
+    });
+  }
+
+  // GUARDAR CAMBIOS
 
   onSave(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      alert('Por favor, completa todos los campos correctamente.');
+      alert('Por favor, completa los campos correctamente.');
       return;
     }
 
-    const updated: EditPeliculaOutput = this.form.value;
-    const modifiedKeys = Object.keys(updated).filter(
-      (key) => (updated as any)[key] !== (this.originalPelicula as any)[key]
-    );
+    const v = this.form.value;
 
-    if (modifiedKeys.length === 0) {
-      alert('No se cambió ningún dato.');
-      return;
-    }
-
-    const peliculaActualizada: EditPeliculaOutput = { ...this.originalPelicula, ...updated };
+    const payload = {
+      ...this.pelicula,
+      titulo: v.titulo,
+      sinopsis: v.sinopsis,
+      director: v.director,
+      duracion: v.duracion,
+      idioma: v.idioma,
+      genero: v.genero,
+      clasificacion: v.clasificacion,
+      estado: v.estado,
+      urlImagen: v.urlImagen,
+      fechaEstreno: `${v.fechaEstrenoAnio}-${v.fechaEstrenoMes}-${v.fechaEstrenoDia}`,
+    };
 
     this.apiService
-      .updatePelicula(peliculaActualizada)
+      .updatePelicula(payload)
       .then(() => {
-        alert('Película actualizada correctamente.');
+        alert('Película actualizada correctamente');
         this.router.navigate(['/pelicula/lista']);
       })
-      .catch((error) => {
-        console.error('Error al actualizar la película:', error);
-        alert('Error al actualizar la película.');
-      });
+      .catch((err) => console.error(err));
+  }
+
+  onBack(): void {
+    this.router.navigate(['/pelicula/lista']);
+  }
+  inicio(): void {
+    this.router.navigate(['/home']);
   }
 }

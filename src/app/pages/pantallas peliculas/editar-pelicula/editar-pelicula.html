@@ -6,93 +6,92 @@
     <span>Usuario</span>
   </div>
 </header>
+
 <div class="container">
-  <!-- Título -->
   <div class="editar-box">
     <h2>Editar película</h2>
 
-    <!-- Formulario -->
     @if (pelicula) {
     <form [formGroup]="form" (ngSubmit)="onSave()">
+      <!-- ID SOLO LECTURA -->
       <div class="form-row">
-        <label for="id">ID</label>
+        <label>ID</label>
         <div class="readonly-text">{{ pelicula.id }}</div>
       </div>
+
+      <!-- Título + Estado -->
       <div class="form-group">
-        <label for="titulo">Título</label>
-        <input id="titulo" formControlName="titulo" required />
-        <label for="estado">Estado</label>
-        <select id="estado" formControlName="estado">
-          <option *ngFor="let e of estados" [value]="e.id">
-            {{ e.nombre }}
-          </option>
+        <label>Título</label>
+        <input type="text" formControlName="titulo" />
+
+        <label>Estado</label>
+        <select formControlName="estado">
+          <option *ngFor="let e of estados" [value]="e.nombre">{{ e.nombre }}</option>
         </select>
       </div>
 
+      <!-- Duración + Clasificación -->
       <div class="form-group">
-        <label class="duracion">
-          Duración
-          <div class="duracion-input">
-            <input type="number" min="1" formControlName="duracion" required />
-            <span>min</span>
-          </div>
-          <label for="clasificacion">Clasificación</label>
-          <select id="clasificacion" formControlName="clasificacion">
-            <option *ngFor="let c of clasificaciones" [value]="c.id">
-              {{ c.nombre }}
+        <label>Duración</label>
+        <input type="number" formControlName="duracion" />
+
+        <label>Clasificación</label>
+        <select formControlName="clasificacion">
+          <option *ngFor="let c of clasificaciones" [value]="c.nombre">{{ c.nombre }}</option>
+        </select>
+      </div>
+
+      <!-- Fecha + Género -->
+      <div class="form-group">
+        <label>Fecha Estreno</label>
+        <div class="dob">
+          <select formControlName="fechaEstrenoDia">
+            <option *ngFor="let d of [].constructor(31); let i = index" [value]="i + 1">
+              {{ i + 1 }}
             </option>
           </select>
-        </label>
-      </div>
 
-      <div class="form-group">
-        <label>
-          Fecha Estreno
-          <div class="dob">
-            <select formControlName="fechaEstrenoDia">
-              <option *ngFor="let d of [].constructor(31); let i = index" [value]="i + 1">
-                {{ i + 1 }}
-              </option>
-            </select>
-            <select formControlName="fechaEstrenoMes">
-              <option *ngFor="let m of [].constructor(12); let i = index" [value]="i + 1">
-                {{ i + 1 }}
-              </option>
-            </select>
+          <select formControlName="fechaEstrenoMes">
+            <option *ngFor="let m of [].constructor(12); let i = index" [value]="i + 1">
+              {{ i + 1 }}
+            </option>
+          </select>
 
-            <select formControlName="fechaEstrenoAnio">
-              <option *ngFor="let a of anios" [value]="a">{{ a }}</option>
-            </select>
-          </div>
-        </label>
-        <label for="genero">Género</label>
-        <select id="genero" formControlName="genero">
-          <option *ngFor="let g of generos" [value]="g.id">
-            {{ g.nombre }}
-          </option>
+          <select formControlName="fechaEstrenoAnio">
+            <option *ngFor="let a of anios" [value]="a">{{ a }}</option>
+          </select>
+        </div>
+
+        <label>Género</label>
+        <select formControlName="genero">
+          <option *ngFor="let g of generos" [value]="g.nombre">{{ g.nombre }}</option>
         </select>
       </div>
 
+      <!-- Director + Idioma -->
       <div class="form-group">
-        <label for="director">Director</label>
-        <input id="director" type="text" formControlName="director" required />
+        <label>Director</label>
+        <input formControlName="director" type="text" />
 
-        <label for="idioma">Idioma</label>
-        <select id="idioma" formControlName="idioma">
-          <option *ngFor="let i of idiomas" [value]="i.id">
-            {{ i.nombre }}
-          </option>
+        <label>Idioma</label>
+        <select formControlName="idioma">
+          <option *ngFor="let i of idiomas" [value]="i.nombre">{{ i.nombre }}</option>
         </select>
       </div>
-      <label for="sinopsis">Sinopsis</label>
-      <input id="sinopsis" type="text" formControlName="sinopsis" required />
 
-      <label for="imagen">URL Imagen</label>
-      <input id="imagen" type="url" formControlName="urlImagen" required />
+      <!-- Sinopsis -->
+      <label>Sinopsis</label>
+      <textarea formControlName="sinopsis"></textarea>
+
+      <!-- Imagen -->
+      <label>URL Imagen</label>
+      <input type="text" formControlName="urlImagen" />
+
       <button class="btn" type="submit">GUARDAR</button>
     </form>
     }
   </div>
+
   <div class="button-group">
     <button class="btn" (click)="onBack()">VOLVER</button>
   </div>

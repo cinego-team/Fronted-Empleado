@@ -1,66 +1,106 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiServiceFunciones } from '../../../services/api.service.funciones';
+import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 
 @Component({
   selector: 'app-editar-funcion',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './editar-funcion.html',
   styleUrls: ['./editar-funcion.css'],
 })
 export class EditarFuncion implements OnInit {
-  funcion: any;
-  originalfuncion: any;
+  form!: FormGroup;
+
+  peliculas: any[] = [];
+  formatos: any[] = [];
+  salas: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiServiceFunciones
+    private apiService: ApiServiceFunciones,
+    private apiService2: ApiServicePelicula,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
-    const funcionId = this.route.snapshot.paramMap.get('id');
-    this.initialization(funcionId);
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.inicializarFormulario();
+    this.cargarListas();
+    this.cargarFuncion(id);
   }
 
-  async initialization(funcionId: string | null): Promise<void> {
-    if (!funcionId) {
-      alert('No se proporcionó un ID de funcion válido.');
-      return;
-    }
+  inicializarFormulario() {
+    this.form = this.fb.group({
+      id: [{ value: '', disabled: true }],
+      pelicula: ['', Validators.required],
+      formato: [null, Validators.required],
+      fecha: ['', Validators.required],
+      hora: ['', Validators.required],
+      sala: ['', Validators.required],
+      disponible: ['', Validators.required],
+    });
+  }
+
+  async cargarListas() {
+    this.peliculas = await this.apiService2.getPeliculas();
+    this.formatos = await this.apiService.findAll();
+    this.salas = await this.apiService.getAllSalas();
+  }
+
+  async cargarFuncion(id: number) {
     try {
-      const fetched = await this.apiService.getFuncionById(+funcionId);
-      console.log('funcion obtenido:', fetched);
-      this.funcion = { ...fetched };
-      this.originalfuncion = { ...fetched };
-    } catch (error) {
-      alert('Error al obtener el funcion:');
+      const f = await this.apiService.getFuncionById(id);
+
+      this.form.patchValue({
+        id: f.id,
+        pelicula: f.pelicula,
+        formato: {
+          nombre: f.formato.nombre,
+          precio: f.formato.precio,
+        },
+        fecha: new Date(f.fecha).toISOString().substring(0, 10),
+        hora: f.hora,
+        sala: f.NumeroSala,
+        disponible: f.disponible,
+      });
+    } catch (e) {
+      alert('Error al cargar la función');
     }
   }
 
   editar() {
-    const modifiedKeys = Object.keys(this.funcion).filter(
-      (key) => key !== 'id' && this.funcion[key] !== this.originalfuncion[key]
-    );
-    if (modifiedKeys.length === 0) {
-      alert('No se cambió ningún dato.');
-    } else if (modifiedKeys.length === Object.keys(this.funcion).length - 1) {
-      this.apiService
-        .updateFuncion(this.funcion)
-        .then(() => {
-          alert('funcion actualizado correctamente.');
-        })
-        .catch((error) => {
-          console.error('Error al actualizar el funcion:', error);
-          alert('Error al actualizar el funcion.');
-        });
+    if (this.form.invalid) {
+      alert('Complete los campos correctamente.');
+      return;
     }
 
-    this.router.navigate(['/funcion/lista']);
+    const dtoFuncion = {
+      pelicula: this.form.value.pelicula,
+      fecha: this.form.value.fecha,
+      hora: this.form.value.hora,
+      disponible: this.form.value.disponible === 'true' || this.form.value.disponible === true,
+      sala: { numeroSala: Number(this.form.value.sala) },
+      formato: {
+        nombre: this.form.value.formato.nombre,
+        precio: this.form.value.formato.precio,
+      },
+    };
+
+    this.apiService
+      .updateFuncion(dtoFuncion)
+      .then(() => {
+        alert('Función actualizada correctamente.');
+        this.router.navigate(['/funcion/lista']);
+      })
+      .catch(() => {
+        alert('Error al actualizar la función.');
+      });
   }
 
   volver() {

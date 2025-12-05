@@ -1,71 +1,96 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ApiServicePromociones } from '../../../services/api.service.promociones';
+import { ApiServiceUsuario } from '../../../services/api.service.usuario';
 @Component({
   selector: 'app-editar-promocion',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './editar-promocion.html',
   styleUrl: './editar-promocion.css',
 })
 export class EditarPromocion {
+  form!: FormGroup;
+
   promocion: any;
-  originalPromocion: any;
+  dias: any[] = [];
+  tiposCliente: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiServicePromociones
+    private fb: FormBuilder,
+    private apiService: ApiServicePromociones,
+
+    private apiService2: ApiServiceUsuario
   ) {}
 
-  ngOnInit() {
-    const promocionId = this.route.snapshot.paramMap.get('id');
-    this.initialization(promocionId);
+  async ngOnInit() {
+    this.form = this.fb.group({
+      nombre: ['', Validators.required],
+      dia: ['', Validators.required],
+      porcentajeDescuento: ['', Validators.required],
+      tipoCliente: ['', Validators.required],
+    });
+
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    await this.cargarDatos(id);
   }
 
-  async initialization(promocionId: string | null): Promise<void> {
-    if (!promocionId) {
-      alert('No se proporcionó un ID de promocion válido.');
-      return;
-    }
+  // CARGA DE DATOS
+
+  async cargarDatos(id: number) {
     try {
-      const fetched = await this.apiService.getPromocionById(+promocionId);
-      console.log('Promocion obtenida:', fetched);
-      this.promocion = { ...fetched };
-      this.originalPromocion = { ...fetched };
-    } catch (error) {
-      alert('Error al obtener la promocion:');
+      // Obtener promo
+      this.promocion = await this.apiService.getPromocionById(id);
+
+      // Llenar el form
+      this.form.patchValue({
+        nombre: this.promocion.nombre,
+        dia: this.promocion.dia,
+        porcentajeDescuento: this.promocion.porcentajeDescuento,
+        tipoCliente: this.promocion.tipoCliente,
+      });
+
+      // Obtener días
+      this.dias = await this.apiService.getAllDias();
+
+      // Obtener tipos de cliente
+      this.tiposCliente = await this.apiService2.getAllTiposClientes();
+    } catch (err) {
+      console.error(err);
+      alert('Error al cargar los datos de la promoción.');
     }
   }
+
+  // GUARDAR CAMBIOS
 
   onSave() {
-    const modifiedKeys = Object.keys(this.promocion).filter(
-      (key) => key !== 'id' && this.promocion[key] !== this.originalPromocion[key]
-    );
-    if (modifiedKeys.length === 0) {
-      alert('No se cambió ningún dato.');
-    } else if (modifiedKeys.length === Object.keys(this.promocion).length - 1) {
-      this.apiService
-        .updatePromocion(this.promocion)
-        .then(() => {
-          alert('Promocion actualizado correctamente.');
-        })
-        .catch((error) => {
-          console.error('Error al actualizar la promocion:', error);
-          alert('Error al actualizar la promocion.');
-        });
+    if (this.form.invalid) {
+      alert('Completa todos los campos.');
+      return;
     }
 
-    this.router.navigate(['/promocione/lista']);
+    const dataActualizada = {
+      id: this.promocion.id,
+      ...this.form.value,
+    };
+
+    this.apiService
+      .updatePromocion(dataActualizada)
+      .then(() => {
+        alert('Promoción actualizada correctamente.');
+        this.router.navigate(['/promocion/lista']);
+      })
+      .catch((err) => {
+        console.error(err);
+        alert('Error al actualizar la promoción.');
+      });
   }
 
   volver() {
-    this.router.navigate(['/promocione/lista']);
-  }
-
-  inicio() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/promocion/lista']);
   }
 }

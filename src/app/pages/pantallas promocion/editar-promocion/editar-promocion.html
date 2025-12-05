@@ -9,36 +9,52 @@
 
   <main class="wrap">
     <section class="card">
-      <h1>Editar Promocion</h1>
+      <h1>Editar Promoción</h1>
 
-      @if (promocion) {
-      <form (ngSubmit)="onSave()">
+      @if (form) {
+      <form class="form" [formGroup]="form" (ngSubmit)="onSave()">
+        <!-- ID SOLO LECTURA -->
         <div class="form-group">
-          <label for="id">ID</label>
-          <div class="readonly-text">{{ promocion.id }}</div>
+          <label>ID</label>
+          <div class="readonly-text">{{ promocion?.id }}</div>
         </div>
 
+        <!-- Nombre -->
         <div class="form-group">
-          <label for="name">Nombre</label>
-          <input id="name" [(ngModel)]="promocion.name" name="name" required />
+          <label for="nombre">Nombre</label>
+          <input id="nombre" formControlName="nombre" />
         </div>
+
+        <!-- Día -->
         <div class="form-group">
-          <label for="diaId">Dia ID</label>
-          <input id="diaId" [(ngModel)]="promocion.diaId" name="diaId" required />
+          <label for="dia">Día</label>
+          <select id="dia" formControlName="dia">
+            <option [ngValue]="''" disabled>Seleccione un día</option>
+
+            @for (dia of dias; track dia.id) {
+            <option [value]="dia.nombre">{{ dia.nombre }}</option>
+            }
+          </select>
         </div>
+
+        <!-- Porcentaje -->
         <div class="form-group">
-          <label for="porcentaje">Porcentaje Descuento</label>
-          <input
-            id="porcentaje"
-            [(ngModel)]="promocion.porcentajeDescuento"
-            name="porcentaje"
-            required
-          />
+          <label for="porcentajeDescuento">Porcentaje Descuento</label>
+          <input id="porcentajeDescuento" type="number" formControlName="porcentajeDescuento" />
         </div>
+
+        <!-- Tipo Cliente -->
         <div class="form-group">
-          <label for="clienteId">Tipo Cliente ID</label>
-          <input id="clienteId" [(ngModel)]="promocion.clienteId" name="clienteId" required />
+          <label for="tipoCliente">Tipo Cliente</label>
+          <select id="tipoCliente" formControlName="tipoCliente">
+            <option [ngValue]="''" disabled>Seleccione tipo de cliente</option>
+
+            @for (tipo of tiposCliente; track tipo.id) {
+            <option [value]="tipo.nombre">{{ tipo.nombre }}</option>
+            }
+          </select>
         </div>
+
         <button type="submit">GUARDAR</button>
       </form>
       }

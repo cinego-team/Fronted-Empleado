@@ -1,48 +1,81 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, type FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ApiServiceFunciones } from '../../../services/api.service.funciones';
+import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 
 @Component({
   selector: 'app-registrar-funcion',
-  imports: [],
   standalone: true,
   templateUrl: './registrar-funcion.html',
   styleUrl: './registrar-funcion.css',
+  imports: [ReactiveFormsModule],
 })
 export class RegistrarFuncion {
-  funcionForm: FormGroup;
-  loading = false;
-  errorMessage = '';
+  form: FormGroup;
+
+  peliculas: any[] = [];
+  formatos: any[] = [];
+  salas: any[] = [];
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private apiService: ApiServiceFunciones
+    private apiService: ApiServiceFunciones,
+    private apiService2: ApiServicePelicula
   ) {
-    this.funcionForm = this.fb.group({
-      nrofuncion: ['', [Validators.required, Validators.min(1)]],
-      capacidad: ['', [Validators.required, Validators.min(1)]],
-      estaDisponible: [true],
+    this.form = this.fb.group({
+      pelicula: ['', Validators.required],
+      formato: ['', Validators.required],
+      fecha: ['', Validators.required],
+      hora: ['', Validators.required],
+      sala: ['', Validators.required],
+      disponible: [true, Validators.required],
     });
   }
 
-  registrar() {
-    if (this.funcionForm.invalid) {
-      alert('Por favor, completa  los campos correctamente.');
-      return;
-    } else if (this.funcionForm.valid) {
-      this.apiService
-        .createFuncion(this.funcionForm.value)
-        .then(() => {
-          alert('funcion creado correctamente.');
-          this.router.navigate(['/funcion/lista']);
-        })
-        .catch((error) => {
-          console.error('Error al crear el funcion:', error);
-          alert('Error al crear el funcion. Por favor, inténtalo de nuevo más tarde.');
-        });
+  ngOnInit() {
+    this.cargarDatos();
+  }
+
+  async cargarDatos() {
+    try {
+      this.peliculas = await this.apiService2.getPeliculas();
+      this.formatos = await this.apiService.findAll();
+      this.salas = await this.apiService.getAllSalas();
+    } catch (err) {
+      console.error('Error al cargar los combos:', err);
+      alert('Error al cargar datos.');
     }
+  }
+
+  registrar() {
+    if (this.form.invalid) {
+      alert('Por favor, completa correctamente todos los campos.');
+      return;
+    }
+
+    const dto = {
+      pelicula: this.form.value.pelicula,
+      fecha: this.form.value.fecha,
+      hora: this.form.value.hora,
+      disponible: this.form.value.disponible === 'true',
+      sala: {
+        numeroSala: Number(this.form.value.sala),
+      },
+      formato: this.form.value.formato,
+    };
+
+    this.apiService
+      .createFuncion(dto)
+      .then(() => {
+        alert('Función creada correctamente.');
+        this.router.navigate(['/funcion/lista']);
+      })
+      .catch((err) => {
+        console.error(err);
+        alert('Error al crear la función.');
+      });
   }
 
   volver() {

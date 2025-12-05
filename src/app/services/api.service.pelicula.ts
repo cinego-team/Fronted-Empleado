@@ -19,10 +19,11 @@ export class ApiServicePelicula {
     director: string;
     duracion: number;
     fechaEstreno: string;
-    idioma: string;
-    genero: string;
-    clasificacion: string;
-    estado: string;
+    idioma: { nombre: string };
+    genero: { nombre: string };
+    clasificacion: { nombre: string };
+    estado: { nombre: string };
+    empleado: { nombre: string; apellido: string };
   }> {
     const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculaById(id))).data;
     return {
@@ -32,11 +33,12 @@ export class ApiServicePelicula {
       director: datos.director,
       duracion: datos.duracion,
       fechaEstreno: datos.fechaEstreno,
-      idioma: datos.idioma,
-      genero: datos.genero,
-      clasificacion: datos.clasficiacion,
-      estado: datos.estado,
+      idioma: { nombre: datos.idioma.nombre },
+      genero: { nombre: datos.genero.nombre },
+      clasificacion: { nombre: datos.clasificacion.nombre },
+      estado: { nombre: datos.estado.nombre },
       urlImagen: datos.urlImagen,
+      empleado: { nombre: datos.empleado.nombre, apellido: datos.empleado.apellido },
     };
   }
 
@@ -53,6 +55,10 @@ export class ApiServicePelicula {
       clasificacion: string;
       estado: string;
       urlImagen: string;
+      empleado: {
+        nombre: string;
+        apellido: string;
+      };
     }>
   > {
     const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculas)).data;
@@ -69,6 +75,10 @@ export class ApiServicePelicula {
         clasificacion: any;
         estado: any;
         urlImagen: any;
+        empleado: {
+          nombre: any;
+          apellido: any;
+        };
       }) => ({
         id: item.id,
         titulo: item.titulo,
@@ -76,11 +86,15 @@ export class ApiServicePelicula {
         director: item.director,
         duracion: item.duracion,
         fechaEstreno: item.fechaEstreno,
-        idioma: item.idioma,
-        genero: item.genero,
-        clasificacion: item.clasificacion,
-        estado: item.estado,
+        idioma: item.idioma.nombre,
+        genero: item.genero.nombre,
+        clasificacion: item.clasificacion.nombre,
+        estado: item.estado.nombre,
         urlImagen: item.urlImagen,
+        empleado: {
+          nombre: item.empleado.nombre,
+          apellido: item.empleado.apellido,
+        },
       })
     );
     return respuesta;
@@ -90,15 +104,20 @@ export class ApiServicePelicula {
   }
   async createPelicula(formulario: any): Promise<void> {
     const nuevaPelicula: EditPeliculaOutput = {
-      idioma: formulario.get('idiomaId').value,
-      genero: formulario.get('generoId').value,
-      clasificacion: formulario.get('clasificacionId').value,
-      estado: formulario.get('estadoId').value,
+      idioma: formulario.get('idioma').value,
+      genero: formulario.get('genero').value,
+      clasificacion: formulario.get('clasificacion').value,
+      estado: formulario.get('estado').value,
       titulo: formulario.get('titulo').value,
       sinopsis: formulario.get('sinopsis').value,
       director: formulario.get('director').value,
       duracion: formulario.get('duracion').value,
       fechaEstreno: formulario.get('fechaEstreno').value,
+      urlImagen: formulario.get('imagen').value,
+      empleado: {
+        nombre: formulario.get('empleadoNombre').value,
+        apellido: formulario.get('empleadoApellido').value,
+      },
     };
     await axiosAPIPeliculas.post(config.APIPeliculasUrls.createPelicula, nuevaPelicula);
   }
@@ -113,6 +132,11 @@ export class ApiServicePelicula {
       genero: pelicula.genero,
       clasificacion: pelicula.clasificacion,
       estado: pelicula.estado,
+      empleado: {
+        nombre: pelicula.empleado.nombre,
+        apellido: pelicula.empleado.apellido,
+      },
+      urlImagen: pelicula.urlImagen,
     };
     await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updatePelicula(pelicula.id!)}`, data);
   }
