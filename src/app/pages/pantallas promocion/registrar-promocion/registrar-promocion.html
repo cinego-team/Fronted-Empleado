@@ -60,7 +60,7 @@
             <option [ngValue]="''" disabled>Seleccione un tipo</option>
 
             @for (tc of tiposCliente; track tc.id) {
-            <option [value]="tc.nombre">{{ tc.nombre }}</option>
+            <option [value]="tc.id">{{ tc.id }}-{{ tc.nombre }}</option>
             }
           </select>
           @if (form.get('tipoCliente')?.invalid && form.get('tipoCliente')?.touched) {

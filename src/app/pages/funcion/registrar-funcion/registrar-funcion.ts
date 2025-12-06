@@ -56,7 +56,7 @@ export class RegistrarFuncion {
     }
 
     const dto = {
-      pelicula: this.form.value.pelicula,
+      peliculaId: this.form.value.peliculaId,
       fecha: this.form.value.fecha,
       hora: this.form.value.hora,
       disponible: this.form.value.disponible === 'true',

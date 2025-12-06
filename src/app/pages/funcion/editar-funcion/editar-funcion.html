@@ -21,7 +21,7 @@
           <select id="pelicula" formControlName="pelicula">
             <option value="" disabled>Seleccione la película</option>
             @for (p of peliculas; track p.id) {
-            <option [value]="p.id">{{ p.titulo }}</option>
+            <option [value]="p.id">{{ p.id }}-{{ p.titulo }}- {{ p.idioma }}</option>
             }
           </select>
         </div>
@@ -32,7 +32,7 @@
             <option [ngValue]="null" disabled selected>Seleccione el formato</option>
 
             <option *ngFor="let f of formatos" [ngValue]="f">
-              {{ f.nombre }} - ${{ f.precio }}
+              {{ f.id }} - {{ f.nombre }} - ${{ f.precio }}
             </option>
           </select>
         </div>

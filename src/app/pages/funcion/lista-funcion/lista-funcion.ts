@@ -12,7 +12,7 @@ import { ApiServiceFunciones } from '../../../services/api.service.funciones';
 export class ListaFuncion implements OnInit {
   funciones: Array<{
     id: number;
-    pelicula: string;
+    peliculaId: number;
     fecha: Date;
     hora: Date;
     disponible: string;
@@ -43,7 +43,7 @@ export class ListaFuncion implements OnInit {
       // Transformar datos del backend al formato del componente
       this.funciones = funcionesBackend.map((funcion) => ({
         id: funcion.id,
-        pelicula: funcion.pelicula,
+        peliculaId: funcion.peliculaId,
         fecha: funcion.fecha,
         hora: funcion.hora,
         disponible: funcion.disponible,

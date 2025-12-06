@@ -18,7 +18,9 @@
           <label for="pelicula">Película</label>
           <select id="pelicula" formControlName="pelicula">
             <option value="">Seleccione la película</option>
-            <option *ngFor="let p of peliculas" [value]="p.nombre">{{ p.nombre }}</option>
+            <option *ngFor="let p of peliculas" [value]="p.id">
+              {{ p.id }} - {{ p.nombre }} -{{ p.idioma }}
+            </option>
           </select>
         </div>
         <!--  Formato -->
@@ -45,7 +47,9 @@
           <label for="sala">Sala</label>
           <select id="sala" formControlName="sala">
             <option value="">Seleccione la sala</option>
-            <option *ngFor="let s of salas" [value]="s.numeroSala">Sala {{ s.numeroSala }}</option>
+            <option *ngFor="let s of salas" [value]="s.numeroSala">
+              Sala {{ s.id }}-{{ s.numeroSala }}
+            </option>
           </select>
         </div>
       </div>

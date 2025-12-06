@@ -38,7 +38,7 @@ export class EditarFuncion implements OnInit {
   inicializarFormulario() {
     this.form = this.fb.group({
       id: [{ value: '', disabled: true }],
-      pelicula: ['', Validators.required],
+      peliculaId: ['', Validators.required],
       formato: [null, Validators.required],
       fecha: ['', Validators.required],
       hora: ['', Validators.required],
@@ -59,7 +59,7 @@ export class EditarFuncion implements OnInit {
 
       this.form.patchValue({
         id: f.id,
-        pelicula: f.pelicula,
+        peliculaId: f.peliculaId,
         formato: {
           nombre: f.formato.nombre,
           precio: f.formato.precio,

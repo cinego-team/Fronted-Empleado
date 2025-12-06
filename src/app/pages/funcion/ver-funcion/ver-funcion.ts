@@ -13,7 +13,7 @@ import { ApiServiceFunciones } from '../../../services/api.service.funciones';
 export class VerFuncion implements OnInit {
   funcion: {
     id: number;
-    pelicula: string;
+    peliculaId: number;
     fecha: Date;
     hora: Date;
     disponible: string;

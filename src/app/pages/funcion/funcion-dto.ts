@@ -1,5 +1,5 @@
 export class EditFuncion {
-  pelicula?: string;
+  peliculaId?: number;
   fecha?: Date;
   hora?: Date;
   disponible?: boolean;
@@ -13,7 +13,7 @@ export class EditFuncion {
 }
 export class FuncionInput {
   id?: number;
-  pelicula?: string;
+  peliculaId?: number;
   fecha?: Date;
   hora?: Date;
   disponible?: boolean;

@@ -123,7 +123,7 @@ export class ApiServiceFunciones {
   async getAllFunciones(): Promise<
     Array<{
       id: number;
-      pelicula: string;
+      peliculaId: number;
       fecha: Date;
       hora: Date;
       disponible: string;
@@ -141,7 +141,7 @@ export class ApiServiceFunciones {
       return datos.map(
         (item: {
           id: any;
-          pelicula: any;
+          peliculaId: any;
           fecha: any;
           hora: any;
           disponible: any;
@@ -150,7 +150,7 @@ export class ApiServiceFunciones {
           formato: { nombre: any; precio: any };
         }) => ({
           id: item.id,
-          pelicula: item.pelicula,
+          peliculaId: item.peliculaId,
           fecha: item.fecha,
           hora: item.fecha,
           disponible: item.disponible,
@@ -166,7 +166,7 @@ export class ApiServiceFunciones {
   }
   async getFuncionById(id: number): Promise<{
     id: number;
-    pelicula: string;
+    peliculaId: number;
     fecha: Date;
     hora: Date;
     disponible: string;
@@ -180,7 +180,7 @@ export class ApiServiceFunciones {
       .data;
     return {
       id: item.id,
-      pelicula: item.pelicula,
+      peliculaId: item.peliculaId,
       fecha: item.fecha,
       hora: item.fecha,
       disponible: item.disponible,
@@ -194,7 +194,7 @@ export class ApiServiceFunciones {
 
   async createFuncion(formulario: any): Promise<void> {
     const nuevaFuncion: EditFuncion = {
-      pelicula: formulario.get('pelicula').value,
+      peliculaId: formulario.get('peliculaId').value,
       fecha: formulario.get('fecha').value,
       hora: formulario.get('hora').value,
       disponible: formulario.get('disponibilidad').value,
@@ -211,7 +211,7 @@ export class ApiServiceFunciones {
 
   async updateFuncion(funcion: FuncionInput): Promise<void> {
     const data: FuncionInput = {
-      pelicula: funcion.pelicula,
+      peliculaId: funcion.peliculaId,
       fecha: funcion.fecha,
       hora: funcion.hora,
       disponible: funcion.disponible,
