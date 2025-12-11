@@ -13,7 +13,7 @@ export class ApiServicePromociones {
     nombre: string;
     porcentajeDescuento: number;
     dia: string;
-    tipoCliente: string;
+    tipoClienteId: number;
   }> {
     const datos = (await axiosAPIPromociones.get(config.APIPromocionesUrls.getPromocionById(id)))
       .data;
@@ -22,7 +22,7 @@ export class ApiServicePromociones {
       nombre: datos.nombre,
       porcentajeDescuento: datos.porcentajeDescuento,
       dia: datos.dia,
-      tipoCliente: datos.tipoCliente,
+      tipoClienteId: datos.tipoClienteId,
     };
   }
   async getPromociones(): Promise<
@@ -30,17 +30,17 @@ export class ApiServicePromociones {
       id: number;
       nombre: string;
       porcentajeDescuento: number;
-      tipoCliente: string;
+      tipoClienteId: number;
       dia: string;
     }>
   > {
     const datos = (await axiosAPIPromociones.get(config.APIPromocionesUrls.getPromociones)).data;
     const respuesta = datos.map(
-      (item: { id: any; nombre: any; porcentajeDescuento: any; tipoCliente: any; dia: any }) => ({
+      (item: { id: any; nombre: any; porcentajeDescuento: any; tipoClienteId: any; dia: any }) => ({
         id: item.id,
         nombre: item.nombre,
         porcentajeDescuento: item.porcentajeDescuento,
-        tipoCliente: item.tipoCliente,
+        tipoClienteId: item.tipoClienteId,
         dia: item.dia,
       })
     );
@@ -54,7 +54,7 @@ export class ApiServicePromociones {
       nombre: formulario.get('nombre').value,
       porcentajeDescuento: formulario.get('porcentajeDescuento').value,
       dia: formulario.get('dia').value,
-      tipoCliente: formulario.get('tipoCliente').value,
+      tipoClienteId: formulario.get('tipoClienteId').value,
     };
     await axiosAPIPromociones.post(config.APIPromocionesUrls.createPromocion, nuevaPromocion);
   }
@@ -63,7 +63,7 @@ export class ApiServicePromociones {
       nombre: promocion.nombre,
       porcentajeDescuento: promocion.porcentajeDescuento,
       dia: promocion.dia,
-      tipoCliente: promocion.tipoCliente,
+      tipoClienteId: promocion.tipoClienteId,
     };
     await axiosAPIPromociones.put(
       `${config.APIPromocionesUrls.updatePromocion(promocion.id!)}`,

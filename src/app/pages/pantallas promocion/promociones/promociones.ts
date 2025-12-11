@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalStatusService } from '../../../services/global-status.service';
 import { ApiServicePromociones } from '../../../services/api.service.promociones';
+import { ApiServiceUsuario } from '../../../services/api.service.usuario';
 @Component({
   selector: 'app-promociones',
   imports: [],
@@ -12,17 +13,19 @@ export class Promociones {
   constructor(
     private router: Router,
     private readonly apiService: ApiServicePromociones,
-    private readonly globalStatusService: GlobalStatusService
+    private readonly globalStatusService: GlobalStatusService,
+    private readonly apiService2: ApiServiceUsuario
   ) {}
   promociones: Array<{
     id: number;
     nombre: string;
     porcentajeDescuento: number;
-    tipoCliente: string;
+    tipoClienteId: number;
     dia: string;
   }> = [];
   selectedRow: number | null = null;
   actualPage: number = 1;
+  tiposCliente: any[] = []; // lista de {id, nombre}
 
   ngOnInit(): void {
     this.initialization();
@@ -31,6 +34,7 @@ export class Promociones {
   async initialization(): Promise<void> {
     this.globalStatusService.setLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 500)); //Decorativo
+    this.tiposCliente = await this.apiService2.getAllTiposClientes();
     const data = await this.apiService.getPromociones();
     if (data.length === 0) {
       alert('No hay promociones para mostrar.');
@@ -45,7 +49,11 @@ export class Promociones {
   selectRow(rowId: number) {
     this.selectedRow = rowId;
   }
-
+  //funcion para conseguir el nombre de las promociones por el ID
+  getTipoClienteNombre(id: number): string {
+    const tipo = this.tiposCliente.find((t) => t.id === id);
+    return tipo ? tipo.nombre : 'Desconocido';
+  }
   onNew() {
     this.router.navigate(['/promocion/registrar']);
   }

@@ -51,7 +51,7 @@ export class EditarPromocion {
         nombre: this.promocion.nombre,
         dia: this.promocion.dia,
         porcentajeDescuento: this.promocion.porcentajeDescuento,
-        tipoCliente: this.promocion.tipoCliente,
+        tipoClienteId: this.promocion.tipoClienteId,
       });
 
       // Obtener días
@@ -75,7 +75,10 @@ export class EditarPromocion {
 
     const dataActualizada = {
       id: this.promocion.id,
-      ...this.form.value,
+      nombre: this.promocion.nombre,
+      dia: this.promocion.dia,
+      porcentajeDescuento: this.promocion.porcentajeDescuento,
+      tipoClienteId: this.promocion.tipoClienteId,
     };
 
     this.apiService

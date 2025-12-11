@@ -1,4 +1,5 @@
 export interface EmpleadoInput {
+  id: number;
   nombre: string;
   apellido: string;
 }

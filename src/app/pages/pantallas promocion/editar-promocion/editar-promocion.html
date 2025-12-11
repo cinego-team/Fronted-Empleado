@@ -50,7 +50,7 @@
             <option [ngValue]="''" disabled>Seleccione tipo de cliente</option>
 
             @for (tipo of tiposCliente; track tipo.id) {
-            <option [value]="tipo.nombre">{{ tipo.nombre }}</option>
+            <option [value]="tipo.id">{{ tipo.id }}-{{ tipo.nombre }}</option>
             }
           </select>
         </div>

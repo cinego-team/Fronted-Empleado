@@ -31,7 +31,7 @@ export class RegistrarPromocion implements OnInit {
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       dia: ['', Validators.required],
       porcentajeDescuento: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
-      tipoCliente: ['', Validators.required],
+      tipoClienteId: ['', Validators.required],
     });
 
     this.cargarDias();
@@ -56,7 +56,7 @@ export class RegistrarPromocion implements OnInit {
       nombre: v.nombre,
       porcentajeDescuento: v.porcentajeDescuento,
       dia: v.dia,
-      tipoCliente: v.tipoCliente,
+      tipoClienteId: v.tipoClienteId,
     };
     this.apiService
       .createPromocion(dto)
