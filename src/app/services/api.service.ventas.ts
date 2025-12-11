@@ -29,4 +29,15 @@ export class ApiServiceVentas {
       return [];
     }
   }
+  async getHorariosMasElegidosMesActual() {
+    const response = await axiosAPIVentas.get(config.APIVentasUrls.getHorariosMasElegidosMesActual);
+    return response.data;
+  }
+  async getEntradasPorDiaSemanaMesActual() {
+    const response = await axiosAPIVentas.get(
+      config.APIVentasUrls.getEntradasPorDiaSemanaMesActual
+    );
+
+    return response.data;
+  }
 }
