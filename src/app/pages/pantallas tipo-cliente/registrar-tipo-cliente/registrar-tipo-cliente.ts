@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiServiceUsuario } from '../../../services/api.service.usuario';
+import { EditTipoCliente } from '../tipos-cliente.dto';
 
 @Component({
   selector: 'app-registrar-tipo-cliente',
@@ -21,7 +22,8 @@ export class RegistrarTipoCliente {
     private router: Router
   ) {
     this.form = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(2)]],
+      denominacion: ['', [Validators.required, Validators.minLength(2)]],
+      descripcion: ['', [Validators.required]],
     });
   }
 
@@ -29,20 +31,21 @@ export class RegistrarTipoCliente {
     if (this.form.invalid) {
       alert('Por favor, completa  los campos correctamente.');
       return;
-    } else if (this.form.valid) {
-      const nombre: string = (this.form.get('nombre')?.value ?? '').toString();
-
-      this.apiService
-        .createTipoCliente(nombre)
-        .then(() => {
-          alert('Tipo Cliente creado correctamente.');
-          this.router.navigate(['/tipo-cliente/lista']);
-        })
-        .catch((error) => {
-          console.error('Error al crear el tipo cliente:', error);
-          alert('Error al crear el tipo cliente. Por favor, inténtalo de nuevo más tarde.');
-        });
     }
+    const dto: EditTipoCliente = {
+      Denominacion: this.form.value.denominacion,
+      Descripcion: this.form.value.descripcion,
+    };
+    this.apiService
+      .createTipoCliente(dto)
+      .then(() => {
+        alert('Tipo Cliente creado correctamente.');
+        this.router.navigate(['/tipo-cliente/lista']);
+      })
+      .catch((error) => {
+        console.error('Error al crear el tipo cliente:', error);
+        alert('Error al crear el tipo cliente. Por favor, inténtalo de nuevo más tarde.');
+      });
   }
 
   volver() {

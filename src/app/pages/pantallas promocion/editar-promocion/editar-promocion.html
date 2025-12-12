@@ -32,7 +32,7 @@
             <option [ngValue]="''" disabled>Seleccione un día</option>
 
             @for (dia of dias; track dia.id) {
-            <option [value]="dia.nombre">{{ dia.nombre }}</option>
+            <option [value]="dia.id">{{ dia.id }}- {{ dia.nombre }}</option>
             }
           </select>
         </div>
@@ -50,7 +50,7 @@
             <option [ngValue]="''" disabled>Seleccione tipo de cliente</option>
 
             @for (tipo of tiposCliente; track tipo.id) {
-            <option [value]="tipo.id">{{ tipo.id }}-{{ tipo.nombre }}</option>
+            <option [value]="tipo.id">{{ tipo.id }}-{{ tipo.denominacion }}</option>
             }
           </select>
         </div>

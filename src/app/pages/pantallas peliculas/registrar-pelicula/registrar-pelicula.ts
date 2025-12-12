@@ -34,8 +34,6 @@ export class RegistrarPelicula implements OnInit {
       director: ['', Validators.required],
       sinopsis: ['', Validators.required],
       urlImagen: ['', Validators.required],
-
-      // IDs seleccionados
       estado: ['', Validators.required],
       clasificacion: ['', Validators.required],
       genero: ['', Validators.required],
@@ -47,7 +45,6 @@ export class RegistrarPelicula implements OnInit {
       this.estados = await this.apiService.getAllEstados();
       this.clasificaciones = await this.apiService.getAllClasificaciones();
       this.generos = await this.apiService.getAllGeneros();
-      this.idiomas = await this.apiService.getAllIdiomas();
     } catch (error) {
       console.error('Error al cargar datos del backend:', error);
     }

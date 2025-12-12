@@ -17,6 +17,7 @@ export class RegistrarFuncion {
   peliculas: any[] = [];
   formatos: any[] = [];
   salas: any[] = [];
+  idiomas: any[] = [];
 
   constructor(
     private router: Router,
@@ -25,12 +26,13 @@ export class RegistrarFuncion {
     private apiService2: ApiServicePelicula
   ) {
     this.form = this.fb.group({
-      pelicula: ['', Validators.required],
-      formato: ['', Validators.required],
-      fecha: ['', Validators.required],
-      hora: ['', Validators.required],
-      sala: ['', Validators.required],
+      pelicula: ['', Validators.required], // objeto película
+      formato: ['', Validators.required], // objeto formato
+      fecha: ['', Validators.required], // yyyy-mm-dd
+      hora: ['', Validators.required], // hh:mm
+      sala: ['', Validators.required], // objeto sala
       disponible: [true, Validators.required],
+      idioma: ['', Validators.required], // objeto idioma
     });
   }
 
@@ -40,9 +42,10 @@ export class RegistrarFuncion {
 
   async cargarDatos() {
     try {
-      this.peliculas = await this.apiService2.getPeliculas();
+      this.peliculas = await this.apiService2.getPeliculasForAdmin();
       this.formatos = await this.apiService.findAll();
-      this.salas = await this.apiService.getAllSalas();
+      this.salas = await this.apiService.getSalas();
+      this.idiomas = await this.apiService2.getAllIdiomas();
     } catch (err) {
       console.error('Error al cargar los combos:', err);
       alert('Error al cargar datos.');
@@ -55,15 +58,30 @@ export class RegistrarFuncion {
       return;
     }
 
+    const { pelicula, formato, fecha, hora, sala, disponible, idioma } = this.form.value;
+
+    const fechaHora = `${fecha}T${hora}:00`;
+
     const dto = {
-      peliculaId: this.form.value.peliculaId,
-      fecha: this.form.value.fecha,
-      hora: this.form.value.hora,
-      disponible: this.form.value.disponible === 'true',
+      peliculaId: pelicula.id,
+      fecha: fechaHora,
+      estaDisponible: disponible,
+
       sala: {
-        numeroSala: Number(this.form.value.sala),
+        id: sala.id,
+        nroSala: sala.numero,
       },
-      formato: this.form.value.formato,
+
+      formato: {
+        id: formato.id,
+        nombre: formato.nombre,
+        precio: formato.precio,
+      },
+
+      idioma: {
+        id: idioma.id,
+        nombre: idioma.nombre,
+      },
     };
 
     this.apiService

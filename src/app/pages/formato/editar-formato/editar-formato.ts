@@ -21,43 +21,44 @@ export class EditarFormatoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const formatoId = this.route.snapshot.paramMap.get('id');
-    this.initialization(formatoId);
-  }
+    // Recuperar el state desde la navegación
+    const navState =
+      (this.router.getCurrentNavigation()?.extras.state as any)?.formato ??
+      (history.state as any)?.formato;
 
-  async initialization(formatoId: string | null): Promise<void> {
-    if (!formatoId) {
-      alert('No se proporcionó un ID de formato válido.');
+    if (!navState) {
+      // Si no hay state, no se puede editar porque no hay datos
+      alert('No se encontró el formato. Volvé al listado.');
+      this.router.navigate(['/formato/lista']);
       return;
     }
-    try {
-      const fetched = await this.apiService.findOne(+formatoId);
-      console.log('Formato obtenido:', fetched);
-      this.formato = { ...fetched };
-      this.originalFormato = { ...fetched };
-    } catch (error) {
-      alert('Error al obtener el formato:');
-    }
+
+    // Setear datos
+    this.formato = { ...navState };
+    this.originalFormato = { ...navState };
   }
+
   onSave() {
-    const modifiedKeys = Object.keys(this.formato).filter(
-      (key) => key !== 'id' && this.formato[key] !== this.originalFormato[key]
-    );
-    if (modifiedKeys.length === 0) {
-      alert('No se cambió ningún dato.');
-    } else if (modifiedKeys.length === Object.keys(this.formato).length - 1) {
-      this.apiService
-        .update(this.formato)
-        .then(() => {
-          alert('Formato actualizado correctamente.');
-        })
-        .catch((error) => {
-          console.error('Error al actualizar el formato:', error);
-          alert('Error al actualizar el formato.');
-        });
+    const campos = Object.keys(this.formato).filter((k) => k !== 'id');
+
+    // verificar si TODOS los campos cambiaron
+    const cambioCompleto = campos.every((key) => this.formato[key] !== this.originalFormato[key]);
+
+    if (!cambioCompleto) {
+      alert('Debe modificar todos los campos para actualizar.');
+      return;
     }
 
-    this.router.navigate(['/formato/lista']);
+    this.apiService
+      .update(this.formato)
+      .then(() => {
+        alert('Formato actualizado correctamente.');
+        this.router.navigate(['/formato/lista']);
+      })
+      .catch((error) => {
+        console.error('Error al actualizar el formato:', error);
+        alert('Error al actualizar el formato.');
+      });
   }
 
   volver() {

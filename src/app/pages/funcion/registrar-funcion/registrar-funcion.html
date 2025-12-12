@@ -18,9 +18,7 @@
           <label for="pelicula">Película</label>
           <select id="pelicula" formControlName="pelicula">
             <option value="">Seleccione la película</option>
-            <option *ngFor="let p of peliculas" [value]="p.id">
-              {{ p.id }} - {{ p.nombre }} -{{ p.idioma }}
-            </option>
+            <option *ngFor="let p of peliculas" [value]="p.id">{{ p.id }} - {{ p.nombre }}</option>
           </select>
         </div>
         <!--  Formato -->
@@ -30,7 +28,7 @@
             <option [ngValue]="null" disabled selected>Seleccione el formato</option>
 
             <option *ngFor="let f of formatos" [ngValue]="f">
-              {{ f.nombre }} - ${{ f.precio }}
+              {{ f.id }}- {{ f.nombre }} - ${{ f.precio }}
             </option>
           </select>
         </div>
@@ -47,11 +45,17 @@
           <label for="sala">Sala</label>
           <select id="sala" formControlName="sala">
             <option value="">Seleccione la sala</option>
-            <option *ngFor="let s of salas" [value]="s.numeroSala">
-              Sala {{ s.id }}-{{ s.numeroSala }}
-            </option>
+            <option *ngFor="let s of salas" [value]="s">{{ s.id }}-{{ s.numeroSala }}</option>
           </select>
         </div>
+      </div>
+      <div class="form-group">
+        <label for="formato">Idioma</label>
+        <select id="formato" formControlName="formato">
+          <option [ngValue]="null" disabled selected>Seleccione el idioma</option>
+
+          <option *ngFor="let i of idiomas" [ngValue]="i">{{ i.id }} - ${{ i.nombre }}</option>
+        </select>
       </div>
 
       <!-- Hora y Disponible -->

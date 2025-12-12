@@ -22,23 +22,21 @@ export class EditarTipoCliente implements OnInit {
   ) {}
 
   ngOnInit() {
-    const tipoClienteId = this.route.snapshot.paramMap.get('id');
-    this.initialization(tipoClienteId);
-  }
+    // Recuperar el state desde la navegación
+    const navState =
+      (this.router.getCurrentNavigation()?.extras.state as any)?.tipoCliente ??
+      (history.state as any)?.tipoCliente;
 
-  async initialization(tipoClienteId: string | null): Promise<void> {
-    if (!tipoClienteId) {
-      alert('No se proporcionó un ID de tipo de cliente válido.');
+    if (!navState) {
+      // Si no hay state, no se puede editar porque no hay datos
+      alert('No se encontró el tipo de cliente. Volvé al listado.');
+      this.router.navigate(['/tipo-cliente/lista']);
       return;
     }
-    try {
-      const fetched = await this.apiService.getTipoClienteById(+tipoClienteId);
-      console.log('Tipo de cliente obtenido:', fetched);
-      this.tipoCliente = { ...fetched };
-      this.originalTipoCliente = { ...fetched };
-    } catch (error) {
-      alert('Error al obtener el tipo de cliente:');
-    }
+
+    // Setear datos
+    this.tipoCliente = { ...navState };
+    this.originalTipoCliente = { ...navState };
   }
 
   onSave() {

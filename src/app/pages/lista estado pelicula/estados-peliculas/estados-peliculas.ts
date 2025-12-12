@@ -32,7 +32,7 @@ export class EstadosPeliculas {
     this.selec = rowId;
   }
 
-  onDelete() {
+  onDelete(): void {
     if (this.selec === null) {
       alert('Seleccioná un estado  primero.');
       return;
@@ -59,13 +59,17 @@ export class EstadosPeliculas {
     this.router.navigate(['/estado-pelicula/registrar']);
   }
 
-  onEdit() {
+  editar() {
     if (this.selec === null) {
       alert('Seleccioná uno primero.');
       return;
     }
-    const selectedEstado = this.estados[this.selec];
-    this.router.navigate(['/estado-pelicula/editar', selectedEstado.id]);
+    const selected = this.estados[this.selec];
+    this.router.navigate(['/estado-pelicula/editar', selected.id], {
+      state: {
+        estadoPelicula: selected,
+      },
+    });
   }
 
   onBack() {

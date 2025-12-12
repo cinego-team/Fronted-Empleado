@@ -23,23 +23,21 @@ export class EditarsalaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const salaId = this.route.snapshot.paramMap.get('id');
-    this.initialization(salaId);
-  }
+    // Recuperar el state desde la navegación
+    const navState =
+      (this.router.getCurrentNavigation()?.extras.state as any)?.sala ??
+      (history.state as any)?.sala;
 
-  async initialization(salaId: string | null): Promise<void> {
-    if (!salaId) {
-      alert('No se proporcionó un ID de sala válido.');
+    if (!navState) {
+      // Si no hay state, no se puede editar porque no hay datos
+      alert('No se encontró el sala. Volvé al listado.');
+      this.router.navigate(['/sala/lista']);
       return;
     }
-    try {
-      const fetched = await this.apiService.getSalaById(+salaId);
-      console.log('sala obtenido:', fetched);
-      this.sala = { ...fetched };
-      this.originalsala = { ...fetched };
-    } catch (error) {
-      alert('Error al obtener el sala:');
-    }
+
+    // Setear datos
+    this.sala = { ...navState };
+    this.originalsala = { ...navState };
   }
   onSave() {
     const modifiedKeys = Object.keys(this.sala).filter(

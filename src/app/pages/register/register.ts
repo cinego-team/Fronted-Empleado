@@ -14,103 +14,103 @@ interface RegisterResponse {
   styleUrl: './register.css',
 })
 export class Register {
-  form: FormGroup;
+  formulario: FormGroup;
   errorMessage: string | null = null;
   successMessage: string | null = null;
+  captchaToken: string | null = null;
+  mostrarPassword = false;
+  roles: any[] = [];
+  dias = Array.from({ length: 31 }, (_, i) => i + 1);
+
+  meses = [
+    { label: 'Enero', value: 1 },
+    { label: 'Febrero', value: 2 },
+    { label: 'Marzo', value: 3 },
+    { label: 'Abril', value: 4 },
+    { label: 'Mayo', value: 5 },
+    { label: 'Junio', value: 6 },
+    { label: 'Julio', value: 7 },
+    { label: 'Agosto', value: 8 },
+    { label: 'Septiembre', value: 9 },
+    { label: 'Octubre', value: 10 },
+    { label: 'Noviembre', value: 11 },
+    { label: 'Diciembre', value: 12 },
+  ];
+
+  anios = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i);
+
   constructor(
-    private fb: FormBuilder,
-    private apiService: ApiServiceUsuario,
-    private router: Router
+    private authService: ApiServiceUsuario,
+    private router: Router,
+    private fb: FormBuilder
   ) {
-    this.form = this.fb.group({
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-
+    this.formulario = this.fb.group({
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
+      apellido: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-
-      password: ['', [Validators.required, Validators.minLength(3)]],
-
-      dia: ['', Validators.required],
-      mes: ['', Validators.required],
-      anio: ['', Validators.required],
-
-      telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{6,15}$/)]],
-
-      rolId: [
+      contrasena: [
         '',
         [
           Validators.required,
-          Validators.pattern(/^[0-9]+$/), // solo números enteros positivos
+          Validators.pattern(/^\S.*\S$/),
+          Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/),
         ],
       ],
+      dia: ['', Validators.required],
+      mes: ['', Validators.required],
+      anio: ['', Validators.required],
+      telefono: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
-  dias: number[] = [];
-  meses = [
-    { valor: 1, nombre: 'Enero' },
-    { valor: 2, nombre: 'Febrero' },
-    { valor: 3, nombre: 'Marzo' },
-    { valor: 4, nombre: 'Abril' },
-    { valor: 5, nombre: 'Mayo' },
-    { valor: 6, nombre: 'Junio' },
-    { valor: 7, nombre: 'Julio' },
-    { valor: 8, nombre: 'Agosto' },
-    { valor: 9, nombre: 'Septiembre' },
-    { valor: 10, nombre: 'Octubre' },
-    { valor: 11, nombre: 'Noviembre' },
-    { valor: 12, nombre: 'Diciembre' },
-  ];
-  anios: number[] = [];
+  async cargarRoles() {
+    this.roles = await this.authService.getAllRoles();
+  }
 
   ngOnInit() {
-    this.cargarDias();
-    this.cargarAnios();
-  }
+    (window as any).onCaptchaSuccess = (token: string) => {
+      const event = new CustomEvent('captcha-success', { detail: token });
+      window.dispatchEvent(event);
+    };
 
-  cargarDias() {
-    this.dias = Array.from({ length: 31 }, (_, i) => i + 1);
-  }
-
-  cargarAnios() {
-    const anioActual = new Date().getFullYear();
-    for (let año = 1950; año <= anioActual; año++) {
-      this.anios.push(año);
-    }
+    window.addEventListener('captcha-success', (e: any) => {
+      this.captchaToken = e.detail;
+    });
+    this.cargarRoles();
   }
 
   onRegister() {
-    if (this.form.invalid) {
-      this.errorMessage = 'Por favor, completa todos los campos correctamente.';
-      this.form.markAllAsTouched();
+    if (this.formulario.invalid) {
+      alert('Por favor, completa todos los campos correctamente.');
+      this.formulario.markAllAsTouched();
       return;
     }
-    const nombre = this.form.value.nombre;
-    const apellido = this.form.value.apellido;
-
-    const email = this.form.value.email;
-    const password = this.form.value.password;
-    const dia = this.form.value.dia;
-    const mes = this.form.value.mes;
-    const anio = this.form.value.anio;
-    const telefono = this.form.value.telefono;
-    const roleId = this.form.value.roleId;
-    console.log('Email:', email);
-    console.log('Constraseña:', password);
-    console.log('Nombre:', nombre);
-    console.log('Apellido:', apellido);
-    console.log('Día:', dia);
-    console.log('Mes:', mes);
-    console.log('Año:', anio);
-    console.log('Teléfono:', telefono);
-    console.log('Rol:', roleId);
-
-    this.apiService
-      .register({ email, password, nombre, apellido, dia, mes, anio, telefono, roleId })
+    if (!this.captchaToken) {
+      alert('Por favor completa el captcha');
+      return;
+    }
+    this.authService
+      .register(
+        {
+          nombre: this.formulario.value.nombre,
+          apellido: this.formulario.value.apellido,
+          email: this.formulario.value.email,
+          contrasena: this.formulario.value.contrasena,
+          dd: this.formulario.value.dia,
+          mm: this.formulario.value.mes,
+          aaaa: this.formulario.value.anio,
+          nroTelefono: `+54${this.formulario.value.telefono.replace(/\D/g, '')}`,
+          rol: {
+            id: this.formulario.value.rol.id,
+            nombre: this.formulario.value.rol.nombre,
+          },
+        },
+        this.captchaToken
+      )
       .then(() => {
         this.successMessage = 'Registro exitoso. Redirigiendo...';
         setTimeout(() => {
-          this.router.navigate(['/home']);
-        }, 4000);
+          this.router.navigate(['/login']);
+        }, 1500);
       })
       .catch((err) => {
         if (err.status === 409) {

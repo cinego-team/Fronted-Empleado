@@ -69,7 +69,11 @@ export class ListaFormatoComponent {
       return;
     }
     const selected = this.formatos[this.selec];
-    this.router.navigate(['/formato/editar', selected.id]);
+    this.router.navigate(['/formato/editar', selected.id], {
+      state: {
+        formato: selected,
+      },
+    });
   }
 
   volver() {

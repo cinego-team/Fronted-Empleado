@@ -30,18 +30,42 @@ export class ApiServicePromociones {
       id: number;
       nombre: string;
       porcentajeDescuento: number;
-      tipoClienteId: number;
-      dia: string;
+      tipoCliente: {
+        id: number;
+        denominacion: string;
+      };
+      dia: {
+        id: number;
+        nombre: string;
+      };
     }>
   > {
     const datos = (await axiosAPIPromociones.get(config.APIPromocionesUrls.getPromociones)).data;
     const respuesta = datos.map(
-      (item: { id: any; nombre: any; porcentajeDescuento: any; tipoClienteId: any; dia: any }) => ({
+      (item: {
+        id: any;
+        nombre: any;
+        porcentajeDescuento: any;
+        tipoCliente: {
+          id: any;
+          denominacion: any;
+        };
+        dia: {
+          id: any;
+          nombre: any;
+        };
+      }) => ({
         id: item.id,
         nombre: item.nombre,
         porcentajeDescuento: item.porcentajeDescuento,
-        tipoClienteId: item.tipoClienteId,
-        dia: item.dia,
+        tipoCliente: {
+          id: item.tipoCliente.id,
+          denominacion: item.tipoCliente.denominacion,
+        },
+        dia: {
+          id: item.dia.id,
+          nombre: item.dia.nombre,
+        },
       })
     );
     return respuesta;

@@ -33,7 +33,7 @@
             <option [ngValue]="''" disabled>Seleccione un día</option>
 
             @for (dia of dias; track dia.id) {
-            <option [value]="dia.nombre">{{ dia.nombre }}</option>
+            <option [value]="dia.id">{{ dia.id }}-{{ dia.nombre }}</option>
             }
           </select>
 
@@ -60,7 +60,7 @@
             <option [ngValue]="''" disabled>Seleccione un tipo</option>
 
             @for (tc of tiposCliente; track tc.id) {
-            <option [value]="tc.id">{{ tc.id }}-{{ tc.nombre }}</option>
+            <option [value]="tc.id">{{ tc.id }}-{{ tc.denominacion }}</option>
             }
           </select>
           @if (form.get('tipoCliente')?.invalid && form.get('tipoCliente')?.touched) {

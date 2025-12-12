@@ -26,7 +26,7 @@
 
         <label>Estado</label>
         <select formControlName="estado">
-          <option *ngFor="let e of estados" [value]="e.nombre">{{ e.nombre }}</option>
+          <option *ngFor="let e of estados" [value]="e">{{ e.id }}-{{ e.nombre }}</option>
         </select>
       </div>
 
@@ -37,7 +37,7 @@
 
         <label>Clasificación</label>
         <select formControlName="clasificacion">
-          <option *ngFor="let c of clasificaciones" [value]="c.nombre">{{ c.nombre }}</option>
+          <option *ngFor="let c of clasificaciones" [value]="c">{{ c.id }}-{{ c.nombre }}</option>
         </select>
       </div>
 
@@ -64,28 +64,21 @@
 
         <label>Género</label>
         <select formControlName="genero">
-          <option *ngFor="let g of generos" [value]="g.nombre">{{ g.nombre }}</option>
+          <option *ngFor="let g of generos" [value]="g">{{ g.id }}-{{ g.nombre }}</option>
         </select>
       </div>
 
-      <!-- Director + Idioma -->
+      <!-- Director + Sinopsis + Imagen -->
       <div class="form-group">
         <label>Director</label>
         <input formControlName="director" type="text" />
 
-        <label>Idioma</label>
-        <select formControlName="idioma">
-          <option *ngFor="let i of idiomas" [value]="i.nombre">{{ i.nombre }}</option>
-        </select>
+        <label>Sinopsis</label>
+        <textarea formControlName="sinopsis"></textarea>
+
+        <label>URL Imagen</label>
+        <input type="text" formControlName="urlImagen" />
       </div>
-
-      <!-- Sinopsis -->
-      <label>Sinopsis</label>
-      <textarea formControlName="sinopsis"></textarea>
-
-      <!-- Imagen -->
-      <label>URL Imagen</label>
-      <input type="text" formControlName="urlImagen" />
 
       <button class="btn" type="submit">GUARDAR</button>
     </form>

@@ -18,9 +18,25 @@ export class Ventas {
   ventas: Array<{
     nroVenta: number;
     fecha: Date;
-    hora: Date;
     total: number;
-    promocionId?: number;
+    promocion?: {
+      id: number;
+      nombre: string;
+      porcentajeDescuento: number;
+    };
+    cliente: {
+      id: number;
+      nombre: string;
+      apellido: string;
+      email: string;
+    };
+    estadoVenta: {
+      nombre: string;
+    };
+    entradas: {
+      id: number;
+      esUsado: boolean;
+    }[];
   }> = [];
   selectedRow: number | null = null;
   actualPage: number = 1;

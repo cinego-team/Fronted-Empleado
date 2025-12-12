@@ -23,23 +23,21 @@ export class EditarIdiomaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const idiomaId = this.route.snapshot.paramMap.get('id');
-    this.initialization(idiomaId);
-  }
+    // Recuperar el state desde la navegación
+    const navState =
+      (this.router.getCurrentNavigation()?.extras.state as any)?.idioma ??
+      (history.state as any)?.idioma;
 
-  async initialization(idiomaId: string | null): Promise<void> {
-    if (!idiomaId) {
-      alert('No se proporcionó un ID de idioma válido.');
+    if (!navState) {
+      // Si no hay state, no se puede editar porque no hay datos
+      alert('No se encontró la clasificación. Volvé al listado.');
+      this.router.navigate(['/clasificacion/lista']);
       return;
     }
-    try {
-      const fetched = await this.apiService.getIdiomaById(+idiomaId);
-      console.log('Idioma obtenido:', fetched);
-      this.idioma = { ...fetched };
-      this.originalIdioma = { ...fetched };
-    } catch (error) {
-      alert('Error al obtener el idioma:');
-    }
+
+    // Setear datos
+    this.idioma = { ...navState };
+    this.originalIdioma = { ...navState };
   }
 
   onSave() {

@@ -40,17 +40,17 @@ export class ListaGeneroComponent {
     this.selec = rowId;
   }
 
-  eliminar() {
+  eliminar(): void {
     if (this.selec === null) {
       alert('Seleccioná un genero  primero.');
       return;
     }
 
-    const selectedC = this.generos[this.selec];
+    const selectedG = this.generos[this.selec];
 
     if (confirm(`¿Estás seguro de que querés eliminar ?`)) {
       this.apiService
-        .deleteGenero(selectedC.id)
+        .deleteGenero(selectedG.id)
         .then(() => {
           alert('Genero eliminada correctamente.');
           this.generos.splice(this.selec!, 1);
@@ -73,9 +73,12 @@ export class ListaGeneroComponent {
       return;
     }
     const selected = this.generos[this.selec];
-    this.router.navigate(['/genero/editar', selected.id]);
+    this.router.navigate(['/genero/editar', selected.id], {
+      state: {
+        genero: selected,
+      },
+    });
   }
-
   volver() {
     this.router.navigate(['/home']);
   }

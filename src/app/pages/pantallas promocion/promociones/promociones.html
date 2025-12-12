@@ -15,8 +15,10 @@
           <th>ID</th>
           <th>Nombre</th>
           <th>Porcentaje de Descuento</th>
-          <th>Tipo Cliente</th>
-          <th>dia</th>
+          <th>Tipo ClienteId</th>
+          <th>Denominación Tipo Cliente</th>
+          <th>DíaId</th>
+          <th>Nombre Día</th>
         </tr>
       </thead>
       <tbody>
@@ -28,8 +30,10 @@
           <td>{{ tipo.id }}</td>
           <td>{{ tipo.nombre }}</td>
           <td>{{ tipo.porcentajeDescuento }}</td>
-          <td>{{ getTipoClienteNombre(tipo.tipoClienteId) }}</td>
-          <td>{{ tipo.dia }}</td>
+          <td>{{ tipo.tipoCliente.id }}</td>
+          <td>{{ tipo.tipoCliente.denominacion }}</td>
+          <td>{{ tipo.dia.id }}</td>
+          <td>{{ tipo.dia.nombre }}</td>
         </tr>
         }
       </tbody>

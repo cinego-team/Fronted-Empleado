@@ -23,23 +23,21 @@ export class EditarEstadoPelicula implements OnInit {
   ) {}
 
   ngOnInit() {
-    const estadoId = this.route.snapshot.paramMap.get('id');
-    this.initialization(estadoId);
-  }
+    // Recuperar el state desde la navegación
+    const navState =
+      (this.router.getCurrentNavigation()?.extras.state as any)?.estadoPelicula ??
+      (history.state as any)?.estadoPelicula;
 
-  async initialization(estadoId: string | null): Promise<void> {
-    if (!estadoId) {
-      alert('No se proporcionó un ID de estado válido.');
+    if (!navState) {
+      // Si no hay state, no se puede editar porque no hay datos
+      alert('No se encontró el estado de pelicula. Volvé al listado.');
+      this.router.navigate(['/estado-pelicula/lista']);
       return;
     }
-    try {
-      const fetched = await this.apiService.getEstadosById(+estadoId);
-      console.log('Estado obtenido:', fetched);
-      this.estado = { ...fetched };
-      this.originalEstado = { ...fetched };
-    } catch (error) {
-      alert('Error al obtener el estado:');
-    }
+
+    // Setear datos
+    this.estado = { ...navState };
+    this.originalEstado = { ...navState };
   }
 
   onSave() {

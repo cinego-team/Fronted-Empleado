@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 export class EditPeliculaComponent implements OnInit {
   peliculaId!: number;
   pelicula: any = null;
+  originalPelicula: any;
   form!: FormGroup;
   idiomas: any[] = [];
   generos: any[] = [];
@@ -29,12 +30,26 @@ export class EditPeliculaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.peliculaId = Number(this.route.snapshot.paramMap.get('id'));
+    // Recuperar la película desde la navegación (state)
+    const navState =
+      (this.router.getCurrentNavigation()?.extras.state as any)?.pelicula ??
+      (history.state as any)?.pelicula;
 
+    if (!navState) {
+      alert('No se encontró la película. Volvé al listado.');
+      this.router.navigate(['/pelicula/lista']);
+      return;
+    }
+
+    // Guardar la película original
+    this.pelicula = { ...navState };
+    this.originalPelicula = { ...navState };
+
+    // Inicializar formulario
     this.generarAnios();
     this.crearFormulario();
     this.cargarListas();
-    this.cargarPelicula();
+    this.cargarPeliculaEnFormulario();
   }
 
   // FORMULARIO REACTIVO
@@ -62,31 +77,25 @@ export class EditPeliculaComponent implements OnInit {
 
   // Cargar listas del backend
   cargarListas(): void {
-    this.apiService.getAllIdiomas().then((data) => (this.idiomas = data));
     this.apiService.getAllGeneros().then((data) => (this.generos = data));
     this.apiService.getAllClasificaciones().then((data) => (this.clasificaciones = data));
     this.apiService.getAllEstados().then((data) => (this.estados = data));
   }
 
-  // Cargar película existente
-  cargarPelicula(): void {
-    this.apiService.getPeliculaById(this.peliculaId).then((data) => {
-      this.pelicula = {
-        id: data.id,
-        titulo: data.titulo,
-        sinopsis: data.sinopsis,
-        director: data.director,
-        duracion: data.duracion,
-        fechaEstreno: data.fechaEstreno,
-        idioma: data.idioma.nombre,
-        genero: data.genero.nombre,
-        clasificacion: data.clasificacion.nombre,
-        estado: data.estado.nombre,
-        empleado: { id: 1 },
-        urlImagen: data.urlImagen,
-      };
+  cargarPeliculaEnFormulario(): void {
+    const p = this.pelicula;
 
-      this.setFechaEstreno(data.fechaEstreno);
+    // Setear campos simples
+    this.form.patchValue({
+      titulo: p.titulo,
+      sinopsis: p.sinopsis,
+      director: p.director,
+      duracion: p.duracion,
+      genero: p.genero,
+      clasificacion: p.clasificacion,
+      estado: p.estado,
+      idioma: p.idioma,
+      urlImagen: p.urlImagen,
     });
   }
 

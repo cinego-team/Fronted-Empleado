@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { config } from '../axios_service/env';
 import { axiosAPIUsuario } from '../axios_service/axios.client';
 import { RegisterEmpleadoDTO } from '../pages/register/registerEmpleado.dto';
-import { NewPermiso } from '../pages/Permiso/newPermiso.dto';
-import { BehaviorSubject } from 'rxjs';
-import { RolInput } from '../pages/Rol/rol-dto';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   EditTipoCliente,
   TipoClienteInput,
@@ -19,9 +17,39 @@ export class ApiServiceUsuario {
   private hasToken(): boolean {
     return !!localStorage.getItem('access_token');
   }
-  async register(credentials: RegisterEmpleadoDTO): Promise<any> {
-    const respuesta = (await axiosAPIUsuario.post(config.APIUsuariosUrls.register, credentials))
-      .data;
+  getIsLoggedInObservable(): Observable<boolean> {
+    return this.loggedIn.asObservable();
+  }
+
+  checkTokenValidity(): boolean {
+    return !!this.getToken();
+  }
+  getToken(): string | null {
+    return localStorage.getItem('access_token');
+  }
+
+  async register(
+    credentials: {
+      nombre: string;
+      apellido: string;
+      email: string;
+      contrasena: string;
+      dd: number;
+      mm: number;
+      aaaa: number;
+      nroTelefono: string;
+      rol: {
+        id: number;
+        nombre: string;
+      };
+    },
+    captcha: string
+  ): Promise<any> {
+    const respuesta = (
+      await axiosAPIUsuario.post(config.APIUsuariosUrls.register, credentials, {
+        headers: { 'x-captcha-token': captcha || '' },
+      })
+    ).data;
     const token = respuesta.access_token;
     const refreshToken = respuesta.refresh_token;
     if (token) {
@@ -31,8 +59,12 @@ export class ApiServiceUsuario {
     }
     return respuesta;
   }
-  async login(credentials: { email: string; password: string }): Promise<any> {
-    const respuesta = (await axiosAPIUsuario.post(config.APIUsuariosUrls.login, credentials)).data;
+  async login(credentials: { email: string; password: string }, captcha: string): Promise<any> {
+    const respuesta = (
+      await axiosAPIUsuario.post(config.APIUsuariosUrls.login, credentials, {
+        headers: { 'x-captcha-token': captcha || '' },
+      })
+    ).data;
     const token = respuesta.accessToken;
     const refreshToken = respuesta.refreshToken;
     if (token) {
@@ -48,44 +80,6 @@ export class ApiServiceUsuario {
     localStorage.removeItem('refresh_token');
     this.loggedIn.next(false);
     this.router.navigate(['/login']);
-  }
-  //falta el refresh token
-  //permiso
-
-  async getPermisoById(id: number): Promise<{
-    id: number;
-    nombre: string;
-  }> {
-    const datos = (await axiosAPIUsuario.get(config.APIUsuariosUrls.getPermisoById(id))).data;
-    return {
-      id: datos.id,
-      nombre: datos.nombre,
-    };
-  }
-  async getAllPermisos(): Promise<
-    Array<{
-      id: number;
-      nombre: string;
-    }>
-  > {
-    const datos = (await axiosAPIUsuario.get(config.APIUsuariosUrls.getPermisos)).data;
-
-    const respuesta = datos.map((item: { id: number; nombre: string }) => ({
-      id: item.id,
-      nombre: item.nombre,
-    }));
-
-    return respuesta;
-  }
-
-  async createPermiso(formulario: any): Promise<void> {
-    const nuevoPermiso: NewPermiso = {
-      nombre: formulario.get('nombre').value,
-    };
-    await axiosAPIUsuario.post(config.APIUsuariosUrls.createPermiso, nuevoPermiso);
-  }
-  async deletePermiso(id: number): Promise<void> {
-    await axiosAPIUsuario.delete(config.APIUsuariosUrls.getPermisoById(id));
   }
   //Roles
   async getAllRoles(): Promise<
@@ -107,42 +101,24 @@ export class ApiServiceUsuario {
       return [];
     }
   }
-  async getRolesById(id: number): Promise<{
-    id: number;
-    nombre: string;
-  }> {
-    const item = (await axiosAPIUsuario.get(config.APIUsuariosUrls.getRolById(id))).data;
-    return {
-      id: item.number,
-      nombre: item.nombre,
-    };
-  }
-
-  async createRol(rolData: { nombre: string }): Promise<void> {
-    await axiosAPIUsuario.post(config.APIUsuariosUrls.createRol, rolData);
-  }
-
-  async updateRol(rol: RolInput): Promise<void> {
-    const data: RolInput = {
-      nombre: rol.nombre,
-    };
-    await axiosAPIUsuario.put(`${config.APIUsuariosUrls.updateRol(rol.id!)}`, data);
-  }
   //tipo cliente
   async getTipoClienteById(id: number): Promise<{
     id: number;
-    nombre: string;
+    denominacion: string;
+    descripcion: string;
   }> {
     const datos = (await axiosAPIUsuario.get(config.APIUsuariosUrls.getTipoClienteById(id))).data;
     return {
       id: datos.id,
-      nombre: datos.nombre,
+      denominacion: datos.denominacion,
+      descripcion: datos.descripcion,
     };
   }
   async getAllTiposClientes(): Promise<
     Array<{
       id: number;
-      nombre: string;
+      denominacion: string;
+      descripcion: string;
     }>
   > {
     const datos = (await axiosAPIUsuario.get(config.APIUsuariosUrls.getTiposClientes)).data;
@@ -159,13 +135,15 @@ export class ApiServiceUsuario {
   }
   async createTipoCliente(formulario: any): Promise<void> {
     const nuevoTipoCliente: EditTipoCliente = {
-      nombre: formulario.get('nombre').value,
+      Denominacion: formulario.get('denominacion').value,
+      Descripcion: formulario.get('descripcion').value,
     };
     await axiosAPIUsuario.post(config.APIUsuariosUrls.createTipoCliente, nuevoTipoCliente);
   }
   async updateTipoCliente(tipoCliente: TipoClienteInput): Promise<void> {
     const data: TipoClienteInput = {
-      nombre: tipoCliente.nombre,
+      denominacion: tipoCliente.denominacion,
+      descripcion: tipoCliente.descripcion,
     };
     await axiosAPIUsuario.put(`${config.APIUsuariosUrls.updateTipoCliente(tipoCliente.id!)}`, data);
   }

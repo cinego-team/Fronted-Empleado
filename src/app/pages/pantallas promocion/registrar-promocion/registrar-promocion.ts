@@ -29,7 +29,7 @@ export class RegistrarPromocion implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
-      dia: ['', Validators.required],
+      diaId: ['', Validators.required],
       porcentajeDescuento: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
       tipoClienteId: ['', Validators.required],
     });
@@ -55,7 +55,7 @@ export class RegistrarPromocion implements OnInit {
     const dto = {
       nombre: v.nombre,
       porcentajeDescuento: v.porcentajeDescuento,
-      dia: v.dia,
+      diaId: v.diaId,
       tipoClienteId: v.tipoClienteId,
     };
     this.apiService

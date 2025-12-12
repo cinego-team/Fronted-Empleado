@@ -1,5 +1,6 @@
 export interface EmpleadoInput {
   id: number;
+  legajo: number;
   nombre: string;
   apellido: string;
 }
@@ -10,10 +11,19 @@ export class EditPeliculaInput {
   director!: string;
   duracion!: number;
   fechaEstreno!: string;
-  idioma!: string; // nombre
-  genero!: string; // nombre
-  clasificacion!: string; // nombre
-  estado!: string; // nombre
+  genero!: {
+    id: number;
+    nombre: string;
+  };
+  clasificacion!: {
+    id: number;
+    nombre: string;
+  };
+
+  estado!: {
+    id: number;
+    nombre: string;
+  };
   empleado!: EmpleadoInput;
   urlImagen!: string;
 }
@@ -24,10 +34,19 @@ export class EditPeliculaOutput {
   director!: string;
   duracion!: number;
   fechaEstreno!: string;
-  idioma!: string; // nombre
-  genero!: string; // nombre
-  clasificacion!: string; // nombre
-  estado!: string; //nombre
+  genero!: {
+    id: number;
+    nombre: string;
+  };
+  clasificacion!: {
+    id: number;
+    nombre: string;
+  };
+
+  estado!: {
+    id: number;
+    nombre: string;
+  };
   empleado!: EmpleadoInput;
   urlImagen!: string;
 }

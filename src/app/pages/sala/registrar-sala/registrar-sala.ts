@@ -22,9 +22,9 @@ export class RegistrarSala {
   ) {
     this.form = this.fb.group({
       numero: ['', [Validators.required, Validators.min(1)]],
-      dipsponibilidad: [true, Validators.required],
-      fila: ['', [Validators.required, Validators.min(1)]],
-      butaca: ['', [Validators.required, Validators.min(1)]],
+      disponibilidad: [true, Validators.required],
+      cantFilas: ['', [Validators.required, Validators.min(1)]],
+      cantButacasPorFila: ['', [Validators.required, Validators.min(1)]],
     });
   }
   disponibilidadOpciones = [
@@ -41,7 +41,7 @@ export class RegistrarSala {
         .createSala(this.form.value)
         .then(() => {
           alert('Sala creado correctamente.');
-          this.router.navigate(['/sala']);
+          this.router.navigate(['/sala/lista']);
         })
         .catch((error) => {
           console.error('Error al crear el sala:', error);
@@ -51,6 +51,6 @@ export class RegistrarSala {
   }
 
   volver() {
-    this.router.navigate(['/salas']);
+    this.router.navigate(['/sala/lista']);
   }
 }

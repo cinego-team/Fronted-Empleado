@@ -8,9 +8,25 @@ export class ApiServiceVentas {
     Array<{
       nroVenta: number;
       fecha: Date;
-      hora: Date;
       total: number;
-      promocionId?: number;
+      promocion?: {
+        id: number;
+        nombre: string;
+        porcentajeDescuento: number;
+      };
+      cliente: {
+        id: number;
+        nombre: string;
+        apellido: string;
+        email: string;
+      };
+      estadoVenta: {
+        nombre: string;
+      };
+      entradas: {
+        id: number;
+        esUsado: boolean;
+      }[];
     }>
   > {
     try {
@@ -20,9 +36,25 @@ export class ApiServiceVentas {
       return datos.map((item: any) => ({
         nroVenta: item.nroVenta,
         fecha: new Date(item.fecha),
-        hora: new Date(item.hora),
         total: item.total,
-        promocionId: item.promocionId,
+        promocion: {
+          id: item.promocion?.id,
+          nombre: item.promocion?.nombre,
+          porcentajeDescuento: item.promocion?.porcentajeDescuento,
+        },
+        cliente: {
+          id: item.cliente.id,
+          nombre: item.cliente.nombre,
+          apellido: item.cliente.apellido,
+          email: item.cliente.email,
+        },
+        estadoVenta: {
+          nombre: item.estadoVenta.nombre,
+        },
+        entradas: item.entradas.map((e: any) => ({
+          id: e.id,
+          esUsado: e.esUsado,
+        })),
       }));
     } catch (error) {
       console.error('Error al obtener ventas:', error);

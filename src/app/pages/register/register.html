@@ -1,61 +1,69 @@
-<head>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
-</head>
-<div class="register-container">
-  <header class="topbar">
-    <img src="assets/logo.png" alt="CineGo" class="logo" />
-  </header>
-  <div class="register-box">
-    <h2>Registar nuevo empleado</h2>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-    <form [formGroup]="form" (ngSubmit)="onRegister()">
+<header class="topbar">
+  <img src="/assets/logo.png" alt="CineGo" class="logo" />
+  <div class="user-section"></div>
+</header>
+
+<div class="register-container">
+  <div class="register-box">
+    <h2>¡Unete a CineGo hoy!</h2>
+
+    <form [formGroup]="formulario" (ngSubmit)="onRegister()">
+      @if (errorMessage) {
+      <div class="alert alert-danger">{{ errorMessage }}</div>
+      }
+
       <div class="form-group">
-        <label for="nombre">Nombre</label>
-        <input type="nombre" id="nombre" formControlName="nombre" />
-        <div *ngIf="form.get('nombre')?.touched && form.get('nombre')?.invalid" class="error">
-          <small class="text-danger" *ngIf="form.get('nombre')?.errors?.['required']"
-            >El nombre es obligatorio.</small
-          >
-        </div>
+        <label for="nombre">Nombre/s</label>
+        <input id="nombre" formControlName="nombre" />
+        @if (formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched) {
+        <small class="text-danger">Nombre requerido (mínimo 2 letras)</small>
+        }
       </div>
+      <div class="form-group">
+        <label for="apellido">Apellido/s</label>
+        <input id="apellido" formControlName="apellido" />
+        @if (formulario.get('apellido')?.invalid && formulario.get('apellido')?.touched) {
+        <small class="text-danger">Apellido requerido (mínimo 3 letras)</small>
+        }
+      </div>
+
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" formControlName="email" />
-        <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="error">
-          <small class="text-danger" *ngIf="form.get('email')?.errors?.['required']"
-            >El email es obligatorio.</small
-          >
-          <small class="text-danger" *ngIf="form.get('email')?.errors?.['email']"
-            >El formato del email no es válido.</small
-          >
-        </div>
-      </div>
+        <input id="email" type="email" formControlName="email" />
 
-      <div class="form-group">
-        <label for="apellido">Apellido</label>
-        <input type="apellido" id="apellido" formControlName="apellido" />
-        <div *ngIf="form.get('apellido')?.touched && form.get('apellido')?.invalid" class="error">
-          <small class="text-danger" *ngIf="form.get('apellido')?.errors?.['required']"
-            >El apellido es obligatorio.</small
-          >
-        </div>
+        @if (formulario.get('email')?.invalid && formulario.get('email')?.touched) {
+        <small class="text-danger"> Ingresá un email válido (ej: usuario@correo.com) </small>
+        }
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" formControlName="password" />
-        <div *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="error">
-          <small class="text-danger" *ngIf="form.get('password')?.errors?.['required']"
-            >La contraseña es obligatoria.</small
-          >
-          <small class="text-danger" *ngIf="form.get('password')?.errors?.['minlength']"
-            >Debe tener al menos 3 caracteres.</small
-          >
+      <div class="form-group password-wrapper">
+        <label for="contraseña">Contraseña</label>
+        <div class="password-input">
+          <input
+            id="contrasena"
+            [type]="mostrarPassword ? 'text' : 'password'"
+            formControlName="contrasena"
+          />
+
+          <button type="button" class="toggle-btn" (click)="mostrarPassword = !mostrarPassword">
+            <img *ngIf="!mostrarPassword" src="../assets/eye-closed.svg" alt="Mostrar" />
+            <img *ngIf="mostrarPassword" src="../assets/eye-open.svg" alt="Ocultar" />
+          </button>
         </div>
+
+        @if (formulario.get('contrasena')?.invalid && formulario.get('contrasena')?.touched) {
+        <small class="text-danger">
+          La contraseña debe cumplir con:
+          <ul class="mt-1 text-danger">
+            <li>Mínimo 8 caracteres</li>
+            <li>Al menos una letra mayúscula (A–Z)</li>
+            <li>Al menos un número (0–9)</li>
+            <li>Al menos un carácter especial (!, @, #, $, %, etc.)</li>
+            <li>Sin espacios al inicio ni al final</li>
+          </ul>
+        </small>
+        }
       </div>
 
       <div class="form-group full">
@@ -68,9 +76,7 @@
 
           <select formControlName="mes">
             <option value="">Mes</option>
-            <option *ngFor="let m of meses" [value]="m.valor">
-              {{ m.nombre }}
-            </option>
+            <option *ngFor="let m of meses" [value]="m.value">{{ m.label }}</option>
           </select>
 
           <select formControlName="anio">
@@ -79,35 +85,33 @@
           </select>
         </div>
       </div>
-
       <div class="form-group full">
         <label>Número de teléfono</label>
         <div class="phone-row">
-          <select>
+          <select disabled>
             <option>+54</option>
           </select>
-          <input type="tel" placeholder="Número" formControlName="telefono" />
+          <input type="tel" formControlName="telefono" placeholder="Número" />
         </div>
       </div>
-      <div class="form-group full">
-        <label for="roleId">Rol (número entero)</label>
-        <input type="number" id="roleId" formControlName="roleId" placeholder="Ej: 1" />
+      <div class="form-group">
+        <label for="formato">Rol</label>
+        <select id="formato" formControlName="formato">
+          <option [ngValue]="null" disabled selected>Seleccione el rol</option>
 
-        <div *ngIf="form.get('roleId')?.touched && form.get('roleId')?.invalid" class="error">
-          <small class="text-danger" *ngIf="form.get('roleId')?.errors?.['required']">
-            El rol es obligatorio.
-          </small>
-          <small class="text-danger" *ngIf="form.get('roleId')?.errors?.['pattern']">
-            El rol debe ser un número entero.
-          </small>
-        </div>
+          <option *ngFor="let r of roles" [ngValue]="r">{{ r.id }} - {{ r.nombre }}</option>
+        </select>
       </div>
 
-      <button type="submit" [disabled]="form.invalid">REGISTRAR</button>
+      <div
+        class="g-recaptcha"
+        data-sitekey="6LcICREsAAAAAKHWBF39boQk9uCQ__y6iFi7mbb2"
+        data-callback="onCaptchaSuccess"
+      ></div>
+
+      <div class="actions">
+        <button type="submit" class="btn-register">REGISTRARME</button>
+      </div>
     </form>
-  </div>
-  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-  <div *ngIf="successMessage" class="success-message">
-    {{ successMessage }}
   </div>
 </div>

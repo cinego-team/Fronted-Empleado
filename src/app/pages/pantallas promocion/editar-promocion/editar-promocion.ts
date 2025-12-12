@@ -5,95 +5,94 @@ import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angula
 import { ApiServicePromociones } from '../../../services/api.service.promociones';
 import { ApiServiceUsuario } from '../../../services/api.service.usuario';
 @Component({
-    selector: 'app-editar-promocion',
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule],
-    templateUrl: './editar-promocion.html',
-    styleUrl: './editar-promocion.css',
+  selector: 'app-editar-promocion',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './editar-promocion.html',
+  styleUrl: './editar-promocion.css',
 })
 export class EditarPromocion {
-    form!: FormGroup;
+  form!: FormGroup;
+  originalPromocion: any;
+  promocion: any;
+  dias: any[] = [];
+  tiposCliente: any[] = [];
 
-    promocion: any;
-    dias: any[] = [];
-    tiposCliente: any[] = [];
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private fb: FormBuilder,
+    private apiService: ApiServicePromociones,
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private fb: FormBuilder,
-        private apiService: ApiServicePromociones,
+    private apiService2: ApiServiceUsuario
+  ) {}
 
-        private apiService2: ApiServiceUsuario
-    ) { }
+  ngOnInit() {
+    const navState =
+      (this.router.getCurrentNavigation()?.extras.state as any)?.promocion ??
+      (history.state as any)?.promocion;
 
-    async ngOnInit() {
-        this.form = this.fb.group({
-            nombre: ['', Validators.required],
-            dia: ['', Validators.required],
-            porcentajeDescuento: ['', Validators.required],
-            tipoCliente: ['', Validators.required],
-        });
-
-        const id = Number(this.route.snapshot.paramMap.get('id'));
-        await this.cargarDatos(id);
+    if (!navState) {
+      alert('No se encontró la promoción. Volvé al listado.');
+      this.router.navigate(['/promocion/lista']);
+      return;
     }
 
-    // CARGA DE DATOS
+    this.promocion = { ...navState };
+    this.originalPromocion = { ...navState };
 
-    async cargarDatos(id: number) {
-        try {
-            // Obtener promo
-            this.promocion = await this.apiService.getPromocionById(id);
+    this.form = this.fb.group({
+      nombre: [this.promocion.nombre, Validators.required],
+      porcentajeDescuento: [
+        this.promocion.porcentajeDescuento,
+        [Validators.required, Validators.min(1), Validators.max(100)],
+      ],
+      tipoClienteId: [this.promocion.tipoClienteId, Validators.required],
+      dia: [this.promocion.dia, Validators.required],
+    });
+    this.cargarDias();
+    this.cargarTiposCliente();
+  }
+  cargarDias() {
+    this.apiService.getAllDias().then((data) => {
+      this.dias = data;
+    });
+  }
+  cargarTiposCliente() {
+    this.apiService2.getAllTiposClientes().then((data) => {
+      this.tiposCliente = data;
+    });
+  }
 
-            // Llenar el form
-            this.form.patchValue({
-                nombre: this.promocion.nombre,
-                dia: this.promocion.dia,
-                porcentajeDescuento: this.promocion.porcentajeDescuento,
-                tipoClienteId: this.promocion.tipoClienteId,
-            });
+  // GUARDAR CAMBIOS
 
-            // Obtener días
-            this.dias = await this.apiService.getAllDias();
-
-            // Obtener tipos de cliente
-            this.tiposCliente = await this.apiService2.getAllTiposClientes();
-        } catch (err) {
-            console.error(err);
-            alert('Error al cargar los datos de la promoción.');
-        }
+  onSave() {
+    if (this.form.invalid) {
+      alert('Completa todos los campos.');
+      return;
     }
 
-    // GUARDAR CAMBIOS
+    const dataActualizada = {
+      id: this.promocion.id,
+      nombre: this.promocion.nombre,
+      porcentajeDescuento: this.promocion.porcentajeDescuento,
+      tipoClienteId: this.promocion.tipoClienteId,
+      diaId: this.promocion.diaId,
+    };
 
-    onSave() {
-        if (this.form.invalid) {
-            alert('Completa todos los campos.');
-            return;
-        }
-
-        const dataActualizada = {
-            id: this.promocion.id,
-            nombre: this.promocion.nombre,
-            porcentajeDescuento: this.promocion.porcentajeDescuento,
-            tipoClienteId: this.promocion.tipoClienteId,
-            dia: this.promocion.dia,
-        };
-
-        this.apiService
-            .updatePromocion(dataActualizada)
-            .then(() => {
-                alert('Promoción actualizada correctamente.');
-                this.router.navigate(['/promocion/lista']);
-            })
-            .catch((err) => {
-                console.error(err);
-                alert('Error al actualizar la promoción.');
-            });
-    }
-
-    volver() {
+    this.apiService
+      .updatePromocion(dataActualizada)
+      .then(() => {
+        alert('Promoción actualizada correctamente.');
         this.router.navigate(['/promocion/lista']);
-    }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert('Error al actualizar la promoción.');
+      });
+  }
+
+  volver() {
+    this.router.navigate(['/promocion/lista']);
+  }
 }

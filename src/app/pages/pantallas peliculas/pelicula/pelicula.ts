@@ -23,21 +23,32 @@ export class Pelicula {
     this.selectedPelicula = p;
   }
   peliculas: Array<{
-    id: number; // obligatorio para update
+    id: number;
     titulo: string;
     sinopsis: string;
     director: string;
     duracion: number;
     fechaEstreno: string;
-    idioma: string; // nombre
-    genero: string; // nombre
-    clasificacion: string; // nombre
-    estado: string; // nombre
+    urlImagen: string;
+    genero: {
+      id: number;
+      nombre: string;
+    };
+
+    clasificacion: {
+      id: number;
+      nombre: string;
+    };
+    estado: {
+      id: number;
+      nombre: string;
+    };
     empleado: {
+      id: number;
+      legajo: number;
       nombre: string;
       apellido: string;
     };
-    urlImagen: string;
   }> = [];
   selec: number | null = null;
 
@@ -54,12 +65,17 @@ export class Pelicula {
     this.peliculas = data;
   }
 
-  onEdit() {
-    if (!this.selectedPelicula) {
-      alert('Seleccioná una película primero.');
+  editar() {
+    if (this.selec === null) {
+      alert('Seleccioná uno primero.');
       return;
     }
-    this.router.navigate(['/pelicula/editar', this.selectedPelicula.id]); // ruta con :id
+    const selected = this.peliculas[this.selec];
+    this.router.navigate(['/pelicula/editar', selected.id], {
+      state: {
+        pelicula: selected,
+      },
+    });
   }
 
   onBack() {
@@ -73,7 +89,7 @@ export class Pelicula {
     this.router.navigate(['/pelicula/registrar']);
   }
 
-  eliminar() {
+  eliminar(): void {
     if (this.selec === null) {
       alert('Seleccioná una película  primero.');
       return;

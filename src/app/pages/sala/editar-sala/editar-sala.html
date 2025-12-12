@@ -23,15 +23,16 @@
           <label for="numero">Numero de sala </label>
           <input id="numero" [(ngModel)]="sala.numero" name="numero" required />
         </div>
-        <div class="form-group">
-          <label for="disponibilidad">Disponibilidad</label>
-          <input
-            id="disponibilidad"
-            [(ngModel)]="sala.disponibilidad"
-            name="disponibilidad"
-            required
-          />
-        </div>
+        <select
+          id="disponibilidad"
+          name="disponibilidad"
+          [(ngModel)]="sala.disponibilidad"
+          required
+        >
+          <option [ngValue]="true">Disponible</option>
+          <option [ngValue]="false">No disponible</option>
+        </select>
+
         <div class="form-group">
           <label for="fila">Cantidad de filas</label>
           <input id="fila" [(ngModel)]="sala.fila" name="fila" required />

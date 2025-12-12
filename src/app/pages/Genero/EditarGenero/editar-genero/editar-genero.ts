@@ -21,25 +21,22 @@ export class EditarGeneroComponent implements OnInit {
     private router: Router,
     private apiService: ApiServicePelicula
   ) {}
-
   ngOnInit() {
-    const generoId = this.route.snapshot.paramMap.get('id');
-    this.initialization(generoId);
-  }
+    // Recuperar el state desde la navegación
+    const navState =
+      (this.router.getCurrentNavigation()?.extras.state as any)?.genero ??
+      (history.state as any)?.genero;
 
-  async initialization(generoId: string | null): Promise<void> {
-    if (!generoId) {
-      alert('No se proporcionó un ID de genero válido.');
+    if (!navState) {
+      // Si no hay state, no se puede editar porque no hay datos
+      alert('No se encontró el genero. Volvé al listado.');
+      this.router.navigate(['/genero/lista']);
       return;
     }
-    try {
-      const fetched = await this.apiService.getGeneroById(+generoId);
-      console.log('Genero obtenido:', fetched);
-      this.genero = { ...fetched };
-      this.originalGenero = { ...fetched };
-    } catch (error) {
-      alert('Error al obtener el genero:');
-    }
+
+    // Setear datos
+    this.genero = { ...navState };
+    this.originalGenero = { ...navState };
   }
 
   onSave() {

@@ -1,33 +1,72 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { TokenTimeoutService } from '../../services/tokeTimeout.service';
 import { ApiServiceUsuario } from '../../services/api.service.usuario';
+declare const grecaptcha: any;
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
+  formulario: FormGroup;
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
+  captchaToken: string | null = null;
+  mostrarPassword = false;
 
   constructor(
-    private apiService: ApiServiceUsuario,
+    private authService: ApiServiceUsuario,
     private router: Router,
-    private tokenTimeoutService: TokenTimeoutService
-  ) {}
+    private tokenTimeoutService: TokenTimeoutService,
+    private fb: FormBuilder
+  ) {
+    this.formulario = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+    });
+  }
 
-  onLogin() {
-    this.apiService
-      .login({ email: this.email, password: this.password })
+  ngOnInit() {
+    (window as any).onCaptchaSuccess = (token: string) => {
+      const event = new CustomEvent('captcha-success', { detail: token });
+      window.dispatchEvent(event);
+    };
+
+    window.addEventListener('captcha-success', (e: any) => {
+      this.captchaToken = e.detail;
+    });
+  }
+
+  OnLogin() {
+    if (this.formulario.invalid) {
+      alert('Por favor, completa todos los campos correctamente.');
+      this.formulario.markAllAsTouched();
+      return;
+    }
+    if (!this.captchaToken) {
+      alert('Por favor completa el captcha');
+      return;
+    }
+    this.authService
+      .login(
+        {
+          email: this.formulario.value.email,
+          password: this.formulario.value.password,
+        },
+        this.captchaToken
+      )
       .then(() => {
         this.tokenTimeoutService.startCountdown();
         this.router.navigate(['/home']);
       })
       .catch((error) => {
         alert('Login fallido. Verifica tus credenciales.');
+        (window as any).grecaptcha.reset();
+        this.captchaToken = null;
       });
   }
 }

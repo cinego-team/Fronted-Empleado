@@ -41,7 +41,7 @@ export class ListaIdiomaComponent {
     this.selec = rowId;
   }
 
-  eliminar() {
+  eliminar(): void {
     if (this.selec === null) {
       alert('Seleccioná un idioma  primero.');
       return;
@@ -69,8 +69,12 @@ export class ListaIdiomaComponent {
       alert('Seleccioná uno primero.');
       return;
     }
-    const selectedIdioma = this.idiomas[this.selec];
-    this.router.navigate(['/idioma/editar', selectedIdioma.id]);
+    const selected = this.idiomas[this.selec];
+    this.router.navigate(['/idioma/editar', selected.id], {
+      state: {
+        idioma: selected,
+      },
+    });
   }
 
   nuevo() {

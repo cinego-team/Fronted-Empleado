@@ -13,8 +13,8 @@ import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
   styleUrls: ['./editar-clasificacion.css'],
 })
 export class EditarClasificacionComponent implements OnInit {
-  clasificacion: any;
-  originalClasificacion: any;
+  clasificacion: any = {};
+  originalClasificacion: any = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -23,44 +23,37 @@ export class EditarClasificacionComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const clasificacionId = this.route.snapshot.paramMap.get('id');
-    this.initialization(clasificacionId);
-  }
+    // Recuperar el state desde la navegación
+    const navState =
+      (this.router.getCurrentNavigation()?.extras.state as any)?.clasificacion ??
+      (history.state as any)?.clasificacion;
 
-  async initialization(clasificacionId: string | null): Promise<void> {
-    if (!clasificacionId) {
-      alert('No se proporcionó un ID de clasificacion válido.');
+    if (!navState) {
+      // Si no hay state, no se puede editar porque no hay datos
+      alert('No se encontró la clasificación. Volvé al listado.');
+      this.router.navigate(['/clasificacion/lista']);
       return;
     }
-    try {
-      const fetched = await this.apiService.getClasificacionById(+clasificacionId);
-      console.log('Clasificación obtenida:', fetched);
-      this.clasificacion = { ...fetched };
-      this.originalClasificacion = { ...fetched };
-    } catch (error) {
-      alert('Error al obtener la clasificacion:');
-    }
+
+    // Setear datos
+    this.clasificacion = { ...navState };
+    this.originalClasificacion = { ...navState };
   }
 
   onSave() {
-    const modifiedKeys = Object.keys(this.clasificacion).filter(
-      (key) => key !== 'id' && this.clasificacion[key] !== this.originalClasificacion[key]
-    );
-    if (modifiedKeys.length === 0) {
+    if (this.clasificacion.nombre === this.originalClasificacion.nombre) {
       alert('No se cambió ningún dato.');
-    } else if (modifiedKeys.length === Object.keys(this.clasificacion).length - 1) {
-      this.apiService
-        .updateClasificacion(this.clasificacion)
-        .then(() => {
-          alert('Clasificación actualizada correctamente.');
-        })
-        .catch((error) => {
-          console.error('Error al actualizar la clasificación:', error);
-          alert('Error al actualizar la clasificación.');
-        });
+      return;
     }
 
-    this.router.navigate(['/clasificacion/lista']);
+    try {
+      this.apiService.updateClasificacion(this.clasificacion);
+      alert('Clasificación actualizada correctamente.');
+      this.router.navigate(['/clasificacion/lista']);
+    } catch (error) {
+      console.error('Error al actualizar la clasificación:', error);
+      alert('Error al actualizar la clasificación.');
+    }
   }
 
   volver() {

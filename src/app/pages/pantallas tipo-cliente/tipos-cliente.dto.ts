@@ -1,7 +1,9 @@
 export class EditTipoCliente {
-  nombre?: string;
+  Denominacion?: string;
+  Descripcion?: string;
 }
 export class TipoClienteInput {
   id?: number;
-  nombre?: string;
+  denominacion?: string;
+  descripcion?: string;
 }

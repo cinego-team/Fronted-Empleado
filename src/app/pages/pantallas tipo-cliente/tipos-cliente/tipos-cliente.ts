@@ -17,7 +17,8 @@ export class TiposCliente {
   ) {}
   tiposCliente: Array<{
     id: number;
-    nombre: string;
+    denominacion: string;
+    descripcion: string;
   }> = [];
   selectedRow: number | null = null;
   actualPage: number = 1;
@@ -50,14 +51,18 @@ export class TiposCliente {
 
   onEdit() {
     if (this.selectedRow === null) {
-      alert('Seleccioná un tipo cliente primero.');
+      alert('Seleccioná uno primero.');
       return;
     }
-    const selectedTipoCliente = this.tiposCliente[this.selectedRow];
-    this.router.navigate(['/tipo-cliente/editar', selectedTipoCliente.id]);
+    const selected = this.tiposCliente[this.selectedRow];
+    this.router.navigate(['/tipo-cliente/editar', selected.id], {
+      state: {
+        tipoCliente: selected,
+      },
+    });
   }
 
-  onDelete() {
+  onDelete(): void {
     if (this.selectedRow === null) {
       alert('Seleccioná un tipo dni primero.');
       return;
@@ -65,7 +70,7 @@ export class TiposCliente {
     const selectedTiposCliente = this.tiposCliente[this.selectedRow];
     if (
       confirm(
-        `¿Estás seguro de que querés eliminar el tipo cliente ${selectedTiposCliente.nombre} (ID: ${selectedTiposCliente.id})?`
+        `¿Estás seguro de que querés eliminar el tipo cliente ${selectedTiposCliente.denominacion} (ID: ${selectedTiposCliente.id})?`
       )
     ) {
       this.apiService.deleteTipoCliente(selectedTiposCliente.id).then(() => {
