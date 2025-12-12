@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { Register } from './pages/register/register';
 import { RegistrarPelicula } from './pages/pantallas peliculas/registrar-pelicula/registrar-pelicula';
-import { EditarPelicula } from './pages/pantallas peliculas/editar-pelicula/editar-pelicula';
+import { EditPeliculaComponent } from './pages/pantallas peliculas/editar-pelicula/editar-pelicula';
 import { RegistrarEstadoPeliculaComponent } from './pages/lista estado pelicula/registrar-estado-p/registrar-estado-p';
 import { EditarEstadoPelicula } from './pages/lista estado pelicula/editar-estado-pelicula/editar-estado-pelicula';
 
@@ -14,8 +14,6 @@ import { EditarTipoCliente } from './pages/pantallas tipo-cliente/editar-tipo-cl
 import { EstadosPeliculas } from './pages/lista estado pelicula/estados-peliculas/estados-peliculas';
 import { Promociones } from './pages/pantallas promocion/promociones/promociones';
 import { Ventas } from './pages/ventas/ventas';
-
-import { PeliculaListaComponent } from './pages/pantallas peliculas/peliculas/peliculas';
 import { TiposCliente } from './pages/pantallas tipo-cliente/tipos-cliente/tipos-cliente';
 import { ListaGeneroComponent } from './pages/Genero/ListaGenero/lista-genero/lista-genero';
 import { RegistrarGeneroComponent } from './pages/Genero/RegistrarGenero/registrar-genero/registrar-genero';
@@ -28,24 +26,21 @@ import { ListaClasificacionComponent } from './pages/Clasificacion/ListaClasific
 import { RegistrarClasificacionComponent } from './pages/Clasificacion/RegistrarClasificacion/registar-clasificacion/registrar-clasificacion';
 import { EditarClasificacionComponent } from './pages/Clasificacion/EditarClasificacion/editar-clasificacion/editar-clasificacion';
 
-import { ListaPermisoComponent } from './pages/Permiso/ListaPermiso/lista-permiso/lista-permiso';
-import { RegistrarPermisoComponent } from './pages/Permiso/RegistrarPermiso/registrar-permiso/registrar-permiso';
-
-import { ListaRolComponent } from './pages/Rol/ListaRol/lista-rol/lista-rol';
-import { RegistrarRolComponent } from './pages/Rol/RegistrarRol/registrar-rol/registrar-rol';
-import { EditarRolComponent } from './pages/Rol/EditarRol/editar-rol/editar-rol';
-
 import { Principal } from './pages/principal/principal';
 import { ListaFuncion } from './pages/funcion/lista-funcion/lista-funcion';
 import { RegistrarFuncion } from './pages/funcion/registrar-funcion/registrar-funcion';
 import { EditarFuncion } from './pages/funcion/editar-funcion/editar-funcion';
-import { VerFuncion } from './pages/funcion/ver-funcion/ver-funcion';
+import { Pelicula } from './pages/pantallas peliculas/pelicula/pelicula';
+import { Home } from './pages/home/home';
+import { Reportes } from './pages/reportes/reportes';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent }, // login
 
-  { path: 'home', component: Principal }, //pantalla principal
-  { path: 'registrar-empleado', component: Register },
+  { path: 'home', component: Home }, //pantalla principal
+  { path: 'administracion', component: Principal }, //menu principal
+  { path: 'registrar/empleado', component: Register },
+  { path: 'reportes', component: Reportes },
 
   //estados peliculas
   { path: 'estado-pelicula/registrar', component: RegistrarEstadoPeliculaComponent },
@@ -53,8 +48,8 @@ export const routes: Routes = [
   { path: 'estado-pelicula/lista', component: EstadosPeliculas },
   //peliculas
   { path: 'pelicula/registrar', component: RegistrarPelicula },
-  { path: 'pelicula/editar', component: EditarPelicula },
-  { path: 'pelicula/lista', component: PeliculaListaComponent },
+  { path: 'pelicula/editar', component: EditPeliculaComponent },
+  { path: 'pelicula/lista', component: Pelicula },
   //promociones
   { path: 'promocion/registrar', component: RegistrarPromocion },
   { path: 'promocion/editar', component: EditarPromocion },
@@ -77,18 +72,9 @@ export const routes: Routes = [
   { path: 'clasificacion/lista', component: ListaClasificacionComponent },
   { path: 'clasificacion/registrar', component: RegistrarClasificacionComponent },
   { path: 'clasificacion/editar', component: EditarClasificacionComponent },
-
-  { path: 'permiso/lista', component: ListaPermisoComponent },
-  { path: 'permiso/registrar', component: RegistrarPermisoComponent },
-
-  { path: 'rol/lista', component: ListaRolComponent },
-  { path: 'rol/registrar', component: RegistrarRolComponent },
-  { path: 'rol/editar', component: EditarRolComponent },
-
   { path: 'funciones', component: ListaFuncion },
   { path: 'registrar-funcion', component: RegistrarFuncion },
   { path: 'editar-funcion', component: EditarFuncion },
-  { path: 'funcion', component: VerFuncion },
 
   { path: '**', redirectTo: '' }, // cualquier ruta desconocida redirige al principal
 ];

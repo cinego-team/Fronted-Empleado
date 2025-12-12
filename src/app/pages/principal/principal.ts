@@ -25,9 +25,7 @@ export class Principal {
   onClasificacion() {
     this.router.navigate(['/clasificacion/lista']);
   }
-  onVentas() {
-    this.router.navigate(['/venta/lista']);
-  }
+
   onPromociones() {
     this.router.navigate(['/promocion/lista']);
   }
@@ -37,8 +35,10 @@ export class Principal {
   onSalas() {
     this.router.navigate(['/sala/lista']);
   }
-
-  inicio() {
-    this.router.navigate(['/home']);
+  onFormatos() {
+    this.router.navigate(['/formato/lista']);
+  }
+  onTipoCliente() {
+    this.router.navigate(['/tipo-cliente/lista']);
   }
 }

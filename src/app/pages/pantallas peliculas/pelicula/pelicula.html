@@ -22,7 +22,6 @@
           <td>Estado</td>
           <td>Género</td>
           <td>Clasificación</td>
-          <td>Idioma</td>
           <td>Empleado</td>
           <th></th>
         </tr>
@@ -43,7 +42,6 @@
           <td>{{ tipo.estado }}</td>
           <td>{{ tipo.genero }}</td>
           <td>{{ tipo.clasificacion }}</td>
-          <td>{{ tipo.idioma }}</td>
           <td>{{ tipo.empleado.nombre }} {{ tipo.empleado.apellido }}</td>
         </tr>
         }
@@ -53,7 +51,7 @@
       <button (click)="onBack()">VOLVER</button>
       <button (click)="onNew()">NUEVO</button>
       <button (click)="eliminar()">ELIMINAR</button>
-      <button (click)="onEdit()">EDITAR</button>
+      <button (click)="editar()">EDITAR</button>
     </div>
   </div>
 </div>

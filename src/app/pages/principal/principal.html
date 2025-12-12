@@ -1,6 +1,6 @@
 <!-- Logo -->
 <header class="topbar">
-  <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()" />
+  <img src="/assets/logo.png" alt="CineGo" class="logo" />
   <div class="user-section">
     <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
     <span>Usuario</span>
@@ -8,17 +8,21 @@
 </header>
 <div class="container">
   <!-- Botones principales -->
-  <div class="buttons-wrapper">
-    <div class="buttons">
-      <button (click)="onPelicula()">PELÍCULAS</button>
-      <button (click)="onFunciones()">FUNCIONES</button>
-      <button (click)="onIdiomas()">IDIOMAS</button>
-      <button (click)="onGenero()">GÉNEROS</button>
-      <button (click)="onClasificacion()">CLASIFICACIÓNES</button>
-      <button (click)="onVentas()">VENTAS</button>
-      <button (click)="onPromociones()">PROMOCIONES</button>
-      <button (click)="onEstado()">ESTADO PELÍCULA</button>
-      <button (click)="onSalas()">SALAS</button>
+  <div class="register-box">
+    <h2>Administración</h2>
+    <div class="buttons-wrapper">
+      <div class="buttons">
+        <button (click)="onPelicula()">PELICULAS</button>
+        <button (click)="onFunciones()">FUNCIONES</button>
+        <button (click)="onIdiomas()">IDIOMAS</button>
+        <button (click)="onGenero()">GÉNEROS</button>
+        <button (click)="onClasificacion()">CLASIFICACIÓNES</button>
+        <button (click)="onPromociones()">PROMOCIONES</button>
+        <button (click)="onEstado()">ESTADO PELÍCULA</button>
+        <button (click)="onSalas()">SALAS</button>
+        <button (click)="onFormatos()">FORMATOS</button>
+        <button (click)="onTipoCliente()">TIPOS CLIENTES</button>
+      </div>
     </div>
   </div>
 </div>
