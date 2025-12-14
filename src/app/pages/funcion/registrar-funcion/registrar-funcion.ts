@@ -42,9 +42,9 @@ export class RegistrarFuncion {
 
   async cargarDatos() {
     try {
-      this.peliculas = await this.apiService2.getPeliculasForAdmin();
-      this.formatos = await this.apiService.findAll();
-      this.salas = await this.apiService.getSalas();
+      this.peliculas = await this.apiService2.getPeliculasParaSelec();
+      this.formatos = await this.apiService.findAllAdmin();
+      this.salas = await this.apiService.getSalasForSelec();
       this.idiomas = await this.apiService2.getAllIdiomas();
     } catch (err) {
       console.error('Error al cargar los combos:', err);
@@ -85,7 +85,7 @@ export class RegistrarFuncion {
     };
 
     this.apiService
-      .createFuncion(dto)
+      .createFuncionAdmin(dto)
       .then(() => {
         alert('Función creada correctamente.');
         this.router.navigate(['/funcion/lista']);

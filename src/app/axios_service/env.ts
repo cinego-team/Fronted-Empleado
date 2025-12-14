@@ -53,7 +53,7 @@ export const config = {
   },
   APIPeliculasUrls: {
     baseUrl: 'http://localhost:3000/microservicio-peliculas',
-    getPeliculaById: (id: number) => `/pelicula/${id}`,
+    getPeliculaByIdForAdmin: (id: number) => `/pelicula/${id}`,
     getPeliculas: '/peliculas',
     createPelicula: '/pelicula/new',
     updatePelicula: (id: number) => `/pelicula/${id}`,

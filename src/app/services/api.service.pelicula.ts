@@ -11,7 +11,7 @@ import { axiosAPIPeliculas } from '../axios_service/axios.client';
 export class ApiServicePelicula {
   constructor() {}
   //peliculas
-  async getPeliculaById(id: number): Promise<{
+  async getPeliculaByIdForAdmin(id: number): Promise<{
     urlImagen: string;
     id: number;
     titulo: string;
@@ -24,7 +24,8 @@ export class ApiServicePelicula {
     estado: { id: number; nombre: string };
     empleado: { id: number; legajo: number; nombre: string; apellido: string };
   }> {
-    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculaById(id))).data;
+    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculaByIdForAdmin(id)))
+      .data;
     return {
       id: datos.id,
       titulo: datos.titulo,
@@ -44,7 +45,7 @@ export class ApiServicePelicula {
       },
     };
   }
-  async getPeliculasForAdmin(): Promise<
+  async getPeliculasParaSelec(): Promise<
     Array<{
       id: number;
       titulo: string;
@@ -58,7 +59,7 @@ export class ApiServicePelicula {
     return respuesta;
   }
 
-  async getPeliculas(): Promise<
+  async getPeliculasCompleto(): Promise<
     Array<{
       id: number;
       titulo: string;
@@ -139,13 +140,23 @@ export class ApiServicePelicula {
     return respuesta;
   }
   async deletePelicula(id: number): Promise<void> {
-    await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getPeliculaById(id));
+    await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getPeliculaByIdForAdmin(id));
   }
-  async createPelicula(formulario: any): Promise<void> {
+  async createPeliculaAdmin(formulario: any): Promise<void> {
     const nuevaPelicula: EditPeliculaOutput = {
-      genero: formulario.get('genero').value,
-      clasificacion: formulario.get('clasificacion').value,
-      estado: formulario.get('estado').value,
+      genero: {
+        id: formulario.get('generoId').value,
+        nombre: formulario.get('generoNombre').value,
+      },
+      clasificacion: {
+        id: formulario.get('clasificacionId').value,
+        nombre: formulario.get('clasificacionNombre').value,
+      },
+
+      estado: {
+        id: formulario.get('estadoId').value,
+        nombre: formulario.get('estadoNombre').value,
+      },
       titulo: formulario.get('titulo').value,
       sinopsis: formulario.get('sinopsis').value,
       director: formulario.get('director').value,
@@ -161,7 +172,7 @@ export class ApiServicePelicula {
     };
     await axiosAPIPeliculas.post(config.APIPeliculasUrls.createPelicula, nuevaPelicula);
   }
-  async updatePelicula(pelicula: EditPeliculaInput): Promise<void> {
+  async updatePeliculaAdmin(pelicula: EditPeliculaInput): Promise<void> {
     const data: EditPeliculaOutput = {
       titulo: pelicula.titulo,
       sinopsis: pelicula.sinopsis,

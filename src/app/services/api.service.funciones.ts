@@ -8,7 +8,7 @@ import { EditFuncion, FuncionInput } from '../pages/funcion/funcion-dto';
 export class ApiServiceFunciones {
   constructor() {}
   //formato
-  async findOne(id: number): Promise<{
+  async findOneAdmin(id: number): Promise<{
     id: number;
     nombre: string;
     precio: number;
@@ -20,7 +20,7 @@ export class ApiServiceFunciones {
       precio: datos.precio,
     };
   }
-  async findAll(): Promise<
+  async findAllAdmin(): Promise<
     Array<{
       id: number;
       nombre: string;
@@ -55,7 +55,7 @@ export class ApiServiceFunciones {
     await axiosAPIFuncionesYsalas.put(`${config.APIFuncionesUrls.update(formato.id!)}`, data);
   }
   //salas
-  async getSalas(): Promise<
+  async getSalasForSelec(): Promise<
     Array<{
       id: number;
       nroSala: number;
@@ -145,7 +145,7 @@ export class ApiServiceFunciones {
       id: number;
       peliculaId: number;
       fecha: Date;
-      estaDisponible: string;
+      estaDisponible: boolean;
       idioma: {
         id: number;
         nombre: string;
@@ -185,7 +185,7 @@ export class ApiServiceFunciones {
           },
           sala: {
             id: item.sala.id,
-            nroSala: item.sala.numeroSala, // <-- 🔥 CORREGIDO
+            nroSala: item.sala.numeroSala,
           },
           formato: {
             id: item.formato.id,
@@ -204,7 +204,7 @@ export class ApiServiceFunciones {
     id: number;
     peliculaId: number;
     fecha: Date;
-    estaDisponible: string;
+    estaDisponible: boolean;
     sala: {
       id: number;
       nroSala: number;
@@ -241,7 +241,7 @@ export class ApiServiceFunciones {
     };
   }
 
-  async createFuncion(formulario: any): Promise<void> {
+  async createFuncionAdmin(formulario: any): Promise<void> {
     const nuevaFuncion: EditFuncion = {
       peliculaId: formulario.get('peliculaId').value,
       fecha: formulario.get('fecha').value,
@@ -262,7 +262,7 @@ export class ApiServiceFunciones {
     };
     await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createFuncion, nuevaFuncion);
   }
-  async updateFuncion(funcion: Partial<FuncionInput> & { id: number }): Promise<void> {
+  async updateFuncionAdmin(funcion: Partial<FuncionInput> & { id: number }): Promise<void> {
     const data: any = { ...funcion };
 
     // Convertir fecha SOLO si vino como string

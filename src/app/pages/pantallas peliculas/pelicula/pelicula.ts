@@ -57,7 +57,7 @@ export class Pelicula {
   }
 
   async initialization(): Promise<void> {
-    const data = await this.apiService.getPeliculas();
+    const data = await this.apiService.getPeliculasCompleto();
     if (data.length === 0) {
       alert('No hay Peliculas para mostrar.');
       return;

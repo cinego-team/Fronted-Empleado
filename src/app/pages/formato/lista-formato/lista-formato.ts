@@ -24,7 +24,7 @@ export class ListaFormatoComponent {
   }
 
   async initialization(): Promise<void> {
-    const data = await this.apiService.findAll();
+    const data = await this.apiService.findAllAdmin();
     if (data.length === 0) {
       alert('No hay formatos para mostrar.');
       return;

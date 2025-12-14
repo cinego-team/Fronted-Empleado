@@ -57,10 +57,10 @@ export class EditarFuncion implements OnInit {
   }
 
   async cargarListas() {
-    this.peliculas = await this.apiService2.getPeliculasForAdmin();
-    this.formatos = await this.apiService.findAll();
+    this.peliculas = await this.apiService2.getPeliculasParaSelec();
+    this.formatos = await this.apiService.findAllAdmin();
     this.idiomas = await this.apiService2.getAllIdiomas();
-    this.salas = await this.apiService.getSalas();
+    this.salas = await this.apiService.getSalasForSelec();
   }
 
   cargarFuncionEnFormulario() {
@@ -132,7 +132,7 @@ export class EditarFuncion implements OnInit {
     cambios.id = original.id;
 
     this.apiService
-      .updateFuncion(cambios)
+      .updateFuncionAdmin(cambios)
       .then(() => {
         alert('Función actualizada correctamente.');
         this.router.navigate(['/funcion/lista']);

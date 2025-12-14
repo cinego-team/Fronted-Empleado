@@ -12,7 +12,7 @@ import { ApiServiceFunciones } from '../../../services/api.service.funciones';
 export class ListaFuncion implements OnInit {
   funciones: Array<{
     id: number;
-    estaDisponible: string;
+    estaDisponible: boolean;
     peliculaId: number;
     fecha: Date;
     idioma: {
