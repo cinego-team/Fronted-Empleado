@@ -32,7 +32,7 @@
           <td>{{ sala.id }}</td>
           <td>{{ sala.numero }}</td>
           <td>{{ sala.disponibilidad }}</td>
-          <td>{{ sala.fila }}</td>
+          <td>{{ sala.cantFilas }}</td>
           <td>{{ sala.capacidad }}</td>
         </tr>
       </tbody>
@@ -43,7 +43,7 @@
   <div class="botones">
     <button class="btn" (click)="nuevaSala()">NUEVA SALA</button>
     <button class="btn" (click)="eliminar()">ELIMINAR</button>
-    <button class="btn" (click)="editarSala()">EDITAR</button>
+    <button class="btn" (click)="editar()">EDITAR</button>
   </div>
 
   <!-- Flecha de navegación -->

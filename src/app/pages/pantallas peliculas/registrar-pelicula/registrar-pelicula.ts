@@ -89,7 +89,7 @@ export class RegistrarPelicula implements OnInit {
         },
       };
 
-      await this.apiService.createPelicula(peliculaParaEnviar);
+      await this.apiService.createPeliculaAdmin(peliculaParaEnviar);
 
       alert('Película creada correctamente.');
       this.router.navigate(['/pelicula/lista']);

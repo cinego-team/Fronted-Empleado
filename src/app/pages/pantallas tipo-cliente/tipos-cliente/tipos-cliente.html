@@ -7,30 +7,33 @@
       <span>Usuario</span>
     </div>
   </header>
-      <h1> Tipo Cliente</h1>
-    <div class="tabla-container">
+  <h1>Tipo Cliente</h1>
+  <div class="tabla-container">
     <table class="tabla-formatos">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-       
-      </tr>
-    </thead>
-    <tbody>
-  @for (tipo of tiposCliente; track tipo.id) {
-    <tr [class.selected]="selectedRow === tiposCliente.indexOf(tipo)" (click)="selectRow(tiposCliente.indexOf(tipo))">
-      <td>{{ tipo.id }}</td>
-      <td>{{ tipo.nombre }}</td>
-    </tr>
-  }
-  </tbody>
-  </table>
-  <div class="button-group">
-    
-    <button (click)="onNew()">NUEVO</button>
-    <button (click)="onEdit()">EDITAR</button>
-    <button (click)="onDelete()">ELIMINAR</button>
-
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Denominacion</th>
+          <th>Descripcion</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (tipo of tiposCliente; track tipo.id) {
+        <tr
+          [class.selected]="selectedRow === tiposCliente.indexOf(tipo)"
+          (click)="selectRow(tiposCliente.indexOf(tipo))"
+        >
+          <td>{{ tipo.id }}</td>
+          <td>{{ tipo.denominacion }}</td>
+          <td>{{ tipo.descripcion }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    <div class="button-group">
+      <button (click)="onNew()">NUEVO</button>
+      <button (click)="onEdit()">EDITAR</button>
+      <button (click)="onDelete()">ELIMINAR</button>
+    </div>
   </div>
 </div>

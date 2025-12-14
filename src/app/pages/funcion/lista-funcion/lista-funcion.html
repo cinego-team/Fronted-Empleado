@@ -33,8 +33,7 @@
         <td>{{ funcion.id }}</td>
         <td>{{ funcion.peliculaId }}</td>
         <td>{{ funcion.fecha }}</td>
-        <td>{{ funcion.hora }}</td>
-        <td>{{ funcion.disponible }}</td>
+        <td>{{ funcion.estaDisponible }}</td>
         <td>{{ funcion.sala }}</td>
         <td>{{ funcion.formato.nombre }}</td>
         <td>{{ funcion.formato.precio }}</td>
@@ -47,7 +46,7 @@
 <div class="botones">
   <button class="btn" (click)="volver()">VOLVER</button>
   <button class="btn" (click)="nuevafuncion()">NUEVA</button>
-  <button class="btn" (click)="editarfuncion()">EDITAR</button>
+  <button class="btn" (click)="editarFuncion()">EDITAR</button>
   <button class="btn">ELIMINAR</button>
   <button class="btn" (click)="ver()">VER</button>
 </div>

@@ -1,39 +1,65 @@
- <header class="topbar">
-    <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()"/>
-    <div class="user-section">
-      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
-      <span>Usuario</span>
-    </div>
-  </header>
+<header class="topbar">
+  <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()" />
+  <div class="user-section">
+    <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
+    <span>Usuario</span>
+  </div>
+</header>
 <div class="page">
-      <h1> Ventas</h1>
-    <div class="tabla-container">
+  <h1>Ventas</h1>
+  <div class="tabla-container">
     <table class="tabla-formatos">
-    <thead>
-      <tr>
-        <th>Numero Venta</th>
-        <th>Fecha</th>
-        <th> Hora</th>
-        <th> Total </th>
-        <th> ID promocion</th>       
-      </tr>
-    </thead>
-    <tbody>
-  @for (tipo of ventas; track tipo.nroVenta) {
-    <tr [class.selected]="selectedRow === ventas.indexOf(tipo)" (click)="selectRow(ventas.indexOf(tipo))">
-      <td>{{ tipo.nroVenta }}</td>
-      <td>{{ tipo.fecha}}</td>
-      <td>{{ tipo.hora }}</td>
-      <td>{{ tipo.total }}</td>
-      <td>{{ tipo.promocionId }}</td>
-     
- 
-    </tr>
-  }
-  </tbody>
-  </table>
- <div class="button-group">
-    <button (click)="OnBack()">VOLVER</button>
- </div>
-</div>
+      <thead>
+        <tr>
+          <th>Numero Venta</th>
+          <th>Fecha y Hora</th>
+          <th>Total</th>
+          <th>Promocion Id</th>
+          <th>Promocion Nombre</th>
+          <th>Porcentaje Descuento</th>
+          <th>Id Cliente</th>
+          <th>Nombre Cliente</th>
+          <th>Apellido Cliente</th>
+          <th>Email Cliente</th>
+          <th>EStado Venta</th>
+          <th>Id Entradas</th>
+          <th>Uso entradas</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (tipo of ventas; track tipo.nroVenta) {
+        <tr
+          [class.selected]="selectedRow === ventas.indexOf(tipo)"
+          (click)="selectRow(ventas.indexOf(tipo))"
+        >
+          <td>{{ tipo.nroVenta }}</td>
+          <td>{{ tipo.fecha }}</td>
+          <td>{{ tipo.total }}</td>
+          <td>{{ tipo.promocion?.id }}</td>
+          <td>{{ tipo.promocion?.nombre }}</td>
+          <td>{{ tipo.promocion?.porcentajeDescuento }}</td>
+          <td>{{ tipo.cliente.id }}</td>
+          <td>{{ tipo.cliente.nombre }}</td>
+          <td>{{ tipo.cliente.apellido }}</td>
+          <td>{{ tipo.cliente.email }}</td>
+          <td>{{ tipo.estadoVenta }}</td>
+          <td>
+            @for (entrada of tipo.entradas; track entrada.id) {
+            {{ entrada.id }}<br />
+            }
+          </td>
 
+          <td>
+            @for (entrada of tipo.entradas; track entrada.id) {
+            {{ entrada.esUsado }}<br />
+            }
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    <div class="button-group">
+      <button (click)="OnBack()">VOLVER</button>
+    </div>
+  </div>
+</div>

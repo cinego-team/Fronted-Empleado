@@ -147,4 +147,17 @@ export class ApiServiceUsuario {
     };
     await axiosAPIUsuario.put(`${config.APIUsuariosUrls.updateTipoCliente(tipoCliente.id!)}`, data);
   }
+  async refreshToken(): Promise<void> {
+    const response = await axiosAPIUsuario.get(config.APIUsuariosUrls.refreshToken);
+
+    const { accessToken, refreshToken } = response.data;
+
+    if (accessToken) {
+      localStorage.setItem('access_token', accessToken);
+    }
+
+    if (refreshToken) {
+      localStorage.setItem('refresh_token', refreshToken);
+    }
+  }
 }

@@ -135,7 +135,7 @@ export class EditPeliculaComponent implements OnInit {
     };
 
     this.apiService
-      .updatePelicula(payload)
+      .updatePeliculaAdmin(payload)
       .then(() => {
         alert('Película actualizada correctamente');
         this.router.navigate(['/pelicula/lista']);
