@@ -6,15 +6,7 @@
   justify-content: center;
   align-items: center;
 }
-/*HEADER*/
-.topbar{ display: flex;justify-content: space-between; align-items: center; padding: 12px 18px;}
-.logo{height: 120px;
-   position: absolute; /* permite ubicar el elemento */
-  top: 0;             /* esquina superior */
-  left: 0;            /* esquina izquierda */
-  width: 120px;       /* ajusta tamaño */
 
-}
 /* Caja */
 .register-box {
   background-color: #8b0f0f;
