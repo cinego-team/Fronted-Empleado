@@ -3,13 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 import { CommonModule } from '@angular/common';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-edit-pelicula',
   templateUrl: './editar-pelicula.html',
   styleUrls: ['./editar-pelicula.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
 })
 export class EditPeliculaComponent implements OnInit {
   peliculaId!: number;

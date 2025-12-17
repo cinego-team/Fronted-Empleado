@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiServiceUsuario } from '../../services/api.service.usuario';
+import { Header } from '../../shared/header/header';
 interface RegisterResponse {
   message?: string;
   access_token?: string;
 }
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
@@ -109,7 +110,7 @@ export class Register {
       .then(() => {
         this.successMessage = 'Registro exitoso. Redirigiendo...';
         setTimeout(() => {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/h']);
         }, 1500);
       })
       .catch((err) => {

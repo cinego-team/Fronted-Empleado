@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 
 import { FormatoInput } from '../formato.dto';
 import { ApiServiceFunciones } from '../../../services/api.service.funciones';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-registrar-formato',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
   standalone: true,
   templateUrl: './registrar-formato.html',
   styleUrl: './registrar-formato.css',

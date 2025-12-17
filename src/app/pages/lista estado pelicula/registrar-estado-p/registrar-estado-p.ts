@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { ApiServicePelicula } from '../../../services/api.service.pelicula';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-registrar-estado',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
   templateUrl: './registrar-estado-p.html',
   styleUrl: './registrar-estado-p.css',
 })

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServicePelicula } from '../../../services/api.service.pelicula';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-estados-peliculas',
-  imports: [],
+  imports: [Header],
   templateUrl: './estados-peliculas.html',
   styleUrl: './estados-peliculas.css',
 })

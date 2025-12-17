@@ -3,10 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiServiceFunciones } from '../../../services/api.service.funciones';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-editar-formato',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Header],
   templateUrl: './editar-formato.html',
   styleUrl: './editar-formato.css',
 })

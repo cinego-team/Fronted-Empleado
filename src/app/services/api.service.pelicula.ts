@@ -51,7 +51,7 @@ export class ApiServicePelicula {
       titulo: string;
     }>
   > {
-    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculas)).data;
+    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculasPAraSelec)).data;
     const respuesta = datos.map((item: { id: any; titulo: any }) => ({
       id: item.id,
       titulo: item.titulo,
@@ -201,47 +201,7 @@ export class ApiServicePelicula {
     };
     await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updatePelicula(pelicula.id!)}`, data);
   }
-  //idiomas
-  async getIdiomaById(id: number): Promise<{
-    id: number;
-    nombre: string;
-  }> {
-    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getIdiomaById(id))).data;
-    return {
-      id: datos.id,
-      nombre: datos.nombre,
-    };
-  }
-  async getAllIdiomas(): Promise<
-    Array<{
-      id: number;
-      nombre: string;
-    }>
-  > {
-    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getIdiomas)).data;
 
-    const respuesta = datos.map((item: { id: number; nombre: string }) => ({
-      id: item.id,
-      nombre: item.nombre,
-    }));
-
-    return respuesta;
-  }
-  async deleteIdioma(id: number): Promise<void> {
-    await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getIdiomaById(id));
-  }
-  async createIdioma(formulario: any): Promise<void> {
-    const nuevoIdioma: EditIdioma = {
-      nombre: formulario.get('nombre').value,
-    };
-    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createIdioma, nuevoIdioma);
-  }
-  async updateIdioma(idioma: IdiomaInput): Promise<void> {
-    const data: IdiomaInput = {
-      nombre: idioma.nombre,
-    };
-    await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateIdioma(idioma.id!)}`, data);
-  }
   //genero
   async getGeneroById(id: number): Promise<{
     id: number;

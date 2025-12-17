@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ApiServicePromociones } from '../../../services/api.service.promociones';
 import { ApiServiceUsuario } from '../../../services/api.service.usuario';
+import { Header } from '../../../shared/header/header';
 @Component({
   selector: 'app-editar-promocion',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
   templateUrl: './editar-promocion.html',
   styleUrl: './editar-promocion.css',
 })

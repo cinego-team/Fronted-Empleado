@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Header } from '../../shared/header/header';
 
 @Component({
   selector: 'app-principal',
-  imports: [],
+  imports: [Header],
   templateUrl: './principal.html',
   styleUrl: './principal.css',
 })
@@ -40,5 +41,8 @@ export class Principal {
   }
   onTipoCliente() {
     this.router.navigate(['/tipo-cliente/lista']);
+  }
+  onVolver() {
+    this.router.navigate(['/h']);
   }
 }

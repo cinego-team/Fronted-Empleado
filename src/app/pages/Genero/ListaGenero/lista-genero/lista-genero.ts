@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
+import { Header } from '../../../../shared/header/header';
 
 interface GeneroRow {
   id: number;
@@ -11,7 +12,7 @@ interface GeneroRow {
 @Component({
   selector: 'app-lista-genero',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Header],
   templateUrl: './lista-genero.html',
   styleUrls: ['./lista-genero.css'],
 })

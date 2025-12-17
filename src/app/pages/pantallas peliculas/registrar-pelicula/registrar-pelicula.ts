@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiServicePelicula } from '../../../services/api.service.pelicula';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-registrar-pelicula',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
   templateUrl: './registrar-pelicula.html',
   styleUrl: './registrar-pelicula.css',
 })

@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ApiServiceFunciones } from '../../../services/api.service.funciones';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-editar-sala',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Header],
   templateUrl: './editar-sala.html',
   styleUrls: ['./editar-sala.css'],
 })

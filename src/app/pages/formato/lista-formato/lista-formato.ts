@@ -3,12 +3,13 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ApiServiceFunciones } from '../../../services/api.service.funciones';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-lista-formato',
   templateUrl: './lista-formato.html',
   styleUrls: ['./lista-formato.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, Header],
 })
 export class ListaFormatoComponent {
   constructor(private router: Router, private readonly apiService: ApiServiceFunciones) {}

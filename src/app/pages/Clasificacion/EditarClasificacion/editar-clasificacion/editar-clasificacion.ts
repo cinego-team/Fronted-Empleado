@@ -5,10 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
 import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
+import { Header } from '../../../../shared/header/header';
 @Component({
   selector: 'app-editar-clasificacion',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Header],
   templateUrl: './editar-clasificacion.html',
   styleUrls: ['./editar-clasificacion.css'],
 })

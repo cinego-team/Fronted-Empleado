@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { ApiServicePromociones } from '../../../services/api.service.promociones';
 import { ApiServiceUsuario } from '../../../services/api.service.usuario';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-registrar-promocion',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
   templateUrl: './registrar-promocion.html',
   styleUrl: './registrar-promocion.css',
 })

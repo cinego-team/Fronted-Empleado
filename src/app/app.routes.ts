@@ -37,8 +37,8 @@ import { Reportes } from './pages/reportes/reportes';
 export const routes: Routes = [
   { path: '', component: LoginComponent }, // login
 
-  { path: 'home', component: Home }, //pantalla principal
-  { path: 'administracion', component: Principal }, //menu principal
+  { path: 'principal', component: Home }, //pantalla principal
+  { path: 'home', component: Principal }, //menu principal
   { path: 'registrar/empleado', component: Register },
   { path: 'reportes', component: Reportes },
 

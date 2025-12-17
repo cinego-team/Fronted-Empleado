@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
+import { Header } from '../../../../shared/header/header';
+import { ApiServiceFunciones } from '../../../../services/api.service.funciones';
 
 @Component({
   selector: 'app-editar-idioma',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Header],
   templateUrl: './editar-idioma.html',
   styleUrls: ['./editar-idioma.css'],
 })
@@ -19,7 +20,7 @@ export class EditarIdiomaComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiServicePelicula
+    private apiService: ApiServiceFunciones
   ) {}
 
   ngOnInit() {

@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ApiServiceFunciones } from '../../../services/api.service.funciones';
 import { ApiServicePelicula } from '../../../services/api.service.pelicula';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-registrar-funcion',
   standalone: true,
   templateUrl: './registrar-funcion.html',
   styleUrl: './registrar-funcion.css',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Header],
 })
 export class RegistrarFuncion {
   form: FormGroup;
@@ -45,7 +46,7 @@ export class RegistrarFuncion {
       this.peliculas = await this.apiService2.getPeliculasParaSelec();
       this.formatos = await this.apiService.findAllAdmin();
       this.salas = await this.apiService.getSalasForSelec();
-      this.idiomas = await this.apiService2.getAllIdiomas();
+      this.idiomas = await this.apiService.getAllIdiomas();
     } catch (err) {
       console.error('Error al cargar los combos:', err);
       alert('Error al cargar datos.');

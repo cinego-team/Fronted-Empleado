@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
-import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
+import { Header } from '../../../../shared/header/header';
+import { ApiServiceFunciones } from '../../../../services/api.service.funciones';
 
 interface Idioma {
   id: number;
@@ -12,12 +12,12 @@ interface Idioma {
 @Component({
   selector: 'app-lista-idioma',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Header],
   templateUrl: './lista-idioma.html',
   styleUrls: ['./lista-idioma.css'],
 })
 export class ListaIdiomaComponent {
-  constructor(private router: Router, private readonly apiService: ApiServicePelicula) {}
+  constructor(private router: Router, private readonly apiService: ApiServiceFunciones) {}
   idiomas: Array<{
     id: number;
     nombre: string;

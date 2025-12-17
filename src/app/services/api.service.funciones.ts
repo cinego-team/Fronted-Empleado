@@ -4,6 +4,7 @@ import { axiosAPIFuncionesYsalas } from '../axios_service/axios.client';
 import { SalaInput } from '../pages/sala/sala-dto';
 import { FormatoInput, FormatoOutput } from '../pages/formato/formato.dto';
 import { EditFuncion, FuncionInput } from '../pages/funcion/funcion-dto';
+import { EditIdioma, IdiomaInput } from '../pages/Idioma/idioma.dto';
 @Injectable({ providedIn: 'root' })
 export class ApiServiceFunciones {
   constructor() {}
@@ -13,7 +14,8 @@ export class ApiServiceFunciones {
     nombre: string;
     precio: number;
   }> {
-    const datos = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.findOne(id))).data;
+    const datos = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.findOneAdmin(id)))
+      .data;
     return {
       id: datos.id,
       nombre: datos.nombre,
@@ -27,7 +29,7 @@ export class ApiServiceFunciones {
       precio: number;
     }>
   > {
-    const datos = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.findAll)).data;
+    const datos = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.findAllAdmin)).data;
 
     const respuesta = datos.map((item: { id: number; nombre: string; precio: number }) => ({
       id: item.id,
@@ -38,7 +40,7 @@ export class ApiServiceFunciones {
     return respuesta;
   }
   async delete(id: number): Promise<void> {
-    await axiosAPIFuncionesYsalas.delete(config.APIFuncionesUrls.findOne(id));
+    await axiosAPIFuncionesYsalas.delete(config.APIFuncionesUrls.findOneAdmin(id));
   }
   async create(formulario: any): Promise<void> {
     const nuevoFormato: FormatoInput = {
@@ -260,7 +262,7 @@ export class ApiServiceFunciones {
         nombre: formulario.get('idioma').value.nombre,
       },
     };
-    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createFuncion, nuevaFuncion);
+    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createFuncionAdmin, nuevaFuncion);
   }
   async updateFuncionAdmin(funcion: Partial<FuncionInput> & { id: number }): Promise<void> {
     const data: any = { ...funcion };
@@ -275,9 +277,54 @@ export class ApiServiceFunciones {
       data.estaDisponible = data.estaDisponible === 'true';
     }
 
-    await axiosAPIFuncionesYsalas.put(`${config.APIFuncionesUrls.updateFuncion(funcion.id)}`, data);
+    await axiosAPIFuncionesYsalas.put(
+      `${config.APIFuncionesUrls.updateFuncionAdmin(funcion.id)}`,
+      data
+    );
   }
   async deleteFuncion(id: number): Promise<void> {
     await axiosAPIFuncionesYsalas.delete(config.APIFuncionesUrls.getFuncById(id));
+  }
+  //idiomas
+  async getIdiomaById(id: number): Promise<{
+    id: number;
+    nombre: string;
+  }> {
+    const datos = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getIdiomaById(id)))
+      .data;
+    return {
+      id: datos.id,
+      nombre: datos.nombre,
+    };
+  }
+  async getAllIdiomas(): Promise<
+    Array<{
+      id: number;
+      nombre: string;
+    }>
+  > {
+    const datos = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getIdiomas)).data;
+
+    const respuesta = datos.map((item: { id: number; nombre: string }) => ({
+      id: item.id,
+      nombre: item.nombre,
+    }));
+
+    return respuesta;
+  }
+  async deleteIdioma(id: number): Promise<void> {
+    await axiosAPIFuncionesYsalas.delete(config.APIFuncionesUrls.getIdiomaById(id));
+  }
+  async createIdioma(formulario: any): Promise<void> {
+    const nuevoIdioma: EditIdioma = {
+      nombre: formulario.get('nombre').value,
+    };
+    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createIdioma, nuevoIdioma);
+  }
+  async updateIdioma(idioma: IdiomaInput): Promise<void> {
+    const data: IdiomaInput = {
+      nombre: idioma.nombre,
+    };
+    await axiosAPIFuncionesYsalas.put(`${config.APIFuncionesUrls.updateIdioma(idioma.id!)}`, data);
   }
 }

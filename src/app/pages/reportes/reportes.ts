@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiServiceVentas } from '../../services/api.service.ventas';
 import { Chart } from 'chart.js/auto';
+import { Header } from '../../shared/header/header';
 
 @Component({
   selector: 'app-reportes',
-  imports: [],
+  imports: [Header],
   templateUrl: './reportes.html',
   styleUrl: './reportes.css',
 })
@@ -12,29 +13,50 @@ export class Reportes implements OnInit {
   // Datos
   horariosMasElegidos: any[] = [];
   entradasPorDia: any[] = [];
+  peliculasTrimestral: any[] = [];
 
   // Gráficos
   chartHorarios: any;
   chartDias: any;
+  chartPeliculas: any;
 
   constructor(private ventasService: ApiServiceVentas) {}
 
   async ngOnInit() {
     await this.cargarReporteHorarios();
     await this.cargarReporteEntradasPorDia();
+    await this.cargarReportePeliculasTrimestral();
 
     this.generarGraficoHorarios();
     this.generarGraficoEntradasPorDia();
+    this.generarGraficoPeliculasTrimestral();
+  }
+  getTrimestreActual(): number {
+    const mes = new Date().getMonth() + 1; // 1–12
+    return Math.ceil(mes / 3);
+  }
+
+  getAnioActual(): number {
+    return new Date().getFullYear();
   }
 
   //   Cargar datos del API
-
   async cargarReporteHorarios() {
     this.horariosMasElegidos = await this.ventasService.getHorariosMasElegidosMesActual();
   }
 
   async cargarReporteEntradasPorDia() {
     this.entradasPorDia = await this.ventasService.getEntradasPorDiaSemanaMesActual();
+  }
+
+  async cargarReportePeliculasTrimestral() {
+    const trimestre = this.getTrimestreActual();
+    const anio = this.getAnioActual();
+
+    this.peliculasTrimestral = await this.ventasService.getPeliculasPorRangoTrimestral(
+      trimestre,
+      anio
+    );
   }
 
   //   Gráfico 1 — Horarios más elegidos
@@ -90,7 +112,30 @@ export class Reportes implements OnInit {
       options: this.getDefaultOptions(),
     });
   }
+  //greafico 2-- Peliculas por rango trimestral
+  generarGraficoPeliculasTrimestral() {
+    if (!this.peliculasTrimestral?.length) return;
+    if (this.chartPeliculas) this.chartPeliculas.destroy();
 
+    const labels = this.peliculasTrimestral.map((x) => x.rango);
+    const data = this.peliculasTrimestral.map((x) => Number(x.cantidad_peliculas));
+
+    this.chartPeliculas = new Chart('graficoPeliculas', {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          {
+            data,
+            backgroundColor: 'rgba(255,245,240,0.9)',
+            borderRadius: 6,
+            borderSkipped: false,
+          },
+        ],
+      },
+      options: this.getDefaultOptions(),
+    });
+  }
   //   Opciones comunes
   getDefaultOptions() {
     return {

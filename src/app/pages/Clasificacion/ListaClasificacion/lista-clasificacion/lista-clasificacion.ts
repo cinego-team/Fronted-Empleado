@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
+import { Header } from '../../../../shared/header/header';
 
 interface ClasificacionRow {
   id: number;
@@ -12,7 +13,7 @@ interface ClasificacionRow {
 @Component({
   selector: 'app-lista-clasificacion',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Header],
   templateUrl: './lista-clasificacion.html',
   styleUrls: ['./lista-clasificacion.css'],
 })

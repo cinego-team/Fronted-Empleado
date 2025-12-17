@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalStatusService } from '../../services/global-status.service';
 import { ApiServiceVentas } from '../../services/api.service.ventas';
+import { Header } from '../../shared/header/header';
 
 @Component({
   selector: 'app-ventas',
-  imports: [],
+  imports: [Header],
   templateUrl: './ventas.html',
   styleUrl: './ventas.css',
 })

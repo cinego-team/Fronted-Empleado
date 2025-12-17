@@ -72,4 +72,14 @@ export class ApiServiceVentas {
 
     return response.data;
   }
+  async getPeliculasPorRangoTrimestral(trimestre: number, anio: number) {
+    const response = await axiosAPIVentas.get(config.APIVentasUrls.getPeliculasPorRangoTrimestral, {
+      params: {
+        trimestre,
+        anio,
+      },
+    });
+
+    return response.data;
+  }
 }

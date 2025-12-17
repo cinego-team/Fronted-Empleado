@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ApiServicePelicula } from '../../../services/api.service.pelicula';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-editar-estado-pelicula',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Header],
   templateUrl: './editar-estado-pelicula.html',
   styleUrl: './editar-estado-pelicula.css',
 })

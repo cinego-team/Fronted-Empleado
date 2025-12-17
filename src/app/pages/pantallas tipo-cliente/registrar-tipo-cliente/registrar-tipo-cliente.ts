@@ -5,10 +5,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiServiceUsuario } from '../../../services/api.service.usuario';
 import { EditTipoCliente } from '../tipos-cliente.dto';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-registrar-tipo-cliente',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
   templateUrl: './registrar-tipo-cliente.html',
   styleUrl: './registrar-tipo-cliente.css',
 })

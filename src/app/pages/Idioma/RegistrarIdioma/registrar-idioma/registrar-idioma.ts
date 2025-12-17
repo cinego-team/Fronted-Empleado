@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
+import { Header } from '../../../../shared/header/header';
+import { ApiServiceFunciones } from '../../../../services/api.service.funciones';
 
 @Component({
   selector: 'app-registrar-idioma',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
   templateUrl: './registrar-idioma.html',
   styleUrls: ['./registrar-idioma.css'],
 })
@@ -16,7 +17,7 @@ export class RegistrarIdiomaComponent {
   error: string | null = null;
   constructor(
     private fb: FormBuilder,
-    private apiService: ApiServicePelicula,
+    private apiService: ApiServiceFunciones,
     private router: Router
   ) {
     this.form = this.fb.group({

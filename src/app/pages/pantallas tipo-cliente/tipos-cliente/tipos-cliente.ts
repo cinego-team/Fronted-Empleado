@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalStatusService } from '../../../services/global-status.service';
 import { ApiServiceUsuario } from '../../../services/api.service.usuario';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-tipos-cliente',
-  imports: [],
+  imports: [Header],
   templateUrl: './tipos-cliente.html',
   styleUrl: './tipos-cliente.css',
 })

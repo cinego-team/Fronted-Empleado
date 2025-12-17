@@ -27,6 +27,25 @@ export class ApiServiceUsuario {
   getToken(): string | null {
     return localStorage.getItem('access_token');
   }
+  getUsuarioDesdeToken(): { nombre: string; apellido: string } | null {
+    const token = localStorage.getItem('access_token');
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return {
+        nombre: payload.nombre,
+        apellido: payload.apellido,
+      };
+    } catch {
+      return null;
+    }
+  }
+  // Obtener el nombre completo del usuario desde el token
+  getNombreCompleto(): string {
+    const usuario = this.getUsuarioDesdeToken();
+    return usuario ? `${usuario.nombre} ${usuario.apellido}` : 'Usuario';
+  }
 
   async register(
     credentials: {

@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ApiServiceUsuario } from '../../../services/api.service.usuario';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-editar-tipo-cliente',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Header],
   templateUrl: './editar-tipo-cliente.html',
   styleUrl: './editar-tipo-cliente.css',
 })

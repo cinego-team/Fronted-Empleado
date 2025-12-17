@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { GlobalStatusService } from '../../../services/global-status.service';
 import { ApiServicePromociones } from '../../../services/api.service.promociones';
 import { ApiServiceUsuario } from '../../../services/api.service.usuario';
+import { Header } from '../../../shared/header/header';
 @Component({
   selector: 'app-promociones',
-  imports: [],
+  imports: [Header],
   templateUrl: './promociones.html',
   styleUrl: './promociones.css',
 })

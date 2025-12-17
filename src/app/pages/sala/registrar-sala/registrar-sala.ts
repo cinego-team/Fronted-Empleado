@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiServiceFunciones } from '../../../services/api.service.funciones';
+import { Header } from '../../../shared/header/header';
 @Component({
   selector: 'app-registrar-sala',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
   standalone: true,
   templateUrl: './registrar-sala.html',
   styleUrl: './registrar-sala.css',

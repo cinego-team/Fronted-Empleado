@@ -3,11 +3,12 @@ import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angula
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
+import { Header } from '../../../../shared/header/header';
 
 @Component({
   selector: 'app-registrar-clasificacion',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
   templateUrl: './registrar-clasificacion.html',
   styleUrls: ['./registrar-clasificacion.css'],
 })

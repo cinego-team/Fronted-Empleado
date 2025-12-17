@@ -3,12 +3,13 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ApiServicePelicula } from '../../../services/api.service.pelicula';
+import { Header } from '../../../shared/header/header';
 @Component({
   selector: 'app-pelicula',
   standalone: true, // si tu proyecto usa standalone components
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
   templateUrl: './pelicula.html',
-  styleUrls: ['./pelicula.css'], // ✅ corregido (plural)
+  styleUrls: ['./pelicula.css'],
 })
 export class Pelicula {
   selectedPelicula: any | null = null;

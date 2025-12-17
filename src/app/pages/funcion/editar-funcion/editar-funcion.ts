@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ApiServiceFunciones } from '../../../services/api.service.funciones';
 import { ApiServicePelicula } from '../../../services/api.service.pelicula';
+import { Header } from '../../../shared/header/header';
 
 @Component({
   selector: 'app-editar-funcion',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
   templateUrl: './editar-funcion.html',
   styleUrls: ['./editar-funcion.css'],
 })
@@ -59,7 +60,7 @@ export class EditarFuncion implements OnInit {
   async cargarListas() {
     this.peliculas = await this.apiService2.getPeliculasParaSelec();
     this.formatos = await this.apiService.findAllAdmin();
-    this.idiomas = await this.apiService2.getAllIdiomas();
+    this.idiomas = await this.apiService.getAllIdiomas();
     this.salas = await this.apiService.getSalasForSelec();
   }
 

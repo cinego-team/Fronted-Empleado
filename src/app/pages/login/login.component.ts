@@ -61,7 +61,7 @@ export class LoginComponent {
       )
       .then(() => {
         this.tokenTimeoutService.startCountdown();
-        this.router.navigate(['/home']);
+        this.router.navigate(['/h']);
       })
       .catch((error) => {
         alert('Login fallido. Verifica tus credenciales.');
