@@ -38,7 +38,7 @@ export const config = {
   APIUsuariosUrls: {
     baseUrl: 'http://localhost:3000/microservicio-usuarios',
     register: 'microservicio-usuarios/usuario/admin/register/empleado',
-    login: 'microservicio-usuarios/usuario/login',
+    login: '/usuario/login',
     //rol
     getAllRoles: 'microservicio-usuarios/rol/admin/all',
     getRolById: (id: number) => `microservicio-usuarios/roles/${id}`,
