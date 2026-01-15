@@ -36,9 +36,9 @@ export const config = {
     updateIdioma: (id: number) => `microservicio-peliculas/idioma/admin/${id}`,
   },
   APIUsuariosUrls: {
-    baseUrl: 'http://localhost:3000/microservicio-usuarios',
+    baseUrl: 'http://localhost:3000',
     register: 'microservicio-usuarios/usuario/admin/register/empleado',
-    login: 'microservicio-usuarios/usuario/admin/login',
+    login: 'microservicio-usuarios/usuario/login',
     //rol
     getAllRoles: 'microservicio-usuarios/rol/admin/all',
     getRolById: (id: number) => `microservicio-usuarios/roles/${id}`,
