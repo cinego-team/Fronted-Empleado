@@ -1,14 +1,22 @@
 .login-page {
-  align-items: center;
+  width: 100%;
+  height: 100vh;
+  position: relative; 
+  display: flex;
   justify-content: center;
-  padding: 1rem;
+  align-items: center;
+  background: linear-gradient(180deg, #5b0f0f, #2b0707);
 }
 
+
+
 .logo {
-  height: clamp(48px, 5vw, 80px);
-  object-fit: contain;
-  margin: 10px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 130px;
 }
+
 
 .login-box {
   background-color: #8a1009;

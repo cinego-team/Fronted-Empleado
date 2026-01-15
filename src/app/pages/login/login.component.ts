@@ -63,10 +63,11 @@ export class LoginComponent {
       this.formulario.markAllAsTouched();
       return;
     }
-    if (!this.captchaToken) {
-      alert('Por favor completa el captcha');
+    if (!this.captchaToken || this.captchaToken.length < 10) {
+      alert('Captcha inválido o no generado');
       return;
     }
+
     this.authService
       .login(
         {

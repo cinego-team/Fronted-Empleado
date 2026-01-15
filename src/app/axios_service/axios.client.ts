@@ -47,19 +47,25 @@ export const axiosAPIUsuario = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
 axiosAPIUsuario.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token');
   const refreshToken = localStorage.getItem('refresh_token');
-  if (token) {
-    config.headers.Authorization = token;
-  }
-  if (refreshToken) {
-    config.headers['refresh-token'] = refreshToken;
+
+  // 🔴 EN LOGIN NO SE MANDA AUTH
+  if (!config.url?.includes('usuario/login')) {
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    if (refreshToken) {
+      config.headers['refresh-token'] = refreshToken;
+    }
   }
 
   return config;
 });
+
+
 //funciones
 export const axiosAPIFuncionesYsalas = axios.create({
   baseURL: config.APIFuncionesUrls.baseUrl,

@@ -81,7 +81,9 @@ export class ApiServiceUsuario {
   async login(credentials: { email: string; password: string }, captcha: string): Promise<any> {
     const respuesta = (
       await axiosAPIUsuario.post(config.APIUsuariosUrls.login, credentials, {
-        headers: { 'x-captcha-token': captcha || '' },
+        headers: {
+          'x-captcha-token': captcha,
+        },
       })
     ).data;
     const token = respuesta.accessToken;
