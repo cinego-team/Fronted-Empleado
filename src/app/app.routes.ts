@@ -69,11 +69,11 @@ export const routes: Routes = [
 
   { path: 'genero/lista', component: ListaGeneroComponent },
   { path: 'genero/registrar', component: RegistrarGeneroComponent },
-  { path: 'genero/editar', component: EditarGeneroComponent },
+  { path: 'genero/editar/:id', component: EditarGeneroComponent },
 
   { path: 'idioma/lista', component: ListaIdiomaComponent },
   { path: 'idioma/registrar', component: RegistrarIdiomaComponent },
-  { path: 'idioma/editar', component: EditarIdiomaComponent },
+  { path: 'idioma/editar/:id', component: EditarIdiomaComponent },
 
   { path: 'clasificacion/lista', component: ListaClasificacionComponent },
   { path: 'clasificacion/registrar', component: RegistrarClasificacionComponent },

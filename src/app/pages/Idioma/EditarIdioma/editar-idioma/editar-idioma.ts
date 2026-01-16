@@ -32,7 +32,7 @@ export class EditarIdiomaComponent implements OnInit {
     if (!navState) {
       // Si no hay state, no se puede editar porque no hay datos
       alert('No se encontró la clasificación. Volvé al listado.');
-      this.router.navigate(['/clasificacion/lista']);
+      this.router.navigate(['/idioma/lista']);
       return;
     }
 

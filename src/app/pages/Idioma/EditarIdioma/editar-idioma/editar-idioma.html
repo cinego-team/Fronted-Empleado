@@ -6,15 +6,17 @@
       <h1>Editar Idioma</h1>
 
       @if (idioma) {
-      <form (ngSubmit)="onSave()">
+      <!-- <CHANGE> Agregar clase 'form' al formulario -->
+      <form class="form" (ngSubmit)="onSave()">
         <div class="form-group">
           <label for="id">ID</label>
-          <div class="readonly-text">{{ idioma.id }}</div>
+          <!-- <CHANGE> Usar clase 'pill' para el ID -->
+          <div class="pill">{{ idioma.id }}</div>
         </div>
 
         <div class="form-group">
           <label for="name">Nombre</label>
-          <input id="name" [(ngModel)]="idioma.name" name="name" required />
+          <input id="name" [(ngModel)]="idioma.nombre" name="name" required />
         </div>
 
         <button type="submit">GUARDAR</button>
@@ -27,3 +29,4 @@
     </div>
   </main>
 </div>
+```
