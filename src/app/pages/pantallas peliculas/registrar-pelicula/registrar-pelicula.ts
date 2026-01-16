@@ -38,7 +38,6 @@ export class RegistrarPelicula implements OnInit {
       estado: ['', Validators.required],
       clasificacion: ['', Validators.required],
       genero: ['', Validators.required],
-      idioma: ['', Validators.required],
     });
 
     // Cargar listas desde backend
@@ -82,12 +81,8 @@ export class RegistrarPelicula implements OnInit {
         clasificacion: this.clasificaciones.find((c) => c.id === Number(data.clasificacion))
           ?.nombre,
         genero: this.generos.find((g) => g.id === Number(data.genero))?.nombre,
-        idioma: this.idiomas.find((i) => i.id === Number(data.idioma))?.nombre,
 
-        empleado: {
-          nombre: 'Sistema', // O lo que quieras enviar
-          apellido: 'Auto',
-        },
+        empleado: null,
       };
 
       await this.apiService.createPeliculaAdmin(peliculaParaEnviar);

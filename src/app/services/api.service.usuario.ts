@@ -181,4 +181,67 @@ export class ApiServiceUsuario {
       localStorage.setItem('refresh_token', refreshToken);
     }
   }
+  decodeToken(token: string): any {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+          .join('')
+      );
+      return JSON.parse(jsonPayload);
+    } catch (error) {
+      console.error('Error decodificando token:', error);
+      return null;
+    }
+  }
+
+  getUserRole(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    const decoded = this.decodeToken(token);
+    // El rol puede estar en diferentes propiedades según cómo se generó el token
+    return decoded?.role?.name || decoded?.role || decoded?.userRole || null;
+  }
+  getUserName(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    const decoded = this.decodeToken(token);
+    return decoded?.name || decoded?.username || decoded?.sub || null;
+  }
+  getUserId(): number | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    const decoded = this.decodeToken(token);
+    return decoded?.sub ? Number(decoded.sub) : null;
+  }
+  async getEmpleadoDesdeToken(): Promise<{ nombre: string; apellido: string } | null> {
+    const token = this.getToken();
+    if (!token) return null;
+
+    const decoded = this.decodeToken(token);
+    const id = decoded?.sub;
+    if (!id) return null;
+
+    try {
+      const response = await axiosAPIUsuario.get(config.APIUsuariosUrls.getEmpleadoById(id), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return {
+        nombre: response.data.nombre,
+        apellido: response.data.apellido,
+      };
+    } catch (error) {
+      console.error('Error obteniendo datos del empleado', error);
+      return null;
+    }
+  }
 }

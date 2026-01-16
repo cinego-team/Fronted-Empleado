@@ -8,14 +8,14 @@
           <th>ID</th>
           <th>Imágen</th>
           <th>Título</th>
-          <td>Director</td>
-          <td>Duración</td>
-          <td>Fecha Estreno</td>
-          <td>Sinopsis</td>
-          <td>Estado</td>
-          <td>Género</td>
-          <td>Clasificación</td>
-          <td>Empleado</td>
+          <th>Director</th>
+          <th>Duración</th>
+          <th>Fecha Estreno</th>
+          <th>Sinopsis</th>
+          <th>Estado</th>
+          <th>Género</th>
+          <th>Clasificación</th>
+          <th>Empleado</th>
           <th></th>
         </tr>
       </thead>
@@ -32,10 +32,10 @@
           <td>{{ tipo.duracion }}</td>
           <td>{{ tipo.fechaEstreno }}</td>
           <td>{{ tipo.sinopsis }}</td>
-          <td>{{ tipo.estado }}</td>
-          <td>{{ tipo.genero }}</td>
-          <td>{{ tipo.clasificacion }}</td>
-          <td>{{ tipo.empleado.nombre }} {{ tipo.empleado.apellido }}</td>
+          <td>{{ tipo.estado.nombre }}</td>
+          <td>{{ tipo.genero.nombre }}</td>
+          <td>{{ tipo.clasificacion.nombre }}</td>
+          <td>{{ tipo.empleado?.nombre }} {{ tipo.empleado?.apellido }}</td>
         </tr>
         }
       </tbody>

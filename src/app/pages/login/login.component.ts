@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { TokenTimeoutService } from '../../services/tokeTimeout.service';
 import { ApiServiceUsuario } from '../../services/api.service.usuario';
+import { AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 declare const grecaptcha: any;
 @Component({
   selector: 'app-login',
@@ -11,13 +12,14 @@ declare const grecaptcha: any;
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   formulario: FormGroup;
   errorMessage: string | null = null;
   successMessage: string | null = null;
   captchaToken: string | null = null;
   mostrarPassword = false;
   private captchaId: number | null = null;
+  private readonly EXPECTED_ROLE = 'EMPLEADO'; // Para el frontend de empleados
 
   constructor(
     private authService: ApiServiceUsuario,
@@ -77,13 +79,22 @@ export class LoginComponent {
         this.captchaToken
       )
       .then(() => {
+        const userRole = this.authService.getUserRole();
+
+        if (userRole !== this.EXPECTED_ROLE) {
+          // Si el rol no coincide, cerrar sesión inmediatamente
+          this.authService.logout();
+          alert(
+            `Acceso denegado. Este portal es solo para usuarios con rol ${this.EXPECTED_ROLE}. Tu rol es: ${userRole}`
+          );
+          (window as any).grecaptcha.reset();
+          this.captchaToken = null;
+          return;
+        }
+
+        // Si el rol es correcto, continuar normalmente
         this.tokenTimeoutService.startCountdown();
-        this.router.navigate(['/h']);
-      })
-      .catch((error) => {
-        alert('Login fallido. Verifica tus credenciales.');
-        (window as any).grecaptcha.reset();
-        this.captchaToken = null;
+        this.router.navigate(['/principal']);
       });
   }
 }

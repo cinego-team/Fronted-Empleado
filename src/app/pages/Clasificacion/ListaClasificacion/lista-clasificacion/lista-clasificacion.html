@@ -1,5 +1,5 @@
+<app-header></app-header>
 <div class="page">
-  <app-header></app-header>
   <h1>Clasificaciones</h1>
   <div class="tabla-container">
     <table class="tabla-formatos">
@@ -10,11 +10,8 @@
         </tr>
       </thead>
       <tbody>
-        @for (tipo of clasificaciones; track tipo.id) {
-        <tr
-          [class.selected]="selec === clasificaciones.indexOf(tipo)"
-          (click)="seleccionar(clasificaciones.indexOf(tipo))"
-        >
+        @for (tipo of clasificaciones; track tipo.id; let i = $index) {
+        <tr [class.selected]="selec === i" (click)="seleccionar(i)">
           <td>{{ tipo.id }}</td>
           <td>{{ tipo.nombre }}</td>
         </tr>

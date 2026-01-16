@@ -30,10 +30,10 @@ export const config = {
     getSalaById: (id: number) => `microservicio-funciones-y-salas/salas/admin/${id}`,
     updateSala: (id: number) => `microservicio-funciones-y-salas/salas/admin/${id}`,
     //idioma
-    getIdiomaById: (id: number) => `microservicio-peliculas/idioma/admin/${id}`,
-    getIdiomas: 'microservicio-peliculas/idioma/admin/all',
-    createIdioma: 'microservicio-peliculas/idioma/admin/new',
-    updateIdioma: (id: number) => `microservicio-peliculas/idioma/admin/${id}`,
+    getIdiomaById: (id: number) => `microservicio-funciones-y-salas/idioma/admin/${id}`,
+    getIdiomas: 'microservicio-funciones-y-salas/idioma/admin/all',
+    createIdioma: 'microservicio-funciones-y-salas/idioma/admin/new',
+    updateIdioma: (id: number) => `microservicio-funciones-y-salas/idioma/admin/${id}`,
   },
   APIUsuariosUrls: {
     baseUrl: 'http://localhost:3000',
@@ -48,31 +48,37 @@ export const config = {
     createTipoCliente: 'microservicio-usuarios/tipo-cliente/admin/new',
     updateTipoCliente: (id: number) => `microservicio-usuarios/tipo-cliente/admin/${id}`,
     refreshToken: 'microservicio-usuarios/refresh-token',
+    getEmpleadoById: (id: number) => `microservicio-usuarios/datos-empleado/${id}`,
   },
   APIPeliculasUrls: {
-    baseUrl: 'http://localhost:3000/microservicio-peliculas',
-    getPeliculaByIdForAdmin: (id: number) => `microservicio-peliculas/pelicula/admin/${id}`,
-    getPeliculas: 'microservicio-peliculas/peliculas/admin/all',
-    createPelicula: 'microservicio-peliculas/pelicula/admin/new',
-    updatePelicula: (id: number) => `microservicio-peliculas/pelicula/admin/${id}`,
-    getPeliculasPAraSelec: 'microservicio-peliculas/pelicula/admin/selec',
+    baseUrl: 'http://localhost:3000',
 
-    //genero
-    getGeneroById: (id: number) => `microservicio-peliculas/genero/admin/${id}`,
-    getGeneros: 'microservicio-peliculas/genero/admin/all',
-    createGenero: 'microservicio-peliculas/genero/admin/new',
-    updateGenero: (id: number) => `microservicio-peliculas/genero/admin/${id}`,
-    //clasificacion
-    getClasificacionById: (id: number) => `microservicio-peliculas/clasificacion/admin/${id}`,
-    getClasificaciones: 'microservicio-peliculas/clasificacion/admin/all',
-    createClasificacion: 'microservicio-peliculas/clasificacion/admin/new',
-    updateClasificacion: (id: number) => `microservicio-peliculas/clasificacion/admin/${id}`,
-    //estados
-    getEstadoById: (id: number) => `microservicio-peliculas/estado-pelicula/admin/${id}`,
-    getEstados: 'microservicio-peliculas/estados-pelicula/admin/all',
-    createEstado: 'microservicio-peliculas/estado-pelicula/admin/new',
-    updateEstado: (id: number) => `microservicio-peliculas/estado-pelicula/admin/${id}`,
+    getPeliculaByIdForAdmin: (id: number) => `/microservicio-peliculas/pelicula/admin/${id}`,
+    getPeliculas: '/microservicio-peliculas/pelicula/admin/all',
+    createPelicula: '/microservicio-peliculas/pelicula/admin/new',
+    updatePelicula: (id: number) => `/microservicio-peliculas/pelicula/admin/${id}`,
+    getPeliculasPAraSelec: '/microservicio-peliculas/pelicula/admin/selec',
+
+    // genero
+    getGeneroById: (id: number) => `/microservicio-peliculas/genero/admin/${id}`,
+    getGeneros: '/microservicio-peliculas/genero/admin/all',
+    createGenero: '/microservicio-peliculas/genero/admin/new',
+    updateGenero: (id: number) => `/microservicio-peliculas/genero/admin/${id}`,
+
+    // clasificacion
+    getClasificacionById: (id: number) => `/microservicio-peliculas/clasificacion/admin/${id}`,
+    getClasificaciones: '/microservicio-peliculas/clasificacion/admin/all',
+    createClasificacion: '/microservicio-peliculas/clasificacion/admin/new',
+    updateClasificacion: (id: number) => `/microservicio-peliculas/clasificacion/admin/${id}`,
+    deleteClasificacionById: (id: number) => `/microservicio-peliculas/clasificacion/admin/${id}`,
+
+    // estados
+    getEstadoById: (id: number) => `/microservicio-peliculas/estado-pelicula/admin/${id}`,
+    getEstados: '/microservicio-peliculas/estado-pelicula/admin/all',
+    createEstado: '/microservicio-peliculas/estado-pelicula/admin/new',
+    updateEstado: (id: number) => `/microservicio-peliculas/estado-pelicula/admin/${id}`,
   },
+
   APIVentasUrls: {
     baseUrl: 'http://localhost:3000',
     getVentas: 'microservicio-ventas/venta/admin/all',

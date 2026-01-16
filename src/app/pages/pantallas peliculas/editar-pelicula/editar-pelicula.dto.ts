@@ -47,6 +47,6 @@ export class EditPeliculaOutput {
     id: number;
     nombre: string;
   };
-  empleado!: EmpleadoInput;
+  empleado?: EmpleadoInput | null;
   urlImagen!: string;
 }

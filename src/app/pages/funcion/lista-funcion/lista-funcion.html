@@ -1,42 +1,44 @@
-<div class="tabla-container">
-  <app-header></app-header>
-  <h1 class="titulo">FUNCIONES</h1>
-  <table class="tabla-funciones">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>PeliculaId</th>
-        <th>Fecha</th>
-        <th>Hora</th>
-        <th>Disponible</th>
-        <th>Numero de Sala</th>
-        <th>Nombre Formate</th>
-        <th>Precio entrada</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let funcion of funciones; let i = index"
-        [class.selected]="selectedIndex === i"
-        (click)="selectRow(i)"
-      >
-        <td>{{ funcion.id }}</td>
-        <td>{{ funcion.peliculaId }}</td>
-        <td>{{ funcion.fecha }}</td>
-        <td>{{ funcion.estaDisponible }}</td>
-        <td>{{ funcion.sala }}</td>
-        <td>{{ funcion.formato.nombre }}</td>
-        <td>{{ funcion.formato.precio }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<app-header></app-header>
+<div class="page">
+  <h1>Funciones</h1>
+  <div class="tabla-container">
+    <table class="tabla-formatos">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>PeliculaId</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Disponible</th>
+          <th>Numero de Sala</th>
+          <th>Nombre Formate</th>
+          <th>Precio entrada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let funcion of funciones; let i = index"
+          [class.selected]="selectedIndex === i"
+          (click)="selectRow(i)"
+        >
+          <td>{{ funcion.id }}</td>
+          <td>{{ funcion.peliculaId }}</td>
+          <td>{{ funcion.fecha }}</td>
+          <td>{{ funcion.estaDisponible }}</td>
+          <td>{{ funcion.sala }}</td>
+          <td>{{ funcion.formato.nombre }}</td>
+          <td>{{ funcion.formato.precio }}</td>
+        </tr>
+      </tbody>
+    </table>
 
-<!-- Botones -->
-<div class="botones">
-  <button class="btn" (click)="volver()">VOLVER</button>
-  <button class="btn" (click)="nuevafuncion()">NUEVA</button>
-  <button class="btn" (click)="editarFuncion()">EDITAR</button>
-  <button class="btn">ELIMINAR</button>
-  <button class="btn" (click)="ver()">VER</button>
+    <!-- Botones -->
+    <div class="button-group">
+      <button class="btn" (click)="volver()">VOLVER</button>
+      <button class="btn" (click)="nuevafuncion()">NUEVA</button>
+      <button class="btn" (click)="editarFuncion()">EDITAR</button>
+      <button class="btn">ELIMINAR</button>
+      <button class="btn" (click)="ver()">VER</button>
+    </div>
+  </div>
 </div>

@@ -129,12 +129,14 @@ export class ApiServicePelicula {
         genero: { id: item.genero.id, nombre: item.genero.nombre },
         clasificacion: { id: item.clasificacion.id, nombre: item.clasificacion.nombre },
         estado: { id: item.estado.id, nombre: item.estado.nombre },
-        empleado: {
-          id: item.empleado.id,
-          legajo: item.empleado.legajo,
-          nombre: item.empleado.nombre,
-          apellido: item.empleado.apellido,
-        },
+        empleado: item.empleado
+          ? {
+              id: item.empleado.id,
+              legajo: item.empleado.legajo,
+              nombre: item.empleado.nombre,
+              apellido: item.empleado.apellido,
+            }
+          : null,
       })
     );
     return respuesta;
@@ -142,36 +144,10 @@ export class ApiServicePelicula {
   async deletePelicula(id: number): Promise<void> {
     await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getPeliculaByIdForAdmin(id));
   }
-  async createPeliculaAdmin(formulario: any): Promise<void> {
-    const nuevaPelicula: EditPeliculaOutput = {
-      genero: {
-        id: formulario.get('generoId').value,
-        nombre: formulario.get('generoNombre').value,
-      },
-      clasificacion: {
-        id: formulario.get('clasificacionId').value,
-        nombre: formulario.get('clasificacionNombre').value,
-      },
-
-      estado: {
-        id: formulario.get('estadoId').value,
-        nombre: formulario.get('estadoNombre').value,
-      },
-      titulo: formulario.get('titulo').value,
-      sinopsis: formulario.get('sinopsis').value,
-      director: formulario.get('director').value,
-      duracion: formulario.get('duracion').value,
-      fechaEstreno: formulario.get('fechaEstreno').value,
-      urlImagen: formulario.get('imagen').value,
-      empleado: {
-        id: formulario.get('empleadoId').value,
-        legajo: formulario.get('empleadoLegajo').value,
-        nombre: formulario.get('empleadoNombre').value,
-        apellido: formulario.get('empleadoApellido').value,
-      },
-    };
+  async createPeliculaAdmin(nuevaPelicula: EditPeliculaOutput): Promise<void> {
     await axiosAPIPeliculas.post(config.APIPeliculasUrls.createPelicula, nuevaPelicula);
   }
+
   async updatePeliculaAdmin(pelicula: EditPeliculaInput): Promise<void> {
     const data: EditPeliculaOutput = {
       titulo: pelicula.titulo,
@@ -231,12 +207,14 @@ export class ApiServicePelicula {
   async deleteGenero(id: number): Promise<void> {
     await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getGeneroById(id));
   }
-  async createGenero(formulario: any): Promise<void> {
+  async createGenero(nombre: string): Promise<void> {
     const nuevoGenero: EditGenero = {
-      nombre: formulario.get('nombre').value,
+      nombre: nombre,
     };
+
     await axiosAPIPeliculas.post(config.APIPeliculasUrls.createGenero, nuevoGenero);
   }
+
   async updateGenero(genero: GeneroInput): Promise<void> {
     const data: GeneroInput = {
       nombre: genero.nombre,
@@ -271,12 +249,14 @@ export class ApiServicePelicula {
     return respuesta;
   }
   async deleteClasificacion(id: number): Promise<void> {
-    await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getClasificacionById(id));
+    await axiosAPIPeliculas.delete(config.APIPeliculasUrls.deleteClasificacionById(id));
   }
-  async createClasificacion(formulario: any): Promise<void> {
+
+  async createClasificacion(nombre: string): Promise<void> {
     const nuevaClasificacion: EditClasificacion = {
-      nombre: formulario.get('nombre').value,
+      nombre,
     };
+
     await axiosAPIPeliculas.post(config.APIPeliculasUrls.createClasificacion, nuevaClasificacion);
   }
   async updateClasificacion(clasificacion: ClasificacionInput): Promise<void> {
@@ -319,10 +299,12 @@ export class ApiServicePelicula {
   }
   async createEstado(formulario: any): Promise<void> {
     const nuevoEstado: EditEstado = {
-      nombre: formulario.get('nombre').value,
+      nombre: formulario.nombre,
     };
+
     await axiosAPIPeliculas.post(config.APIPeliculasUrls.createEstado, nuevoEstado);
   }
+
   async updateEstado(estado: EstadoInput): Promise<void> {
     const data: EstadoInput = {
       nombre: estado.nombre,

@@ -20,9 +20,6 @@ export class Pelicula {
     private router: Router
   ) {}
 
-  selectRow(p: any) {
-    this.selectedPelicula = p;
-  }
   peliculas: Array<{
     id: number;
     titulo: string;
@@ -65,6 +62,10 @@ export class Pelicula {
     }
     this.peliculas = data;
   }
+  selectRow(index: number) {
+    this.selec = index;
+    this.selectedPelicula = this.peliculas[index];
+  }
 
   editar() {
     if (this.selec === null) {
@@ -80,7 +81,7 @@ export class Pelicula {
   }
 
   onBack() {
-    this.router.navigate(['/pelicula/lista']);
+    this.router.navigate(['/home']);
   }
 
   inicio() {

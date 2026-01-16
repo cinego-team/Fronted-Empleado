@@ -70,9 +70,9 @@ export class Ventas {
     this.selectedRow = rowId;
   }
   OnBack() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/principal']);
   }
   inicio() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/principal']);
   }
 }

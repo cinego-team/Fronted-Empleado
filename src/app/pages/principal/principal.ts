@@ -43,6 +43,6 @@ export class Principal {
     this.router.navigate(['/tipo-cliente/lista']);
   }
   onVolver() {
-    this.router.navigate(['/h']);
+    this.router.navigate(['/principal']);
   }
 }

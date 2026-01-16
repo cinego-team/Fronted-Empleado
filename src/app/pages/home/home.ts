@@ -14,12 +14,12 @@ export class Home {
     this.router.navigate(['/registrar/empleado']);
   }
   onAdministrar() {
-    this.router.navigate(['/administracion']);
+    this.router.navigate(['/home']);
   }
   onReportes() {
     this.router.navigate(['/reportes']);
   }
   onVentas() {
-    this.router.navigate(['/venta/lista']);
+    this.router.navigate(['/ventas']);
   }
 }

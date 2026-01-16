@@ -1,7 +1,7 @@
 <div class="page">
   <app-header></app-header>
   <main class="wrap">
-    <section class="card">
+    <section class="register-box">
       <h1>Registrar Idioma</h1>
 
       <form [formGroup]="form" (ngSubmit)="onSave()">
@@ -11,11 +11,11 @@
         <div class="form-group">
           <label for="nombre">Nombre</label>
           <input id="nombre" formControlName="nombre" />
-          @if (form.get('name')?.invalid && form.get('name')?.touched) {
+          @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
           <small class="text-danger">Nombre requerido (mínimo 2 letras)</small>
           }
         </div>
-        <button type="submit" (click)="(form.invalid)">REGISTRAR</button>
+        <button type="submit" [disabled]="form.invalid">REGISTRAR</button>
       </form>
     </section>
   </main>

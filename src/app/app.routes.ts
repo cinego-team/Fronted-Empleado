@@ -33,12 +33,18 @@ import { EditarFuncion } from './pages/funcion/editar-funcion/editar-funcion';
 import { Pelicula } from './pages/pantallas peliculas/pelicula/pelicula';
 import { Home } from './pages/home/home';
 import { Reportes } from './pages/reportes/reportes';
+import { ListaSala } from './pages/sala/lista-sala/lista-sala';
+import { RegistrarSala } from './pages/sala/registrar-sala/registrar-sala';
+import { EditarsalaComponent } from './pages/sala/editar-sala/editar-sala';
+import { ListaFormatoComponent } from './pages/formato/lista-formato/lista-formato';
+import { RegistrarFormato } from './pages/formato/registrar-formato/registrar-formato';
+import { EditarFormatoComponent } from './pages/formato/editar-formato/editar-formato';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent }, // login
 
   { path: 'principal', component: Home }, //pantalla principal
-  { path: 'home', component: Principal }, //menu principal
+  { path: 'home', component: Principal }, //menu principal administrar
   { path: 'registrar/empleado', component: Register },
   { path: 'reportes', component: Reportes },
 
@@ -72,9 +78,14 @@ export const routes: Routes = [
   { path: 'clasificacion/lista', component: ListaClasificacionComponent },
   { path: 'clasificacion/registrar', component: RegistrarClasificacionComponent },
   { path: 'clasificacion/editar', component: EditarClasificacionComponent },
-  { path: 'funciones', component: ListaFuncion },
-  { path: 'registrar-funcion', component: RegistrarFuncion },
-  { path: 'editar-funcion', component: EditarFuncion },
-
+  { path: 'funcion/lista', component: ListaFuncion },
+  { path: 'funcion/registrar', component: RegistrarFuncion },
+  { path: 'funcion/editar', component: EditarFuncion },
+  { path: 'sala/lista', component: ListaSala },
+  { path: 'sala/registrar', component: RegistrarSala },
+  { path: 'sala/editar', component: EditarsalaComponent },
+  { path: 'formato/lista', component: ListaFormatoComponent },
+  { path: 'formato/registrar', component: RegistrarFormato },
+  { path: 'formato/editar', component: EditarFormatoComponent },
   { path: '**', redirectTo: '' }, // cualquier ruta desconocida redirige al principal
 ];

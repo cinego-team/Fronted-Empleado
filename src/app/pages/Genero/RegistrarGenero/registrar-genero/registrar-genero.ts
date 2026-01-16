@@ -28,22 +28,22 @@ export class RegistrarGeneroComponent {
 
   onSave() {
     if (this.form.invalid) {
-      alert('Por favor, completa  los campos correctamente.');
+      alert('Por favor, completa los campos correctamente.');
       return;
-    } else if (this.form.valid) {
-      const nombre: string = (this.form.get('nombre')?.value ?? '').toString();
-
-      this.apiService
-        .createGenero(nombre)
-        .then(() => {
-          alert('Género creado correctamente.');
-          this.router.navigate(['/genero/lista']);
-        })
-        .catch((error) => {
-          console.error('Error al crear el género:', error);
-          alert('Error al crear el género. Por favor, inténtalo de nuevo más tarde.');
-        });
     }
+
+    const nombre = this.form.value.nombre;
+
+    this.apiService
+      .createGenero(nombre)
+      .then(() => {
+        alert('Género creado correctamente.');
+        this.router.navigate(['/genero/lista']);
+      })
+      .catch((error) => {
+        console.error('Error al crear el género:', error);
+        alert('Error al crear el género.');
+      });
   }
 
   volver() {

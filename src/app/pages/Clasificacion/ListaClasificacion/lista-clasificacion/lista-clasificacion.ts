@@ -23,7 +23,6 @@ export class ListaClasificacionComponent {
     id: number;
     nombre: string;
   }> = [];
-  selec: number | null = null;
 
   ngOnInit(): void {
     this.initialization();
@@ -37,9 +36,10 @@ export class ListaClasificacionComponent {
     }
     this.clasificaciones = data;
   }
+  selec: number | null = null;
 
-  seleccionar(rowId: number) {
-    this.selec = rowId;
+  seleccionar(index: number) {
+    this.selec = index;
   }
 
   eliminar(): void {
@@ -51,6 +51,8 @@ export class ListaClasificacionComponent {
     const selectedC = this.clasificaciones[this.selec];
 
     if (confirm(`¿Estás seguro de que querés eliminar ?`)) {
+      console.log(selectedC);
+
       this.apiService
         .deleteClasificacion(selectedC.id)
         .then(() => {

@@ -36,7 +36,7 @@ export class RegistrarClasificacionComponent {
         .createClasificacion(nombre)
         .then(() => {
           alert('Clasificación creada correctamente.');
-          this.router.navigate(['/clasificaciones']);
+          this.router.navigate(['/clasificacion/lista']);
         })
         .catch((error) => {
           console.error('Error al crear la clasificación:', error);

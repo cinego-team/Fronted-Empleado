@@ -315,12 +315,14 @@ export class ApiServiceFunciones {
   async deleteIdioma(id: number): Promise<void> {
     await axiosAPIFuncionesYsalas.delete(config.APIFuncionesUrls.getIdiomaById(id));
   }
-  async createIdioma(formulario: any): Promise<void> {
+  async createIdioma(nombre: string): Promise<void> {
     const nuevoIdioma: EditIdioma = {
-      nombre: formulario.get('nombre').value,
+      nombre,
     };
+
     await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createIdioma, nuevoIdioma);
   }
+
   async updateIdioma(idioma: IdiomaInput): Promise<void> {
     const data: IdiomaInput = {
       nombre: idioma.nombre,
