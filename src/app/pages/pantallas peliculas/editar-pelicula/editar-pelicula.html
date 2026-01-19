@@ -17,8 +17,8 @@
         <input type="text" formControlName="titulo" />
 
         <label>Estado</label>
-        <select formControlName="estado">
-          <option *ngFor="let e of estados" [value]="e">{{ e.id }}-{{ e.nombre }}</option>
+        <select formControlName="estado" [compareWith]="compareById">
+          <option *ngFor="let e of estados" [ngValue]="e">{{ e.id }}-{{ e.nombre }}</option>
         </select>
       </div>
 
@@ -28,8 +28,8 @@
         <input type="number" formControlName="duracion" />
 
         <label>Clasificación</label>
-        <select formControlName="clasificacion">
-          <option *ngFor="let c of clasificaciones" [value]="c">{{ c.id }}-{{ c.nombre }}</option>
+        <select formControlName="clasificacion" [compareWith]="compareById">
+          <option *ngFor="let c of clasificaciones" [ngValue]="c">{{ c.id }}-{{ c.nombre }}</option>
         </select>
       </div>
 
@@ -55,8 +55,8 @@
         </div>
 
         <label>Género</label>
-        <select formControlName="genero">
-          <option *ngFor="let g of generos" [value]="g">{{ g.id }}-{{ g.nombre }}</option>
+        <select formControlName="genero" [compareWith]="compareById">
+          <option *ngFor="let g of generos" [ngValue]="g">{{ g.id }}-{{ g.nombre }}</option>
         </select>
       </div>
 

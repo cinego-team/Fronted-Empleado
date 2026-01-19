@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 import { CommonModule } from '@angular/common';
 import { Header } from '../../../shared/header/header';
+import { ApiServiceUsuario } from '../../../services/api.service.usuario';
 
 @Component({
   selector: 'app-edit-pelicula',
@@ -17,21 +18,25 @@ export class EditPeliculaComponent implements OnInit {
   pelicula: any = null;
   originalPelicula: any;
   form!: FormGroup;
-  idiomas: any[] = [];
   generos: any[] = [];
   clasificaciones: any[] = [];
   estados: any[] = [];
   anios: number[] = [];
+  empleadoLogueado: { id: number; legajo: number; nombre: string; apellido: string } | null = null;
+
+  compareById(obj1: any, obj2: any): boolean {
+    return obj1 && obj2 ? obj1.id === obj2.id : obj1 === obj2;
+  }
 
   constructor(
     private apiService: ApiServicePelicula,
+    private apiServiceUsuario: ApiServiceUsuario,  
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder
   ) {}
 
-  ngOnInit(): void {
-    // Recuperar la película desde la navegación (state)
+  async ngOnInit(): Promise<void> {
     const navState =
       (this.router.getCurrentNavigation()?.extras.state as any)?.pelicula ??
       (history.state as any)?.pelicula;
@@ -42,32 +47,31 @@ export class EditPeliculaComponent implements OnInit {
       return;
     }
 
-    // Guardar la película original
     this.pelicula = { ...navState };
     this.originalPelicula = { ...navState };
 
-    // Inicializar formulario
     this.generarAnios();
     this.crearFormulario();
-    this.cargarListas();
+    
+    // Esperar a que las listas se carguen ANTES de setear los valores
+    await this.cargarListas();
+    this.empleadoLogueado = await this.apiServiceUsuario.getEmpleadoCompletoDesdeToken();
     this.cargarPeliculaEnFormulario();
   }
 
-  // FORMULARIO REACTIVO
   crearFormulario(): void {
     this.form = this.fb.group({
       titulo: ['', Validators.required],
-      estado: ['', Validators.required],
+      estado: [null, Validators.required],
       duracion: ['', Validators.required],
-      clasificacion: ['', Validators.required],
+      clasificacion: [null, Validators.required],
       fechaEstrenoDia: ['', Validators.required],
       fechaEstrenoMes: ['', Validators.required],
       fechaEstrenoAnio: ['', Validators.required],
-      genero: ['', Validators.required],
+      genero: [null, Validators.required],
       director: ['', Validators.required],
-      idioma: ['', Validators.required],
       sinopsis: ['', Validators.required],
-      urlImagen: ['', Validators.required],
+      urlImagen: [''],
     });
   }
 
@@ -76,31 +80,47 @@ export class EditPeliculaComponent implements OnInit {
     for (let a = anioActual; a >= 1900; a--) this.anios.push(a);
   }
 
-  // Cargar listas del backend
-  cargarListas(): void {
-    this.apiService.getAllGeneros().then((data) => (this.generos = data));
-    this.apiService.getAllClasificaciones().then((data) => (this.clasificaciones = data));
-    this.apiService.getAllEstados().then((data) => (this.estados = data));
+  // Cargar listas del backend - ahora es async
+  async cargarListas(): Promise<void> {
+    try {
+      const [generos, clasificaciones, estados] = await Promise.all([
+        this.apiService.getAllGeneros(),
+        this.apiService.getAllClasificaciones(),
+        this.apiService.getAllEstados(),
+      ]);
+      this.generos = generos;
+      this.clasificaciones = clasificaciones;
+      this.estados = estados;
+    } catch (error) {
+      console.error('Error cargando listas:', error);
+    }
   }
 
   cargarPeliculaEnFormulario(): void {
     const p = this.pelicula;
 
-    // Setear campos simples
+    // Buscar los objetos en las listas cargadas
+    const generoObj = this.generos.find(g => g.id === p.genero?.id) || null;
+    const clasificacionObj = this.clasificaciones.find(c => c.id === p.clasificacion?.id) || null;
+    const estadoObj = this.estados.find(e => e.id === p.estado?.id) || null;
+
     this.form.patchValue({
       titulo: p.titulo,
       sinopsis: p.sinopsis,
       director: p.director,
       duracion: p.duracion,
-      genero: p.genero,
-      clasificacion: p.clasificacion,
-      estado: p.estado,
-      idioma: p.idioma,
+      genero: generoObj,
+      clasificacion: clasificacionObj,
+      estado: estadoObj,
       urlImagen: p.urlImagen,
     });
+
+    // Cargar la fecha de estreno
+    if (p.fechaEstreno) {
+      this.setFechaEstreno(p.fechaEstreno);
+    }
   }
 
-  //convertir la fecha
   setFechaEstreno(fecha: string): void {
     const d = new Date(fecha);
     this.form.patchValue({
@@ -109,8 +129,6 @@ export class EditPeliculaComponent implements OnInit {
       fechaEstrenoAnio: d.getFullYear(),
     });
   }
-
-  // GUARDAR CAMBIOS
 
   onSave(): void {
     if (this.form.invalid) {
@@ -121,18 +139,23 @@ export class EditPeliculaComponent implements OnInit {
 
     const v = this.form.value;
 
+    // Formatear la fecha correctamente con padding de ceros
+    const mes = String(v.fechaEstrenoMes).padStart(2, '0');
+    const dia = String(v.fechaEstrenoDia).padStart(2, '0');
+    const empleadoLogueado = JSON.parse(localStorage.getItem('empleado') || '{}');
+
     const payload = {
-      ...this.pelicula,
+      id: this.pelicula.id,
       titulo: v.titulo,
       sinopsis: v.sinopsis,
       director: v.director,
-      duracion: v.duracion,
-      idioma: v.idioma,
-      genero: v.genero,
-      clasificacion: v.clasificacion,
-      estado: v.estado,
+      duracion: Number(v.duracion),
       urlImagen: v.urlImagen,
-      fechaEstreno: `${v.fechaEstrenoAnio}-${v.fechaEstrenoMes}-${v.fechaEstrenoDia}`,
+      fechaEstreno: `${v.fechaEstrenoAnio}-${mes}-${dia}`,
+      genero: { id: v.genero.id, nombre: v.genero.nombre },
+      clasificacion: { id: v.clasificacion.id, nombre: v.clasificacion.nombre },
+      estado: { id: v.estado.id, nombre: v.estado.nombre },
+      empleado: empleadoLogueado,
     };
 
     this.apiService
@@ -147,6 +170,7 @@ export class EditPeliculaComponent implements OnInit {
   onBack(): void {
     this.router.navigate(['/pelicula/lista']);
   }
+  
   inicio(): void {
     this.router.navigate(['/home']);
   }

@@ -27,6 +27,34 @@ export class ApiServiceUsuario {
   getToken(): string | null {
     return localStorage.getItem('access_token');
   }
+
+  async getEmpleadoCompletoDesdeToken(): Promise<{ id: number; legajo: number; nombre: string; apellido: string } | null> {
+    const token = this.getToken();
+    if (!token) return null;
+
+    const decoded = this.decodeToken(token);
+    const id = decoded?.sub;
+    if (!id) return null;
+
+    try {
+      const response = await axiosAPIUsuario.get(config.APIUsuariosUrls.getEmpleadoById(id), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return {
+        id: response.data.id,
+        legajo: response.data.legajo,
+        nombre: response.data.nombre,
+        apellido: response.data.apellido,
+      };
+    } catch (error) {
+      console.error('Error obteniendo datos del empleado', error);
+      return null;
+    }
+  }
+
   getUsuarioDesdeToken(): { nombre: string; apellido: string } | null {
     const token = localStorage.getItem('access_token');
     if (!token) return null;

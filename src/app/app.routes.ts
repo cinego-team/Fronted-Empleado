@@ -50,11 +50,11 @@ export const routes: Routes = [
 
   //estados peliculas
   { path: 'estado-pelicula/registrar', component: RegistrarEstadoPeliculaComponent },
-  { path: 'estado-pelicula/editar', component: EditarEstadoPelicula },
+  { path: 'estado-pelicula/editar/:id', component: EditarEstadoPelicula },
   { path: 'estado-pelicula/lista', component: EstadosPeliculas },
   //peliculas
   { path: 'pelicula/registrar', component: RegistrarPelicula },
-  { path: 'pelicula/editar', component: EditPeliculaComponent },
+  { path: 'pelicula/editar/:id', component: EditPeliculaComponent },
   { path: 'pelicula/lista', component: Pelicula },
   //promociones
   { path: 'promocion/registrar', component: RegistrarPromocion },

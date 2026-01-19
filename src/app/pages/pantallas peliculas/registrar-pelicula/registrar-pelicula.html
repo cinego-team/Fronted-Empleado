@@ -14,7 +14,7 @@
         <label>Estado</label>
         <select formControlName="estado">
           <option value="">Seleccione</option>
-          <option *ngFor="let e of estados" [value]="e">{{ e.id }}- {{ e.nombre }}</option>
+          <option *ngFor="let e of estados" [value]="e.id">{{ e.id }}- {{ e.nombre }}</option>
         </select>
       </div>
 
@@ -25,7 +25,7 @@
         <label>Clasificación</label>
         <select formControlName="clasificacion">
           <option value="">Seleccione</option>
-          <option *ngFor="let c of clasificaciones" [value]="c">{{ c.id }}-{{ c.nombre }}</option>
+          <option *ngFor="let c of clasificaciones" [value]="c.id">{{ c.id }}-{{ c.nombre }}</option>
         </select>
       </div>
 
@@ -36,7 +36,7 @@
         <label>Género</label>
         <select formControlName="genero">
           <option value="">Seleccione</option>
-          <option *ngFor="let g of generos" [value]="g">{{ g.id }}-{{ g.nombre }}</option>
+          <option *ngFor="let g of generos" [value]="g.id">{{ g.id }}-{{ g.nombre }}</option>
         </select>
       </div>
 

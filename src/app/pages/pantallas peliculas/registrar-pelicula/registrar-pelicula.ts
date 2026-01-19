@@ -67,26 +67,35 @@ export class RegistrarPelicula implements OnInit {
 
     try {
       const data = this.form.value;
+  
+      const estadoId = Number(data.estado);
+      const clasificacionId = Number(data.clasificacion);
+      const generoId = Number(data.genero);
 
-      // Convertir ID → nombre (lo que necesita tu DTO)
+      const estadoObj = this.estados.find((e) => e.id === estadoId);
+      const clasificacionObj = this.clasificaciones.find((c) => c.id === clasificacionId);
+      const generoObj = this.generos.find((g) => g.id === generoId);
+
+      if (!estadoObj || !clasificacionObj || !generoObj) {
+        console.log('[v0] No encontrados:', { estadoObj, clasificacionObj, generoObj });
+        alert('Error: No se encontraron los datos de estado, clasificación o género.');
+        return;
+      }
+
       const peliculaParaEnviar = {
         titulo: data.titulo,
         sinopsis: data.sinopsis,
         director: data.director,
-        duracion: data.duracion,
+        duracion: Number(data.duracion),
         fechaEstreno: data.fechaEstreno,
         urlImagen: data.urlImagen,
-
-        estado: this.estados.find((e) => e.id === Number(data.estado))?.nombre,
-        clasificacion: this.clasificaciones.find((c) => c.id === Number(data.clasificacion))
-          ?.nombre,
-        genero: this.generos.find((g) => g.id === Number(data.genero))?.nombre,
-
-        empleado: null,
+        estado: { id: estadoObj.id, nombre: estadoObj.nombre },
+        clasificacion: { id: clasificacionObj.id, nombre: clasificacionObj.nombre },
+        genero: { id: generoObj.id, nombre: generoObj.nombre },
+        empleado: { id: 1, legajo: 0, nombre: '', apellido: '' },
       };
 
       await this.apiService.createPeliculaAdmin(peliculaParaEnviar);
-
       alert('Película creada correctamente.');
       this.router.navigate(['/pelicula/lista']);
     } catch (error) {
