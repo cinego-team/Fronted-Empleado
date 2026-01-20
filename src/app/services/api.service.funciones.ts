@@ -243,26 +243,17 @@ export class ApiServiceFunciones {
     };
   }
 
-  async createFuncionAdmin(formulario: any): Promise<void> {
-    const nuevaFuncion: EditFuncion = {
-      peliculaId: formulario.get('peliculaId').value,
-      fecha: formulario.get('fecha').value,
-      estaDisponible: formulario.get('estaDisponible').value,
-      sala: {
-        id: formulario.get('sala').value.id,
-        nroSala: formulario.get('sala').value.nroSala,
-      },
-      formato: {
-        id: formulario.get('formato').value.id,
-        nombre: formulario.get('formato').value.nombre,
-        precio: formulario.get('formato').value.precio,
-      },
-      idioma: {
-        id: formulario.get('idioma').value.id,
-        nombre: formulario.get('idioma').value.nombre,
-      },
-    };
-    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createFuncionAdmin, nuevaFuncion);
+  async createFuncionAdmin(dto: {
+    peliculaId: number;
+    fecha: Date;
+    estaDisponible: boolean;
+    sala: { id: number; nroSala: number };
+    formato: { id: number; nombre: string; precio: number };
+    idioma: { id: number; nombre: string };
+  }): Promise<void> {
+    console.log('[v0] URL:', config.APIFuncionesUrls.createFuncionAdmin);
+    console.log('[v0] DTO:', dto);
+    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createFuncionAdmin, dto);
   }
   async updateFuncionAdmin(funcion: Partial<FuncionInput> & { id: number }): Promise<void> {
     const data: any = { ...funcion };

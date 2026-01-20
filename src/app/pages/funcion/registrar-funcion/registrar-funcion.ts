@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { ApiServiceFunciones } from '../../../services/api.service.funciones';
 import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 import { Header } from '../../../shared/header/header';
@@ -10,7 +11,7 @@ import { Header } from '../../../shared/header/header';
   standalone: true,
   templateUrl: './registrar-funcion.html',
   styleUrl: './registrar-funcion.css',
-  imports: [ReactiveFormsModule, Header],
+  imports: [CommonModule, ReactiveFormsModule, Header],  // Agregar CommonModule
 })
 export class RegistrarFuncion {
   form: FormGroup;
@@ -27,13 +28,13 @@ export class RegistrarFuncion {
     private apiService2: ApiServicePelicula
   ) {
     this.form = this.fb.group({
-      pelicula: ['', Validators.required], // objeto película
-      formato: ['', Validators.required], // objeto formato
-      fecha: ['', Validators.required], // yyyy-mm-dd
-      hora: ['', Validators.required], // hh:mm
-      sala: ['', Validators.required], // objeto sala
+      pelicula: [null, Validators.required],
+      formato: [null, Validators.required],
+      fecha: ['', Validators.required],
+      hora: ['', Validators.required],
+      sala: [null, Validators.required],
       disponible: [true, Validators.required],
-      idioma: ['', Validators.required], // objeto idioma
+      idioma: [null, Validators.required],
     });
   }
 
@@ -41,60 +42,56 @@ export class RegistrarFuncion {
     this.cargarDatos();
   }
 
+  
   async cargarDatos() {
     try {
-      this.peliculas = await this.apiService2.getPeliculasParaSelec();
-      this.formatos = await this.apiService.findAllAdmin();
-      this.salas = await this.apiService.getSalasForSelec();
+      this.peliculas = await this.apiService2.getPeliculasParaSelec();      
+      this.formatos = await this.apiService.findAllAdmin();      
+      this.salas = await this.apiService.getSalasForSelec();      
       this.idiomas = await this.apiService.getAllIdiomas();
     } catch (err) {
-      console.error('Error al cargar los combos:', err);
       alert('Error al cargar datos.');
     }
   }
 
-  registrar() {
+  async registrar() {
     if (this.form.invalid) {
+      this.form.markAllAsTouched();
       alert('Por favor, completa correctamente todos los campos.');
       return;
     }
 
     const { pelicula, formato, fecha, hora, sala, disponible, idioma } = this.form.value;
 
-    const fechaHora = `${fecha}T${hora}:00`;
+    const fechaHora = new Date(`${fecha}T${hora}:00`);
 
     const dto = {
       peliculaId: pelicula.id,
       fecha: fechaHora,
       estaDisponible: disponible,
-
       sala: {
         id: sala.id,
-        nroSala: sala.numero,
+        nroSala: sala.nroSala,
       },
-
       formato: {
         id: formato.id,
         nombre: formato.nombre,
         precio: formato.precio,
       },
-
       idioma: {
         id: idioma.id,
         nombre: idioma.nombre,
       },
     };
 
-    this.apiService
-      .createFuncionAdmin(dto)
-      .then(() => {
-        alert('Función creada correctamente.');
-        this.router.navigate(['/funcion/lista']);
-      })
-      .catch((err) => {
-        console.error(err);
-        alert('Error al crear la función.');
-      });
+    try {
+      await this.apiService.createFuncionAdmin(dto);
+      alert('Función creada correctamente.');
+      this.router.navigate(['/funcion/lista']);
+    } catch (err) {
+      console.error(err);
+      alert('Error al crear la función.');
+    }
   }
 
   volver() {

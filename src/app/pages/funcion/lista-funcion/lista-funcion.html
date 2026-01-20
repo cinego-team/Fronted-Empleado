@@ -6,13 +6,13 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>PeliculaId</th>
+          <th>Película ID</th>
           <th>Fecha</th>
-          <th>Hora</th>
           <th>Disponible</th>
-          <th>Numero de Sala</th>
-          <th>Nombre Formate</th>
-          <th>Precio entrada</th>
+          <th>Idioma</th>
+          <th>Nro. Sala</th>
+          <th>Formato</th>
+          <th>Precio</th>
         </tr>
       </thead>
       <tbody>
@@ -24,10 +24,11 @@
           <td>{{ funcion.id }}</td>
           <td>{{ funcion.peliculaId }}</td>
           <td>{{ funcion.fecha }}</td>
-          <td>{{ funcion.estaDisponible }}</td>
-          <td>{{ funcion.sala }}</td>
-          <td>{{ funcion.formato.nombre }}</td>
-          <td>{{ funcion.formato.precio }}</td>
+          <td>{{ funcion.estaDisponible ? 'Sí' : 'No' }}</td>
+          <td>{{ funcion.idioma?.nombre ?? 'Sin idioma' }}</td>
+          <td>{{ funcion.sala?.nroSala ?? 'Sin sala' }}</td>
+          <td>{{ funcion.formato?.nombre ?? 'Sin formato' }}</td>
+          <td>{{ funcion.formato?.precio ?? '-' }}</td>
         </tr>
       </tbody>
     </table>
@@ -37,7 +38,7 @@
       <button class="btn" (click)="volver()">VOLVER</button>
       <button class="btn" (click)="nuevafuncion()">NUEVA</button>
       <button class="btn" (click)="editarFuncion()">EDITAR</button>
-      <button class="btn">ELIMINAR</button>
+      <button class="btn" (click)="eliminar()">ELIMINAR</button>
       <button class="btn" (click)="ver()">VER</button>
     </div>
   </div>

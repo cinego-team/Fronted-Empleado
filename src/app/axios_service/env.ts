@@ -19,10 +19,10 @@ export const config = {
     update: (id: number) => `microservicio-funciones-y-salas/formato/admin/${id}`,
     findOneFormatoForPut: (id: number) => `microservicio-funciones-y-salas/formato/admin/${id}`,
     //funcion
-    getFunciones: 'microservicio-funciones-y-salas/funcion/admin/all',
-    getFuncById: (id: number) => `microservicio-funciones-y-salas/funcion/admin/${id}`,
-    createFuncionAdmin: 'microservicio-funciones-y-salas/funcion/admin/new',
-    updateFuncionAdmin: (id: number) => `microservicio-funciones-y-salas/funcion/admin/${id}`,
+    getFunciones: '/microservicio-funciones-y-salas/funcion/admin/all',
+    getFuncById: (id: number) => `/microservicio-funciones-y-salas/funcion/admin/${id}`,
+    createFuncionAdmin: '/microservicio-funciones-y-salas/funcion/admin/new',
+    updateFuncionAdmin: (id: number) => `/microservicio-funciones-y-salas/funcion/admin/${id}`,
     //salas
     getAllSalas: 'microservicio-funciones-y-salas/salas/admin/all',
     getSalas: 'microservicio-funciones-y-salas/salas/admin/selec',

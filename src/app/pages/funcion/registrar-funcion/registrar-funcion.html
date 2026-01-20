@@ -4,23 +4,22 @@
     <h2>Registrar Función</h2>
 
     <form [formGroup]="form" (ngSubmit)="registrar()">
-      <!-- Película-->
+      <!-- Película -->
       <div class="form-row">
         <div class="form-group">
           <label for="pelicula">Película</label>
           <select id="pelicula" formControlName="pelicula">
-            <option value="">Seleccione la película</option>
-            <option *ngFor="let p of peliculas" [value]="p.id">{{ p.id }} - {{ p.nombre }}</option>
+            <option [ngValue]="null" disabled selected>Seleccione la película</option>
+            <option *ngFor="let p of peliculas" [ngValue]="p">{{ p.id }} - {{ p.titulo }}</option>
           </select>
         </div>
-        <!--  Formato -->
+        <!-- Formato -->
         <div class="form-group">
           <label for="formato">Formato</label>
           <select id="formato" formControlName="formato">
             <option [ngValue]="null" disabled selected>Seleccione el formato</option>
-
             <option *ngFor="let f of formatos" [ngValue]="f">
-              {{ f.id }}- {{ f.nombre }} - ${{ f.precio }}
+              {{ f.id }} - {{ f.nombre }} - ${{ f.precio }}
             </option>
           </select>
         </div>
@@ -36,17 +35,18 @@
         <div class="form-group">
           <label for="sala">Sala</label>
           <select id="sala" formControlName="sala">
-            <option value="">Seleccione la sala</option>
-            <option *ngFor="let s of salas" [value]="s">{{ s.id }}-{{ s.numeroSala }}</option>
+            <option [ngValue]="null" disabled selected>Seleccione la sala</option>
+            <option *ngFor="let s of salas" [ngValue]="s">{{ s.id }} - Sala {{ s.nroSala }}</option>
           </select>
         </div>
       </div>
-      <div class="form-group">
-        <label for="formato">Idioma</label>
-        <select id="formato" formControlName="formato">
-          <option [ngValue]="null" disabled selected>Seleccione el idioma</option>
 
-          <option *ngFor="let i of idiomas" [ngValue]="i">{{ i.id }} - ${{ i.nombre }}</option>
+      <!-- Idioma -->
+      <div class="form-group">
+        <label for="idioma">Idioma</label>
+        <select id="idioma" formControlName="idioma">
+          <option [ngValue]="null" disabled selected>Seleccione el idioma</option>
+          <option *ngFor="let i of idiomas" [ngValue]="i">{{ i.id }} - {{ i.nombre }}</option>
         </select>
       </div>
 
@@ -60,8 +60,8 @@
         <div class="form-group">
           <label for="disponible">Disponible</label>
           <select id="disponible" formControlName="disponible">
-            <option value="true">Disponible</option>
-            <option value="false">No disponible</option>
+            <option [ngValue]="true">Disponible</option>
+            <option [ngValue]="false">No disponible</option>
           </select>
         </div>
       </div>
