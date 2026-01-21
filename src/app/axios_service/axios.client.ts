@@ -12,7 +12,7 @@ axiosAPIPromociones.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token');
   const refreshToken = localStorage.getItem('refresh_token');
   if (token) {
-    config.headers.Authorization = token;
+    config.headers.Authorization = `Bearer ${token}`;
   }
   if (refreshToken) {
     config.headers['refresh-token'] = refreshToken;
@@ -49,22 +49,62 @@ export const axiosAPIUsuario = axios.create({
 });
 axiosAPIUsuario.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token');
-  const refreshToken = localStorage.getItem('refresh_token');
 
-  // 🔴 EN LOGIN NO SE MANDA AUTH
-  if (!config.url?.includes('usuario/login')) {
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    if (refreshToken) {
-      config.headers['refresh-token'] = refreshToken;
-    }
+  // No enviar auth en login
+  if (token && !config.url?.includes('usuario/login')) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
   return config;
 });
+axiosAPIUsuario.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
 
+    if (!error.response) {
+      return Promise.reject(error);
+    }
+
+    if (
+      error.response.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url?.includes('usuario/login') &&
+      !originalRequest.url?.includes('usuario/refresh')
+    ) {
+      originalRequest._retry = true;
+
+      try {
+        const refreshToken = localStorage.getItem('refresh_token');
+        if (!refreshToken) throw new Error('No refresh token');
+
+        const response = await axios.post(config.APIUsuariosUrls.refreshToken, null, {
+          headers: {
+            'refresh-token': refreshToken,
+          },
+        });
+
+        const { accessToken } = response.data;
+        if (!accessToken) throw new Error('No access token');
+
+        localStorage.setItem('access_token', accessToken);
+
+        originalRequest.headers = {
+          ...originalRequest.headers,
+          Authorization: `Bearer ${accessToken}`,
+        };
+
+        return axiosAPIUsuario(originalRequest);
+      } catch (e) {
+        localStorage.clear();
+        window.location.href = '/login';
+        return Promise.reject(e);
+      }
+    }
+
+    return Promise.reject(error);
+  },
+);
 
 //funciones
 export const axiosAPIFuncionesYsalas = axios.create({

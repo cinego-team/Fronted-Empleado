@@ -20,7 +20,7 @@ export class RegistrarTipoCliente {
   constructor(
     private fb: FormBuilder,
     private apiService: ApiServiceUsuario,
-    private router: Router
+    private router: Router,
   ) {
     this.form = this.fb.group({
       denominacion: ['', [Validators.required, Validators.minLength(2)]],
@@ -30,13 +30,15 @@ export class RegistrarTipoCliente {
 
   onSave() {
     if (this.form.invalid) {
-      alert('Por favor, completa  los campos correctamente.');
+      alert('Por favor, completa los campos correctamente.');
       return;
     }
-    const dto: EditTipoCliente = {
-      Denominacion: this.form.value.denominacion,
-      Descripcion: this.form.value.descripcion,
+
+    const dto = {
+      denominacion: this.form.value.denominacion,
+      descripcion: this.form.value.descripcion,
     };
+
     this.apiService
       .createTipoCliente(dto)
       .then(() => {

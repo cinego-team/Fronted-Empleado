@@ -42,13 +42,10 @@ export class ApiServiceFunciones {
   async delete(id: number): Promise<void> {
     await axiosAPIFuncionesYsalas.delete(config.APIFuncionesUrls.findOneAdmin(id));
   }
-  async create(formulario: any): Promise<void> {
-    const nuevoFormato: FormatoInput = {
-      nombre: formulario.get('nombre').value,
-      precio: formulario.get('precio').value,
-    };
-    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.create, nuevoFormato);
+  async create(formato: FormatoInput): Promise<void> {
+    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.create, formato);
   }
+
   async update(formato: FormatoOutput): Promise<void> {
     const data: FormatoInput = {
       nombre: formato.nombre,
@@ -86,14 +83,20 @@ export class ApiServiceFunciones {
     }>
   > {
     try {
-      const response = await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getAllSalas);
+      const token = localStorage.getItem('token');
+
+      const response = await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getAllSalas, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       const datos = response.data;
 
       return datos.map((item: any) => ({
         id: item.id,
-        numero: item.numero,
-        disponibilidad: item.disponibilidad === 'true',
-
+        numero: item.nroSala,
+        disponibilidad: item.estaDisponible,
         cantFilas: item.cantFilas,
         capacidad: item.capacidad,
       }));
@@ -102,6 +105,7 @@ export class ApiServiceFunciones {
       return [];
     }
   }
+
   async getSalaById(id: number): Promise<{
     id: number;
     numero: number;
@@ -121,11 +125,24 @@ export class ApiServiceFunciones {
 
   async createSala(salaData: {
     numero: number;
-    disponibilidad: string;
+    disponibilidad: boolean;
     cantFilas: number;
     cantButacasPorFila: number;
   }): Promise<void> {
-    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createSalas, salaData);
+    const payload = {
+      nroSala: Number(salaData.numero),
+      estaDisponible: salaData.disponibilidad,
+      cantFilas: Number(salaData.cantFilas),
+      cantButacasPorFila: Number(salaData.cantButacasPorFila),
+    };
+
+    const token = localStorage.getItem('access_token');
+
+    await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createSalas, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 
   async updateSala(sala: SalaInput): Promise<void> {
@@ -138,8 +155,15 @@ export class ApiServiceFunciones {
     await axiosAPIFuncionesYsalas.put(`${config.APIFuncionesUrls.updateSala(sala.id!)}`, data);
   }
   async deleteSala(id: number): Promise<void> {
-    await axiosAPIFuncionesYsalas.delete(config.APIFuncionesUrls.getSalaById(id));
+    const token = localStorage.getItem('access_token');
+
+    await axiosAPIFuncionesYsalas.delete(config.APIFuncionesUrls.deleteSalaById(id), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
+
   //funciones
 
   async getFunciones(): Promise<
@@ -194,7 +218,7 @@ export class ApiServiceFunciones {
             nombre: item.formato.nombre,
             precio: item.formato.precio,
           },
-        })
+        }),
       );
     } catch (error) {
       console.error('Error al obtener funciones:', error);
@@ -268,7 +292,7 @@ export class ApiServiceFunciones {
 
     await axiosAPIFuncionesYsalas.put(
       `${config.APIFuncionesUrls.updateFuncionAdmin(funcion.id)}`,
-      data
+      data,
     );
   }
   async deleteFuncion(id: number): Promise<void> {

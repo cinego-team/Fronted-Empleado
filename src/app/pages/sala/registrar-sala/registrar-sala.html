@@ -1,50 +1,62 @@
 <div class="container">
   <app-header></app-header>
 
-  <!-- Contenedor principal -->
   <main class="form-container">
     <h2>Registrar Sala</h2>
 
     <form [formGroup]="form" (ngSubmit)="registrar()">
+      <!-- Número de sala -->
       <div class="form-group">
-        <label for="numero">Numero de sala </label>
+        <label for="numero">Número de sala</label>
         <input type="number" id="numero" formControlName="numero" />
         <div *ngIf="form.get('numero')?.touched && form.get('numero')?.invalid" class="error">
-          <small class="text-danger" *ngIf="form.get('numero')?.errors?.['required']"
-            >El numero de sala es obligatorio.</small
-          >
+          <small class="text-danger" *ngIf="form.get('numero')?.errors?.['required']">
+            El número de sala es obligatorio.
+          </small>
         </div>
       </div>
+
+      <!-- Disponibilidad -->
       <div class="form-group">
+        <label>Disponibilidad</label>
         <select formControlName="disponibilidad" class="input-redondo">
           <option *ngFor="let op of disponibilidadOpciones" [ngValue]="op.value">
             {{ op.label }}
           </option>
         </select>
       </div>
+
+      <!-- Cantidad de filas -->
       <div class="form-group">
-        <label for="fila">Cantidad de filas </label>
-        <input type="number" id="fila" formControlName="fila" />
-        <div *ngIf="form.get('fila')?.touched && form.get('fila')?.invalid" class="error">
-          <small class="text-danger" *ngIf="form.get('fila')?.errors?.['required']"
-            >La cantidad de filas es obligatorio.</small
-          >
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="butaca">Cantidad de butacas por fila </label>
-        <input type="number" id="butaca" formControlName="butaca" />
-        <div *ngIf="form.get('butaca')?.touched && form.get('butaca')?.invalid" class="error">
-          <small class="text-danger" *ngIf="form.get('butaca')?.errors?.['required']"
-            >La cantidad de butacas es obligatorio.</small
-          >
+        <label for="cantFilas">Cantidad de filas</label>
+        <input type="number" id="cantFilas" formControlName="cantFilas" />
+        <div *ngIf="form.get('cantFilas')?.touched && form.get('cantFilas')?.invalid" class="error">
+          <small class="text-danger" *ngIf="form.get('cantFilas')?.errors?.['required']">
+            La cantidad de filas es obligatoria.
+          </small>
         </div>
       </div>
 
-      <button type="submit" class="btn-registrar" (click)="registrar()">Registrar</button>
+      <!-- Cantidad de butacas por fila -->
+      <div class="form-group">
+        <label for="cantButacasPorFila">Cantidad de butacas por fila</label>
+        <input type="number" id="cantButacasPorFila" formControlName="cantButacasPorFila" />
+        <div
+          *ngIf="form.get('cantButacasPorFila')?.touched && form.get('cantButacasPorFila')?.invalid"
+          class="error"
+        >
+          <small class="text-danger" *ngIf="form.get('cantButacasPorFila')?.errors?.['required']">
+            La cantidad de butacas es obligatoria.
+          </small>
+        </div>
+      </div>
+
+      <!-- Botón registrar -->
+      <button type="submit" class="btn-registrar">Registrar</button>
     </form>
   </main>
+
   <div class="button-group">
-    <button (click)="volver()">VOLVER</button>
+    <button type="button" (click)="volver()">VOLVER</button>
   </div>
 </div>

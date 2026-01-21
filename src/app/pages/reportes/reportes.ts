@@ -55,7 +55,7 @@ export class Reportes implements OnInit {
 
     this.peliculasTrimestral = await this.ventasService.getPeliculasPorRangoTrimestral(
       trimestre,
-      anio
+      anio,
     );
   }
 
@@ -140,6 +140,7 @@ export class Reportes implements OnInit {
   getDefaultOptions() {
     return {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
       },

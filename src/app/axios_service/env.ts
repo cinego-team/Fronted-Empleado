@@ -1,15 +1,25 @@
 export const config = {
   APIPromocionesUrls: {
     baseUrl: 'http://localhost:3000',
-    //dia
-    getDiaById: (id: number) => `microservicio-promociones/dias/${id}`,
-    getDias: 'microservicio-promociones/dia/admin/all',
-    //promocion
-    getPromocionById: (id: number) => `microservicio-promociones/promocion/admin/${id}`,
-    getPromociones: 'microservicio-promociones/promocion/admin/all',
-    createPromocion: 'microservicio-promociones/promocion/admin/new',
-    updatePromocion: (id: number) => `microservicio-promociones/promocion/admin/${id}`,
+
+    // Días
+    getDias: '/microservicio-promociones/dia/admin/all',
+    getDiaById: (id: number) => `/microservicio-promociones/dia/admin/${id}`,
+    registrarDia: '/microservicio-promociones/dia/admin/new',
+    actualizarDiaById: (id: number) => `/microservicio-promociones/dia/admin/${id}`,
+    eliminarDiaById: (id: number) => `/microservicio-promociones/dia/admin/${id}`,
+
+    // Promociones
+    getPromociones: '/microservicio-promociones/promocion/admin/all',
+    getPromocionById: (id: number) => `/microservicio-promociones/promocion/admin/${id}`,
+
+    createPromocion: '/microservicio-promociones/promocion/admin/new',
+    updatePromocion: (id: number) => `/microservicio-promociones/promocion/admin/${id}`,
+    deletePromocion: (id: number) => `/microservicio-promociones/promocion/admin/${id}`,
+    verificarPromocionById: (id: number) =>
+      `/microservicio-promociones/promocion/verificar-promocion/${id}`,
   },
+
   APIFuncionesUrls: {
     baseUrl: 'http://localhost:3000',
     //formato
@@ -26,9 +36,10 @@ export const config = {
     //salas
     getAllSalas: 'microservicio-funciones-y-salas/salas/admin/all',
     getSalas: 'microservicio-funciones-y-salas/salas/admin/selec',
-    createSalas: 'microservicio-funciones-y-salas/salas/new',
+    createSalas: 'microservicio-funciones-y-salas/salas/admin/new',
     getSalaById: (id: number) => `microservicio-funciones-y-salas/salas/admin/${id}`,
     updateSala: (id: number) => `microservicio-funciones-y-salas/salas/admin/${id}`,
+    deleteSalaById: (id: number) => `microservicio-funciones-y-salas/salas/admin/${id}`,
     //idioma
     getIdiomaById: (id: number) => `microservicio-funciones-y-salas/idioma/admin/${id}`,
     getIdiomas: 'microservicio-funciones-y-salas/idioma/admin/all',

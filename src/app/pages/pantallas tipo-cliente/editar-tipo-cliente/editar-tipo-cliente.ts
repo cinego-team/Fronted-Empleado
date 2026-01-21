@@ -19,7 +19,7 @@ export class EditarTipoCliente implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiServiceUsuario
+    private apiService: ApiServiceUsuario,
   ) {}
 
   ngOnInit() {
@@ -41,24 +41,27 @@ export class EditarTipoCliente implements OnInit {
   }
 
   onSave() {
+    // Detecta cambios respecto al objeto original
     const modifiedKeys = Object.keys(this.tipoCliente).filter(
-      (key) => key !== 'id' && this.tipoCliente[key] !== this.originalTipoCliente[key]
+      (key) => key !== 'id' && this.tipoCliente[key] !== this.originalTipoCliente[key],
     );
+
     if (modifiedKeys.length === 0) {
       alert('No se cambió ningún dato.');
-    } else if (modifiedKeys.length === Object.keys(this.tipoCliente).length - 1) {
-      this.apiService
-        .updateTipoCliente(this.tipoCliente)
-        .then(() => {
-          alert('Tipo de cliente actualizado correctamente.');
-        })
-        .catch((error) => {
-          console.error('Error al actualizar el tipo de cliente:', error);
-          alert('Error al actualizar el tipo de cliente.');
-        });
+      return;
     }
 
-    this.router.navigate(['/tipo-cliente/lista']);
+    this.apiService
+      .updateTipoCliente(this.tipoCliente)
+      .then(() => {
+        alert('Tipo de cliente actualizado correctamente.');
+        // Navega y pasa el estado para que la lista pueda recargarse
+        this.router.navigate(['/tipo-cliente/lista'], { state: { reload: true } });
+      })
+      .catch((error) => {
+        console.error('Error al actualizar el tipo de cliente:', error);
+        alert('Error al actualizar el tipo de cliente.');
+      });
   }
 
   volver() {

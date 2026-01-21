@@ -28,7 +28,12 @@ export class ApiServiceUsuario {
     return localStorage.getItem('access_token');
   }
 
-  async getEmpleadoCompletoDesdeToken(): Promise<{ id: number; legajo: number; nombre: string; apellido: string } | null> {
+  async getEmpleadoCompletoDesdeToken(): Promise<{
+    id: number;
+    legajo: number;
+    nombre: string;
+    apellido: string;
+  } | null> {
     const token = this.getToken();
     if (!token) return null;
 
@@ -90,7 +95,7 @@ export class ApiServiceUsuario {
         nombre: string;
       };
     },
-    captcha: string
+    captcha: string,
   ): Promise<any> {
     const respuesta = (
       await axiosAPIUsuario.post(config.APIUsuariosUrls.register, credentials, {
@@ -172,23 +177,26 @@ export class ApiServiceUsuario {
   > {
     const datos = (await axiosAPIUsuario.get(config.APIUsuariosUrls.getTiposClientes)).data;
 
-    const respuesta = datos.map((item: { id: number; nombre: string }) => ({
-      id: item.id,
-      nombre: item.nombre,
-    }));
+    const respuesta = datos.map(
+      (item: { id: number; denominacion: string; descripcion: string }) => ({
+        id: item.id,
+        denominacion: item.denominacion,
+        descripcion: item.descripcion,
+      }),
+    );
 
     return respuesta;
   }
   async deleteTipoCliente(id: number): Promise<void> {
     await axiosAPIUsuario.delete(config.APIUsuariosUrls.getTipoClienteById(id));
   }
-  async createTipoCliente(formulario: any): Promise<void> {
-    const nuevoTipoCliente: EditTipoCliente = {
-      Denominacion: formulario.get('denominacion').value,
-      Descripcion: formulario.get('descripcion').value,
-    };
-    await axiosAPIUsuario.post(config.APIUsuariosUrls.createTipoCliente, nuevoTipoCliente);
+  async createTipoCliente(formulario: {
+    denominacion: string;
+    descripcion: string;
+  }): Promise<void> {
+    await axiosAPIUsuario.post(config.APIUsuariosUrls.createTipoCliente, formulario);
   }
+
   async updateTipoCliente(tipoCliente: TipoClienteInput): Promise<void> {
     const data: TipoClienteInput = {
       denominacion: tipoCliente.denominacion,
@@ -217,7 +225,7 @@ export class ApiServiceUsuario {
         atob(base64)
           .split('')
           .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-          .join('')
+          .join(''),
       );
       return JSON.parse(jsonPayload);
     } catch (error) {

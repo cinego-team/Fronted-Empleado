@@ -6,33 +6,30 @@
       <h1>Editar Tipo Cliente</h1>
 
       @if (tipoCliente) {
-      <form (ngSubmit)="onSave()">
-        <div class="form-group">
-          <label for="id">ID</label>
-          <div class="readonly-text">{{ tipoCliente.id }}</div>
-        </div>
+        <!-- <CHANGE> Agregar clase 'form' al formulario -->
+        <form class="form" (ngSubmit)="onSave()">
+          <div class="form-group">
+            <label for="id">ID</label>
+            <!-- <CHANGE> Usar clase 'pill' para el ID -->
+            <div class="pill">{{ tipoCliente.id }}</div>
+          </div>
 
-        <div class="form-group">
-          <label for="denominacion">Denominación</label>
-          <input
-            id="denominacion"
-            [(ngModel)]="tipoCliente.denominacion"
-            name="denominacion"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="descripcion">Descripción</label>
-          <input
-            id="descripcion"
-            [(ngModel)]="tipoCliente.descripcion"
-            name="descripcion"
-            required
-          />
-        </div>
+          <div class="form-group">
+            <label for="name">Denominación</label>
+            <input id="name" [(ngModel)]="tipoCliente.denominacion" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <input
+              id="descripcion"
+              [(ngModel)]="tipoCliente.descripcion"
+              name="descripcion"
+              required
+            />
+          </div>
 
-        <button type="submit">GUARDAR</button>
-      </form>
+          <button type="submit">GUARDAR</button>
+        </form>
       }
     </section>
 
@@ -41,3 +38,4 @@
     </div>
   </main>
 </div>
+```

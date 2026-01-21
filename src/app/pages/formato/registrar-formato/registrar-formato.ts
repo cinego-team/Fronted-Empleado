@@ -21,7 +21,7 @@ export class RegistrarFormato {
   constructor(
     private fb: FormBuilder,
     private apiService: ApiServiceFunciones,
-    private router: Router
+    private router: Router,
   ) {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],

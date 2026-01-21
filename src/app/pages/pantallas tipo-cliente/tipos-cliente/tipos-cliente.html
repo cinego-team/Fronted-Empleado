@@ -1,32 +1,34 @@
+<app-header></app-header>
+
 <div class="page">
-  <app-header></app-header>
   <h1>Tipo Cliente</h1>
+
   <div class="tabla-container">
     <table class="tabla-formatos">
       <thead>
         <tr>
           <th>ID</th>
-          <th>Denominacion</th>
-          <th>Descripcion</th>
+          <th>Denominación</th>
+          <th>Descripción</th>
         </tr>
       </thead>
+
       <tbody>
-        @for (tipo of tiposCliente; track tipo.id) {
-        <tr
-          [class.selected]="selectedRow === tiposCliente.indexOf(tipo)"
-          (click)="selectRow(tiposCliente.indexOf(tipo))"
-        >
-          <td>{{ tipo.id }}</td>
-          <td>{{ tipo.denominacion }}</td>
-          <td>{{ tipo.descripcion }}</td>
-        </tr>
+        @for (tipo of tiposCliente; track tipo.id; let i = $index) {
+          <tr (click)="selectRow(i)">
+            <td>{{ tipo.id }}</td>
+            <td>{{ tipo.denominacion }}</td>
+            <td>{{ tipo.descripcion }}</td>
+          </tr>
         }
       </tbody>
     </table>
+
     <div class="button-group">
       <button (click)="onNew()">NUEVO</button>
       <button (click)="onEdit()">EDITAR</button>
       <button (click)="onDelete()">ELIMINAR</button>
+        <button (click)="onBack()">VOLVER</button>
     </div>
   </div>
 </div>

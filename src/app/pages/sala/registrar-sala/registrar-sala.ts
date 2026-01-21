@@ -19,7 +19,7 @@ export class RegistrarSala {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private apiService: ApiServiceFunciones
+    private apiService: ApiServiceFunciones,
   ) {
     this.form = this.fb.group({
       numero: ['', [Validators.required, Validators.min(1)]],
@@ -35,20 +35,27 @@ export class RegistrarSala {
 
   registrar() {
     if (this.form.invalid) {
-      alert('Por favor, completa  los campos correctamente.');
+      alert('Por favor, completa los campos correctamente.');
       return;
-    } else if (this.form.valid) {
-      this.apiService
-        .createSala(this.form.value)
-        .then(() => {
-          alert('Sala creado correctamente.');
-          this.router.navigate(['/sala/lista']);
-        })
-        .catch((error) => {
-          console.error('Error al crear el sala:', error);
-          alert('Error al crear el sala. Por favor, inténtalo de nuevo más tarde.');
-        });
     }
+
+    const formValue = this.form.value as {
+      numero: number;
+      disponibilidad: boolean;
+      cantFilas: number;
+      cantButacasPorFila: number;
+    };
+
+    this.apiService
+      .createSala(formValue)
+      .then(() => {
+        alert('Sala creada correctamente.');
+        this.router.navigate(['/sala/lista']);
+      })
+      .catch((error) => {
+        console.error('Error al crear la sala:', error);
+        alert('Error al crear la sala.');
+      });
   }
 
   volver() {

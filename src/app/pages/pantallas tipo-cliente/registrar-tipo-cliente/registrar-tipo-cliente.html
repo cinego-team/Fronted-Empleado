@@ -1,33 +1,29 @@
+<app-header></app-header>
 <div class="page">
-  <app-header></app-header>
-
   <main class="wrap">
-    <section class="card">
+    <section class="register-box">
       <h1>Registrar Tipo Cliente</h1>
 
       <form [formGroup]="form" (ngSubmit)="onSave()">
-        @if (error) {
-        <div class="alert alert-danger">{{ error }}</div>
-        }
         <div class="form-group">
-          <label for="nombre">Denominacion</label>
-          <input id="nombre" formControlName="nombre" />
-          @if (form.get('name')?.invalid && form.get('name')?.touched) {
-          <small class="text-danger">Denominacion requerida (mínimo 2 letras)</small>
+          <label for="denominacion">Denominación</label>
+          <input id="denominacion" formControlName="denominacion" />
+
+          @if (form.get('denominacion')?.invalid && form.get('denominacion')?.touched) {
+            <small class="text-danger"> Denominación requerida (mínimo 2 letras) </small>
           }
         </div>
+
         <div class="form-group">
-          <label for="nombre">Descripción</label>
-          <input id="nombre" formControlName="nombre" required />
-          <span
-            *ngIf="form.get('nombre')?.invalid && form.get('nombre')?.touched"
-            class="text-danger"
-          >
-            Descripción obligatoria
-          </span>
+          <label for="descripcion">Descripción</label>
+          <input id="descripcion" formControlName="descripcion" />
+
+          @if (form.get('descripcion')?.invalid && form.get('descripcion')?.touched) {
+            <small class="text-danger"> Descripción obligatoria </small>
+          }
         </div>
 
-        <button type="submit" (click)="(form.invalid)">REGISTRAR</button>
+        <button type="submit" [disabled]="form.invalid">REGISTRAR</button>
       </form>
     </section>
   </main>
