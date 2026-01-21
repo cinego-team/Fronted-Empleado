@@ -12,17 +12,16 @@
       <div class="form-row">
         <div class="form-group">
           <label for="pelicula">Película</label>
-          <select id="pelicula" formControlName="pelicula">
-            <option value="" disabled>Seleccione la película</option>
-            @for (p of peliculas; track p.id) {
-            <option [value]="p.id">{{ p.id }}-{{ p.titulo }}</option>
-            }
-          </select>
+        <select id="pelicula" formControlName="pelicula" [compareWith]="compareById">            
+          <option *ngFor="let pelicula of peliculas" [ngValue]="pelicula">
+              {{ pelicula.id }} - {{ pelicula.titulo }}
+          </option>
+        </select>
         </div>
 
         <div class="form-group">
           <label for="formato">Formato</label>
-          <select id="formato" formControlName="formato">
+          <select id="formato" formControlName="formato" [compareWith]="compareById">
             <option [ngValue]="null" disabled selected>Seleccione el formato</option>
 
             <option *ngFor="let f of formatos" [ngValue]="f">
@@ -40,7 +39,7 @@
 
         <div class="form-group">
           <label for="sala">Sala</label>
-          <select id="sala" formControlName="sala">
+          <select id="sala" formControlName="sala" [compareWith]="compareById">
             <option [ngValue]="null" disabled selected>Seleccione la sala</option>
 
             <option *ngFor="let s of salas" [ngValue]="s">{{ s.id }} - {{ s.nroSala }}</option>
@@ -49,7 +48,7 @@
       </div>
       <div class="form-group">
         <label for="idioma">Idioma</label>
-        <select id="idioma" formControlName="idioma">
+        <select id="idioma" formControlName="idioma" [compareWith]="compareById">
           <option [ngValue]="null" disabled selected>Seleccione el idioma</option>
 
           <option *ngFor="let i of idiomas" [ngValue]="i">{{ i.id }} - {{ i.nombre }}</option>
@@ -64,9 +63,9 @@
 
         <div class="form-group">
           <label for="disponible">Disponible</label>
-          <select id="disponible" formControlName="disponible">
-            <option [value]="true">Disponible</option>
-            <option [value]="false">No Disponible</option>
+          <select id="disponible" formControlName="disponible" [compareWith]="compareBoolean">
+            <option [ngValue]="true">Disponible</option>
+            <option [ngValue]="false">No Disponible</option>
           </select>
         </div>
       </div>

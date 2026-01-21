@@ -251,8 +251,6 @@ export class ApiServiceFunciones {
     formato: { id: number; nombre: string; precio: number };
     idioma: { id: number; nombre: string };
   }): Promise<void> {
-    console.log('[v0] URL:', config.APIFuncionesUrls.createFuncionAdmin);
-    console.log('[v0] DTO:', dto);
     await axiosAPIFuncionesYsalas.post(config.APIFuncionesUrls.createFuncionAdmin, dto);
   }
   async updateFuncionAdmin(funcion: Partial<FuncionInput> & { id: number }): Promise<void> {

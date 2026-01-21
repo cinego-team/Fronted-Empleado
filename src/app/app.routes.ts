@@ -80,7 +80,7 @@ export const routes: Routes = [
   { path: 'clasificacion/editar', component: EditarClasificacionComponent },
   { path: 'funcion/lista', component: ListaFuncion },
   { path: 'funcion/registrar', component: RegistrarFuncion },
-  { path: 'funcion/editar', component: EditarFuncion },
+  { path: 'funcion/editar/:id', component: EditarFuncion },
   { path: 'sala/lista', component: ListaSala },
   { path: 'sala/registrar', component: RegistrarSala },
   { path: 'sala/editar', component: EditarsalaComponent },

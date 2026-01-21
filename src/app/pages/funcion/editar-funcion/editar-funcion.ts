@@ -30,30 +30,30 @@ export class EditarFuncion implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.dataFuncion = history.state.funcion;
+  async ngOnInit() {
+  this.dataFuncion = history.state.funcion;
 
-    if (!this.dataFuncion) {
-      alert('No se recibió la función.');
-      this.router.navigate(['/funcion/lista']);
-      return;
-    }
-
-    this.inicializarFormulario();
-    this.cargarListas();
-    this.cargarFuncionEnFormulario();
+  if (!this.dataFuncion) {
+    alert('No se recibió la función.');
+    this.router.navigate(['/funcion/lista']);
+    return;
   }
+
+  this.inicializarFormulario();
+  await this.cargarListas();  // <-- Agregar await aquí
+  this.cargarFuncionEnFormulario();
+}
 
   inicializarFormulario() {
     this.form = this.fb.group({
       id: [{ value: '', disabled: true }],
-      peliculaId: ['', Validators.required],
+      pelicula: ['', Validators.required],
       formato: ['', Validators.required],
       idioma: ['', Validators.required],
       fecha: ['', Validators.required],
       hora: ['', Validators.required],
       sala: ['', Validators.required],
-      estaDisponible: ['', Validators.required],
+      disponible: ['', Validators.required],
     });
   }
 
@@ -64,21 +64,32 @@ export class EditarFuncion implements OnInit {
     this.salas = await this.apiService.getSalasForSelec();
   }
 
-  cargarFuncionEnFormulario() {
+  cargarFuncionEnFormulario() {  
     const f = this.dataFuncion;
-
+    const peliculaSeleccionada = this.peliculas.find(p => p.id === f.peliculaId);
     const fechaObj = new Date(f.fecha);
+
+    console.log('[v0] Peliculas cargadas:', this.peliculas);
+    console.log('[v0] PeliculaId de la funcion:', f.peliculaId);
 
     this.form.patchValue({
       id: f.id,
-      peliculaId: f.peliculaId,
+      pelicula: peliculaSeleccionada,
       formato: f.formato,
       idioma: f.idioma,
       sala: f.sala,
       fecha: fechaObj.toISOString().substring(0, 10), // yyyy-mm-dd
       hora: fechaObj.toTimeString().substring(0, 5), // HH:mm
-      estaDisponible: f.estaDisponible,
+      disponible: f.estaDisponible,
     });
+  }
+
+  compareById(obj1: any, obj2: any): boolean {
+    return obj1 && obj2 ? obj1.id === obj2.id : obj1 === obj2;
+  }
+
+  compareBoolean(val1: any, val2: any): boolean {
+    return val1 === val2;
   }
 
   editar() {
