@@ -1,26 +1,48 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiServiceUsuario } from '../../services/api.service.usuario';
 
+interface usuario {
+    id: number;
+    nombre: string;
+    apellido: string;
+    email: string;
+    fechaNacimiento: string;
+    nroTelefono: string;
+    legajo: number;
+    role: {
+        id: number;
+        permissions: {
+            id: number;
+            code: string;
+        };
+
+    }
+}
 @Component({
-  selector: 'app-header',
-  imports: [],
-  templateUrl: './header.html',
-  styleUrl: './header.css',
+    selector: 'app-header',
+    imports: [],
+    templateUrl: './header.html',
+    styleUrl: './header.css',
+    standalone: true,
 })
 export class Header implements OnInit {
-  userName: string | null = null;
-  constructor(private router: Router, private authService: ApiServiceUsuario) {}
-  async ngOnInit() {
-    const empleado = await this.authService.getEmpleadoDesdeToken();
+    userData: usuario | null = null;
+    errorMessage: string | null = null;
+    successMessage: string | null = null;
 
-    if (empleado) {
-      this.userName = `${empleado.nombre} ${empleado.apellido}`;
+    constructor(
+        private apiServiceUsuario: ApiServiceUsuario,
+    ) { }
+    ngOnInit(): void {
+        this.initialization();
     }
-  }
 
-  inicio() {
-    this.router.navigate(['/home']);
-  }
+    async initialization(): Promise<void> {
+        try {
+            this.userData = await this.apiServiceUsuario.getDatosUsuario();
+        } catch (error) {
+            console.error(error);
+            this.errorMessage = 'No se pudo cargar el usuario';
+        }
+    }
 }

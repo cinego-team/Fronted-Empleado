@@ -1,13 +1,17 @@
 .login-page {
-  align-items: center;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
   justify-content: center;
-  padding: 1rem;
+  align-items: center;
 }
 
 .logo {
-  height: clamp(48px, 5vw, 80px);
-  object-fit: contain;
-  margin: 10px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 120px;
+  height: auto;
 }
 
 .login-box {
@@ -71,17 +75,6 @@
   background-color: #fff;
 }
 
-.register-text {
-  margin-top: 1.2rem;
-  font-size: 0.9rem;
-}
-
-.register-text a {
-  color: #fff;
-  text-decoration: underline;
-  font-weight: bold;
-}
-
 @media (max-width: 768px) {
   .login-box {
     width: 100%;
@@ -125,4 +118,11 @@
 
 .toggle-btn:hover img {
   opacity: 1;
+}
+
+#captcha {
+  margin-top: 25px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
 }

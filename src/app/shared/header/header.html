@@ -1,7 +1,12 @@
 <header class="topbar">
-  <img src="/assets/logo.png" alt="CineGo" class="logo" (click)="inicio()" />
+  <a href="principal">
+    <img src="/assets/logo.png" alt="CineGo" class="logo" />
+  </a>
+
   <div class="user-section">
-    <img src="assets/usuario.png" alt="Usuario" class="user-icon" />
-    <span>{{ userName }}</span>
+    <a href="mi-usuario" class="user-link">
+      <img src="/assets/usuario.png" alt="Usuario" class="user-icon" />
+      <span>{{ userData?.nombre }}</span>
+    </a>
   </div>
 </header>

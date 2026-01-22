@@ -1,0 +1,26 @@
+<header class="topbar">
+  <a href="principal"><img src="/assets/logo.png" alt="CineGo" class="logo" /></a>
+</header>
+<div class="page usuario-page">
+  <div class="usuario-box" *ngIf="userData">
+    <h2>Mi Perfil</h2>
+
+    <div class="usuario-info">
+      <p><strong>Nombre:</strong> {{ userData.nombre }}</p>
+      <p><strong>Apellido:</strong> {{ userData.apellido }}</p>
+      <p><strong>Email:</strong> {{ userData.email }}</p>
+      <p><strong>Fecha Nac.:</strong> {{ userData.fechaNacimiento }}</p>
+      <p><strong>Teléfono:</strong> {{ userData.nroTelefono }}</p>
+      <p><strong>Legajo:</strong> {{ userData.legajo }}</p>
+      <p><strong>Rol:</strong> {{ userData.role }}</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn-logout" (click)="logout()">CERRAR SESIÓN</button>
+    </div>
+  </div>
+
+  <div class="usuario-box" *ngIf="!userData">
+    <p>Cargando datos...</p>
+  </div>
+</div>
