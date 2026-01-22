@@ -3,11 +3,11 @@ export class EditPromocionInput {
   nombre?: string;
   porcentajeDescuento?: number;
   tipoClienteId?: number;
-  dia?: string;
+  diaId?: number;
 }
 export class EditPromocionOutput {
   nombre?: string;
   porcentajeDescuento?: number;
-  dia?: string;
+  diaId?: number;
   tipoClienteId?: number;
 }

@@ -59,7 +59,7 @@ export const routes: Routes = [
     { path: 'pelicula/lista', component: Pelicula },
     //promociones
     { path: 'promocion/registrar', component: RegistrarPromocion },
-    { path: 'promocion/editar', component: EditarPromocion },
+    { path: 'promocion/editar/:id', component: EditarPromocion },
     { path: 'promocion/lista', component: Promociones },
     //tipos cliente
     { path: 'tipo-cliente/registrar', component: RegistrarTipoCliente },

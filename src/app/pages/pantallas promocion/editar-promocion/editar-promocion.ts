@@ -29,7 +29,8 @@ export class EditarPromocion {
   ) {}
 
   ngOnInit() {
-    const navState =
+    const id = this.route.snapshot.paramMap.get('id');
+      const navState =
       (this.router.getCurrentNavigation()?.extras.state as any)?.promocion ??
       (history.state as any)?.promocion;
 
@@ -48,8 +49,8 @@ export class EditarPromocion {
         this.promocion.porcentajeDescuento,
         [Validators.required, Validators.min(1), Validators.max(100)],
       ],
-      tipoClienteId: [this.promocion.tipoClienteId, Validators.required],
-      dia: [this.promocion.dia, Validators.required],
+      tipoClienteId: [this.promocion.tipoCliente?.id, Validators.required],  
+      dia: [this.promocion.dia?.id, Validators.required],
     });
     this.cargarDias();
     this.cargarTiposCliente();
@@ -73,12 +74,13 @@ export class EditarPromocion {
       return;
     }
 
+    const formValues = this.form.value;
     const dataActualizada = {
       id: this.promocion.id,
-      nombre: this.promocion.nombre,
-      porcentajeDescuento: this.promocion.porcentajeDescuento,
-      tipoClienteId: this.promocion.tipoClienteId,
-      diaId: this.promocion.diaId,
+      nombre: formValues.nombre,
+      porcentajeDescuento: formValues.porcentajeDescuento,
+      tipoClienteId: formValues.tipoClienteId,
+      diaId: formValues.dia,
     };
 
     this.apiService

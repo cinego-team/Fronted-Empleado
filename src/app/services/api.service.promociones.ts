@@ -77,16 +77,16 @@ export class ApiServicePromociones {
     const nuevaPromocion: EditPromocionOutput = {
       nombre: formulario.get('nombre').value,
       porcentajeDescuento: formulario.get('porcentajeDescuento').value,
-      dia: formulario.get('dia').value,
+      diaId: formulario.get('dia').value,
       tipoClienteId: formulario.get('tipoClienteId').value,
     };
     await axiosAPIPromociones.post(config.APIPromocionesUrls.createPromocion, nuevaPromocion);
   }
   async updatePromocion(promocion: EditPromocionInput): Promise<void> {
-    const data: EditPromocionOutput = {
+    const data = {
       nombre: promocion.nombre,
       porcentajeDescuento: promocion.porcentajeDescuento,
-      dia: promocion.dia,
+      diaId: promocion.diaId,
       tipoClienteId: promocion.tipoClienteId,
     };
     await axiosAPIPromociones.put(

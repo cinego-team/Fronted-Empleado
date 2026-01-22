@@ -23,10 +23,9 @@
         <div class="form-group">
           <label for="dia">Día</label>
           <select id="dia" formControlName="dia">
-            <option [ngValue]="''" disabled>Seleccione un día</option>
-
+            <option [ngValue]="null" disabled>Seleccione un día</option>
             @for (dia of dias; track dia.id) {
-            <option [value]="dia.id">{{ dia.id }}- {{ dia.nombre }}</option>
+              <option [ngValue]="dia.id">{{ dia.id }}- {{ dia.nombre }}</option>
             }
           </select>
         </div>
@@ -40,11 +39,10 @@
         <!-- Tipo Cliente -->
         <div class="form-group">
           <label for="tipoCliente">Tipo Cliente</label>
-          <select id="tipoCliente" formControlName="tipoCliente">
-            <option [ngValue]="''" disabled>Seleccione tipo de cliente</option>
-
+          <select id="tipoCliente" formControlName="tipoClienteId">
+            <option [ngValue]="null" disabled>Seleccione tipo de cliente</option>
             @for (tipo of tiposCliente; track tipo.id) {
-            <option [value]="tipo.id">{{ tipo.id }}-{{ tipo.denominacion }}</option>
+              <option [ngValue]="tipo.id">{{ tipo.id }}-{{ tipo.denominacion }}</option>
             }
           </select>
         </div>

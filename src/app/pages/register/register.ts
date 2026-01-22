@@ -10,7 +10,7 @@ interface RegisterResponse {
 }
 @Component({
     selector: 'app-register',
-    imports: [CommonModule, ReactiveFormsModule, Header],
+    imports: [CommonModule, ReactiveFormsModule],
     templateUrl: './register.html',
     styleUrl: './register.css',
 })

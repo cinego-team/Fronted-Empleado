@@ -4,6 +4,8 @@ import { GlobalStatusService } from '../../../services/global-status.service';
 import { ApiServicePromociones } from '../../../services/api.service.promociones';
 import { ApiServiceUsuario } from '../../../services/api.service.usuario';
 import { Header } from '../../../shared/header/header';
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-promociones',
   imports: [Header],
@@ -11,11 +13,12 @@ import { Header } from '../../../shared/header/header';
   styleUrl: './promociones.css',
 })
 export class Promociones {
+  [x: string]: any;
   constructor(
     private router: Router,
     private readonly apiService: ApiServicePromociones,
     private readonly globalStatusService: GlobalStatusService,
-    private readonly apiService2: ApiServiceUsuario
+    private readonly apiService2: ApiServiceUsuario,
   ) {}
   promociones: Array<{
     id: number;
@@ -67,7 +70,7 @@ export class Promociones {
     const selected = this.promociones[this.selectedRow];
     this.router.navigate(['/promocion/editar', selected.id], {
       state: {
-        genero: selected,
+        promocion: selected,
       },
     });
   }
