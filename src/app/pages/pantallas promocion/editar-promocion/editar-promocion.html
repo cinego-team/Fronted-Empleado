@@ -6,49 +6,48 @@
       <h1>Editar Promoción</h1>
 
       @if (form) {
-      <form class="form" [formGroup]="form" (ngSubmit)="onSave()">
-        <!-- ID SOLO LECTURA -->
-        <div class="form-group">
-          <label>ID</label>
-          <div class="readonly-text">{{ promocion?.id }}</div>
-        </div>
+        <form class="form" [formGroup]="form" (ngSubmit)="onSave()">
+          <div class="form-group id-group">
+            <label for="id">ID</label>
+            <div class="pill">{{ promocion.id }}</div>
+          </div>
 
-        <!-- Nombre -->
-        <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input id="nombre" formControlName="nombre" />
-        </div>
+          <!-- Nombre -->
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" formControlName="nombre" />
+          </div>
 
-        <!-- Día -->
-        <div class="form-group">
-          <label for="dia">Día</label>
-          <select id="dia" formControlName="dia">
-            <option [ngValue]="null" disabled>Seleccione un día</option>
-            @for (dia of dias; track dia.id) {
-              <option [ngValue]="dia.id">{{ dia.id }}- {{ dia.nombre }}</option>
-            }
-          </select>
-        </div>
+          <!-- Día -->
+          <div class="form-group">
+            <label for="dia">Día</label>
+            <select id="dia" formControlName="dia">
+              <option [ngValue]="null" disabled>Seleccione un día</option>
+              @for (dia of dias; track dia.id) {
+                <option [ngValue]="dia.id">{{ dia.id }}- {{ dia.nombre }}</option>
+              }
+            </select>
+          </div>
 
-        <!-- Porcentaje -->
-        <div class="form-group">
-          <label for="porcentajeDescuento">Porcentaje Descuento</label>
-          <input id="porcentajeDescuento" type="number" formControlName="porcentajeDescuento" />
-        </div>
+          <!-- Porcentaje -->
+          <div class="form-group">
+            <label for="porcentajeDescuento">Porcentaje Descuento</label>
+            <input id="porcentajeDescuento" type="number" formControlName="porcentajeDescuento" />
+          </div>
 
-        <!-- Tipo Cliente -->
-        <div class="form-group">
-          <label for="tipoCliente">Tipo Cliente</label>
-          <select id="tipoCliente" formControlName="tipoClienteId">
-            <option [ngValue]="null" disabled>Seleccione tipo de cliente</option>
-            @for (tipo of tiposCliente; track tipo.id) {
-              <option [ngValue]="tipo.id">{{ tipo.id }}-{{ tipo.denominacion }}</option>
-            }
-          </select>
-        </div>
+          <!-- Tipo Cliente -->
+          <div class="form-group">
+            <label for="tipoCliente">Tipo Cliente</label>
+            <select id="tipoCliente" formControlName="tipoClienteId">
+              <option [ngValue]="null" disabled>Seleccione tipo de cliente</option>
+              @for (tipo of tiposCliente; track tipo.id) {
+                <option [ngValue]="tipo.id">{{ tipo.id }}-{{ tipo.denominacion }}</option>
+              }
+            </select>
+          </div>
 
-        <button type="submit">GUARDAR</button>
-      </form>
+          <button type="submit">GUARDAR</button>
+        </form>
       }
     </section>
 

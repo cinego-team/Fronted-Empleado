@@ -26,7 +26,7 @@
           <td>{{ funcion.fecha }}</td>
           <td>{{ funcion.estaDisponible ? 'Sí' : 'No' }}</td>
           <td>{{ funcion.idioma?.nombre ?? 'Sin idioma' }}</td>
-          <td>{{ funcion.sala?.nroSala ?? 'Sin sala' }}</td>
+          <td>{{ funcion.sala?.nroSala }}</td>
           <td>{{ funcion.formato?.nombre ?? 'Sin formato' }}</td>
           <td>{{ funcion.formato?.precio ?? '-' }}</td>
         </tr>
@@ -39,7 +39,6 @@
       <button class="btn" (click)="nuevafuncion()">NUEVA</button>
       <button class="btn" (click)="editarFuncion()">EDITAR</button>
       <button class="btn" (click)="eliminar()">ELIMINAR</button>
-      <button class="btn" (click)="ver()">VER</button>
     </div>
   </div>
 </div>

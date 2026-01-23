@@ -8,7 +8,7 @@
 
 <div class="register-container">
   <div class="register-box">
-    <h2>¡Unete a CineGo hoy!</h2>
+    <h2>¡Registra un nuevo empleado!</h2>
 
     <form [formGroup]="formulario" (ngSubmit)="onRegister()">
       @if (errorMessage) {
@@ -111,7 +111,10 @@
       ></div>
 
       <div class="actions">
-        <button type="submit" class="btn-register">REGISTRARME</button>
+        <button type="submit" class="btn-register">REGISTRAR</button>
+      </div>
+      <div class="button-group">
+        <button class="btn" (click)="volver()">VOLVER</button>
       </div>
     </form>
   </div>

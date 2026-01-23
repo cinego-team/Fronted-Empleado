@@ -1,66 +1,63 @@
-<!-- Barra superior -->
-<div class="container">
-  <app-header></app-header>
-
+<app-header></app-header>
+<div class="page">
   <main class="wrap">
     <section class="card">
-      <h1>Registrar Promoción</h1>
+      <h2>Registrar Promoción</h2>
 
       <form [formGroup]="form" (ngSubmit)="onSave()" class="form">
         @if (error) {
-        <div class="alert alert-danger">{{ error }}</div>
+          <div class="alert alert-danger">{{ error }}</div>
         }
 
-        <!-- Fila 1: Nombre y Porcentaje -->
-        <div class="form-row">
-          <!-- Nombre -->
-          <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input id="nombre" formControlName="nombre" placeholder="Nombre de la promoción" />
-            @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
-            <small class="error">Nombre requerido</small>
-            }
-          </div>
-
-          <!-- Porcentaje -->
-          <div class="form-group">
-            <label for="porcentajeDescuento">Porcentaje Descuento</label>
-            <input id="porcentajeDescuento" type="number" formControlName="porcentajeDescuento" placeholder="0-100" />
-            @if (form.get('porcentajeDescuento')?.invalid && form.get('porcentajeDescuento')?.touched) {
-            <small class="error">Porcentaje entre 0 y 100</small>
-            }
-          </div>
+        <!-- Nombre -->
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" formControlName="nombre" />
+          @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
+          <small class="text-danger">Nombre requerido</small>
+          }
         </div>
 
-        <!-- Fila 2: Día y Tipo de Cliente -->
-        <div class="form-row">
-          <!-- Día -->
-          <div class="form-group">
-            <label for="diaId">Día</label>
-            <select id="diaId" formControlName="diaId">
-              <option [ngValue]="''" disabled>Seleccione un día</option>
-              @for (dia of dias; track dia.id) {
-              <option [value]="dia.id">{{ dia.nombre }}</option>
-              }
-            </select>
-            @if (form.get('diaId')?.invalid && form.get('diaId')?.touched) {
-            <small class="error">Debe seleccionar un día</small>
-            }
-          </div>
+        <!-- Día -->
+        <div class="form-group">
+          <label for="dia">Día</label>
+          <select id="dia" formControlName="dia">
+            <option [ngValue]="''" disabled>Seleccione un día</option>
 
-          <!-- Tipo de Cliente -->
-          <div class="form-group">
-            <label for="tipoClienteId">Tipo de Cliente</label>
-            <select id="tipoClienteId" formControlName="tipoClienteId">
-              <option [ngValue]="''" disabled>Seleccione un tipo</option>
-              @for (tc of tiposCliente; track tc.id) {
-              <option [value]="tc.id">{{ tc.denominacion }}</option>
-              }
-            </select>
-            @if (form.get('tipoClienteId')?.invalid && form.get('tipoClienteId')?.touched) {
-            <small class="error">Debe seleccionar un tipo de cliente</small>
+            @for (dia of dias; track dia.id) {
+            <option [value]="dia.id">{{ dia.id }}-{{ dia.nombre }}</option>
             }
-          </div>
+          </select>
+
+          @if (form.get('dia')?.invalid && form.get('dia')?.touched) {
+          <small class="text-danger">Debe seleccionar un día</small>
+          }
+        </div>
+
+        <!-- Porcentaje -->
+        <div class="form-group">
+          <label for="porcentajeDescuento">Porcentaje de Descuento</label>
+          <input id="porcentajeDescuento" type="number" formControlName="porcentajeDescuento" />
+
+          @if (form.get('porcentajeDescuento')?.invalid && form.get('porcentajeDescuento')?.touched)
+          {
+          <small class="text-danger">Porcentaje entre 0 y 100</small>
+          }
+        </div>
+
+        <!-- Tipo de Cliente -->
+        <div class="form-group">
+          <label for="tipoCliente">Tipo de Cliente</label>
+          <select id="tipoCliente" formControlName="tipoCliente">
+            <option [ngValue]="''" disabled>Seleccione un tipo</option>
+
+            @for (tc of tiposCliente; track tc.id) {
+            <option [value]="tc.id">{{ tc.id }}-{{ tc.denominacion }}</option>
+            }
+          </select>
+          @if (form.get('tipoCliente')?.invalid && form.get('tipoCliente')?.touched) {
+          <small class="text-danger">Debe seleccionar un tipo de cliente</small>
+          }
         </div>
 
         <button type="submit" [disabled]="form.invalid">Registrar</button>
