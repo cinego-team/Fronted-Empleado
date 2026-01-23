@@ -107,7 +107,7 @@ export class ApiServiceUsuario {
   }
 
   async register(
-    credentials: {
+    datosEmpleado: {
       nombre: string;
       apellido: string;
       email: string;
@@ -121,22 +121,31 @@ export class ApiServiceUsuario {
         nombre: string;
       };
     },
-    captcha: string,
+    captcha: string, // 👈 agregamos captcha como segundo argumento
   ): Promise<any> {
-    const respuesta = (
-      await axiosAPIUsuario.post(config.APIUsuariosUrls.register, credentials, {
-        headers: { 'x-captcha-token': captcha || '' },
-      })
-    ).data;
-    const token = respuesta.access_token;
-    const refreshToken = respuesta.refresh_token;
-    if (token) {
-      localStorage.setItem('access_token', token);
-      localStorage.setItem('refresh_token', refreshToken);
-      this.loggedIn.next(true);
+    try {
+      const tokenAdmin = localStorage.getItem('access_token'); // si es necesario
+      const payload = { ...datosEmpleado };
+
+      const respuesta = await axiosAPIUsuario.post(
+        config.APIUsuariosUrls.register, // o registerEmpleado si es admin
+        payload,
+        {
+          headers: {
+            'x-captcha-token': captcha, // captcha en header
+            Authorization: tokenAdmin ? `Bearer ${tokenAdmin}` : undefined,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      return respuesta.data;
+    } catch (error: any) {
+      console.error('Error registrando usuario:', error.response?.data || error.message);
+      throw error;
     }
-    return respuesta;
   }
+
   async login(credentials: { email: string; password: string }, captcha: string): Promise<any> {
     const respuesta = (
       await axiosAPIUsuario.post(config.APIUsuariosUrls.login, credentials, {

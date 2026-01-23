@@ -4,22 +4,26 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiServiceUsuario } from '../../services/api.service.usuario';
 import { Header } from '../../shared/header/header';
+import { OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 interface RegisterResponse {
   message?: string;
   access_token?: string;
 }
+declare const grecaptcha: any;
 @Component({
   selector: 'app-register',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
+  standalone: true,
 })
-export class Register {
+export class Register implements OnInit, AfterViewInit, OnDestroy {
   formulario: FormGroup;
   errorMessage: string | null = null;
   successMessage: string | null = null;
   captchaToken: string | null = null;
   mostrarPassword = false;
+  private captchaId: number | null = null;
   roles: {
     id: number;
     name: string;
@@ -64,6 +68,7 @@ export class Register {
       mes: ['', Validators.required],
       anio: ['', Validators.required],
       telefono: ['', [Validators.required, Validators.minLength(6)]],
+      rol: [null, Validators.required],
     });
   }
   async cargarRoles() {
@@ -84,6 +89,7 @@ export class Register {
   }
 
   onRegister() {
+    console.log('Submit disparado');
     if (this.formulario.invalid) {
       alert('Por favor, completa todos los campos correctamente.');
       this.formulario.markAllAsTouched();
@@ -114,7 +120,7 @@ export class Register {
       .then(() => {
         this.successMessage = 'Registro exitoso. Redirigiendo...';
         setTimeout(() => {
-          this.router.navigate(['/h']);
+          this.router.navigate(['/principal']);
         }, 1500);
       })
       .catch((err) => {
@@ -129,5 +135,24 @@ export class Register {
   }
   volver() {
     this.router.navigate(['/principal']);
+  }
+  ngAfterViewInit() {
+    const interval = setInterval(() => {
+      if (typeof grecaptcha !== 'undefined') {
+        clearInterval(interval);
+
+        this.captchaId = grecaptcha.render('captcha', {
+          sitekey: '6LcICREsAAAAAKHWBF39boQk9uCQ__y6iFi7mbb2',
+          callback: (token: string) => {
+            this.captchaToken = token;
+          },
+        });
+      }
+    }, 100);
+  }
+  ngOnDestroy() {
+    if (this.captchaId !== null && typeof grecaptcha !== 'undefined') {
+      grecaptcha.reset(this.captchaId);
+    }
   }
 }

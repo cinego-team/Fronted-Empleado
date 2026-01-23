@@ -42,52 +42,52 @@ import { EditarFormatoComponent } from './pages/formato/editar-formato/editar-fo
 import { MiUsuarioComponent } from './pages/miUsuario/mi-usuario';
 
 export const routes: Routes = [
-    { path: 'login', component: LoginComponent }, // login
+  { path: 'login', component: LoginComponent }, // login
 
-    { path: 'principal', component: Home }, //pantalla principal
-    { path: 'home', component: Principal }, //menu principal administrar
-    { path: 'registrar/empleado', component: Register },
-    { path: 'reportes', component: Reportes },
+  { path: 'principal', component: Home }, //pantalla principal
+  { path: 'home', component: Principal }, //menu principal administrar
+  { path: 'registrar/empleado', component: Register },
+  { path: 'reportes', component: Reportes },
 
-    //estados peliculas
-    { path: 'estado-pelicula/registrar', component: RegistrarEstadoPeliculaComponent },
-    { path: 'estado-pelicula/editar/:id', component: EditarEstadoPelicula },
-    { path: 'estado-pelicula/lista', component: EstadosPeliculas },
-    //peliculas
-    { path: 'pelicula/registrar', component: RegistrarPelicula },
-    { path: 'pelicula/editar/:id', component: EditPeliculaComponent },
-    { path: 'pelicula/lista', component: Pelicula },
-    //promociones
-    { path: 'promocion/registrar', component: RegistrarPromocion },
-    { path: 'promocion/editar/:id', component: EditarPromocion },
-    { path: 'promocion/lista', component: Promociones },
-    //tipos cliente
-    { path: 'tipo-cliente/registrar', component: RegistrarTipoCliente },
-    { path: 'tipo-cliente/editar/:id', component: EditarTipoCliente },
-    { path: 'tipo-cliente/lista', component: TiposCliente },
+  //estados peliculas
+  { path: 'estado-pelicula/registrar', component: RegistrarEstadoPeliculaComponent },
+  { path: 'estado-pelicula/editar/:id', component: EditarEstadoPelicula },
+  { path: 'estado-pelicula/lista', component: EstadosPeliculas },
+  //peliculas
+  { path: 'pelicula/registrar', component: RegistrarPelicula },
+  { path: 'pelicula/editar/:id', component: EditPeliculaComponent },
+  { path: 'pelicula/lista', component: Pelicula },
+  //promociones
+  { path: 'promocion/registrar', component: RegistrarPromocion },
+  { path: 'promocion/editar/:id', component: EditarPromocion },
+  { path: 'promocion/lista', component: Promociones },
+  //tipos cliente
+  { path: 'tipo-cliente/registrar', component: RegistrarTipoCliente },
+  { path: 'tipo-cliente/editar/:id', component: EditarTipoCliente },
+  { path: 'tipo-cliente/lista', component: TiposCliente },
 
-    { path: 'ventas', component: Ventas },
+  { path: 'ventas', component: Ventas },
 
-    { path: 'genero/lista', component: ListaGeneroComponent },
-    { path: 'genero/registrar', component: RegistrarGeneroComponent },
-    { path: 'genero/editar/:id', component: EditarGeneroComponent },
+  { path: 'genero/lista', component: ListaGeneroComponent },
+  { path: 'genero/registrar', component: RegistrarGeneroComponent },
+  { path: 'genero/editar/:id', component: EditarGeneroComponent },
 
-    { path: 'idioma/lista', component: ListaIdiomaComponent },
-    { path: 'idioma/registrar', component: RegistrarIdiomaComponent },
-    { path: 'idioma/editar/:id', component: EditarIdiomaComponent },
+  { path: 'idioma/lista', component: ListaIdiomaComponent },
+  { path: 'idioma/registrar', component: RegistrarIdiomaComponent },
+  { path: 'idioma/editar/:id', component: EditarIdiomaComponent },
 
-    { path: 'clasificacion/lista', component: ListaClasificacionComponent },
-    { path: 'clasificacion/registrar', component: RegistrarClasificacionComponent },
-    { path: 'clasificacion/editar/:id', component: EditarClasificacionComponent },
-    { path: 'funcion/lista', component: ListaFuncion },
-    { path: 'funcion/registrar', component: RegistrarFuncion },
-    { path: 'funcion/editar/:id', component: EditarFuncion },
-    { path: 'sala/lista', component: ListaSala },
-    { path: 'sala/registrar', component: RegistrarSala },
-    { path: 'sala/editar', component: EditarsalaComponent },
-    { path: 'formato/lista', component: ListaFormatoComponent },
-    { path: 'formato/registrar', component: RegistrarFormato },
-    { path: 'formato/editar', component: EditarFormatoComponent },
-    { path: 'mi-usuario', component: MiUsuarioComponent },
-    { path: '**', redirectTo: 'login' }, // cualquier ruta desconocida redirige al principal
+  { path: 'clasificacion/lista', component: ListaClasificacionComponent },
+  { path: 'clasificacion/registrar', component: RegistrarClasificacionComponent },
+  { path: 'clasificacion/editar/:id', component: EditarClasificacionComponent },
+  { path: 'funcion/lista', component: ListaFuncion },
+  { path: 'funcion/registrar', component: RegistrarFuncion },
+  { path: 'funcion/editar/:id', component: EditarFuncion },
+  { path: 'sala/lista', component: ListaSala },
+  { path: 'sala/registrar', component: RegistrarSala },
+  { path: 'sala/editar/:id', component: EditarsalaComponent },
+  { path: 'formato/lista', component: ListaFormatoComponent },
+  { path: 'formato/registrar', component: RegistrarFormato },
+  { path: 'formato/editar/:id', component: EditarFormatoComponent },
+  { path: 'mi-usuario', component: MiUsuarioComponent },
+  { path: '**', redirectTo: 'login' }, // cualquier ruta desconocida redirige al principal
 ];

@@ -137,7 +137,7 @@ export class ApiServicePelicula {
               apellido: item.empleado.apellido,
             }
           : null,
-      })
+      }),
     );
     return respuesta;
   }
@@ -190,9 +190,11 @@ export class ApiServicePelicula {
     };
   }
   async getAllGeneros(page = 1, quantity = 10): Promise<Array<{ id: number; nombre: string }>> {
-    const datos = (await axiosAPIPeliculas.get(
-        `${config.APIPeliculasUrls.getGeneros}?page=${page}&quantity=${quantity}`
-    )).data;
+    const datos = (
+      await axiosAPIPeliculas.get(
+        `${config.APIPeliculasUrls.getGeneros}?page=${page}&quantity=${quantity}`,
+      )
+    ).data;
     const respuesta = datos.map((item: { id: number; nombre: string }) => ({
       id: item.id,
       nombre: item.nombre,
@@ -261,7 +263,7 @@ export class ApiServicePelicula {
     };
     await axiosAPIPeliculas.put(
       `${config.APIPeliculasUrls.updateClasificacion(clasificacion.id!)}`,
-      data
+      data,
     );
   }
   //estados
@@ -293,8 +295,8 @@ export class ApiServicePelicula {
   async deleteEstado(id: number): Promise<void> {
     await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getEstadoById(id));
   }
-  async createEstado(formulario: any): Promise<void> {
-    const nuevoEstado: EditEstado = {
+  async createEstado(formulario: { nombre: string }): Promise<void> {
+    const nuevoEstado = {
       nombre: formulario.nombre,
     };
 

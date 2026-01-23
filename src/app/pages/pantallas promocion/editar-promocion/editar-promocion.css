@@ -124,6 +124,7 @@ button:hover {
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 25px;
+  position: center;
 }
 /* ID en línea */
 .id-group {

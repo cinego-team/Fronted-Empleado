@@ -1,24 +1,26 @@
 <div class="page">
-  <app-header></app-header>>
+  <app-header></app-header>
 
   <main class="wrap">
     <section class="card">
       <h1>Editar Estado Película</h1>
 
       @if (estado) {
-      <form (ngSubmit)="onSave()">
-        <div class="form-group">
-          <label for="id">ID</label>
-          <div class="readonly-text">{{ estado.id }}</div>
-        </div>
+        <!-- <CHANGE> Agregar clase 'form' al formulario -->
+        <form class="form" (ngSubmit)="onSave()">
+          <div class="form-group">
+            <label for="id">ID</label>
+            <!-- <CHANGE> Usar clase 'pill' para el ID -->
+            <div class="pill">{{ estado.id }}</div>
+          </div>
 
-        <div class="form-group">
-          <label for="name">Nombre</label>
-          <input id="name" [(ngModel)]="estado.name" name="name" required />
-        </div>
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input id="name" [(ngModel)]="estado.nombre" name="name" required />
+          </div>
 
-        <button type="submit">GUARDAR</button>
-      </form>
+          <button type="submit">GUARDAR</button>
+        </form>
       }
     </section>
 
@@ -27,3 +29,4 @@
     </div>
   </main>
 </div>
+```

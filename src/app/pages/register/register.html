@@ -96,25 +96,21 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="formato">Rol</label>
-        <select id="formato" formControlName="formato">
+        <label for="rol">Rol</label>
+        <select id="rol" formControlName="rol">
           <option [ngValue]="null" disabled selected>Seleccione el rol</option>
 
           <option *ngFor="let r of roles" [ngValue]="r">{{ r.id }} - {{ r.name }}</option>
         </select>
       </div>
 
-      <div
-        class="g-recaptcha"
-        data-sitekey="6LcICREsAAAAAKHWBF39boQk9uCQ__y6iFi7mbb2"
-        data-callback="onCaptchaSuccess"
-      ></div>
+      <div id="captcha"></div>
 
       <div class="actions">
         <button type="submit" class="btn-register">REGISTRAR</button>
       </div>
       <div class="button-group">
-        <button class="btn" (click)="volver()">VOLVER</button>
+        <button type="button" class="btn" (click)="volver()">VOLVER</button>
       </div>
     </form>
   </div>

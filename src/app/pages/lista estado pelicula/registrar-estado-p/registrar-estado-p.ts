@@ -20,7 +20,7 @@ export class RegistrarEstadoPeliculaComponent {
   constructor(
     private fb: FormBuilder,
     private apiService: ApiServicePelicula,
-    private router: Router
+    private router: Router,
   ) {
     this.form = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
@@ -29,22 +29,20 @@ export class RegistrarEstadoPeliculaComponent {
 
   onSave() {
     if (this.form.invalid) {
-      alert('Por favor, completa  los campos correctamente.');
+      alert('Por favor, completa los campos correctamente.');
       return;
-    } else if (this.form.valid) {
-      const nombre: string = (this.form.get('nombre')?.value ?? '').toString();
-
-      this.apiService
-        .createEstado(nombre)
-        .then(() => {
-          alert('Estado creado correctamente.');
-          this.router.navigate(['/estado-pelicula/lista']);
-        })
-        .catch((error) => {
-          console.error('Error al crear el estado:', error);
-          alert('Error al crear el estado. Por favor, inténtalo de nuevo más tarde.');
-        });
     }
+
+    this.apiService
+      .createEstado(this.form.value)
+      .then(() => {
+        alert('Estado creado correctamente.');
+        this.router.navigate(['/estado-pelicula/lista']);
+      })
+      .catch((error) => {
+        console.error('Error al crear el estado:', error);
+        alert('Error al crear el estado.');
+      });
   }
 
   volver() {

@@ -20,46 +20,44 @@ export class EditarsalaComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiServiceFunciones
+    private apiService: ApiServiceFunciones,
   ) {}
 
-  ngOnInit() {
-    // Recuperar el state desde la navegación
-    const navState =
-      (this.router.getCurrentNavigation()?.extras.state as any)?.sala ??
-      (history.state as any)?.sala;
+  async ngOnInit() {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    const id = Number(idParam);
 
-    if (!navState) {
-      // Si no hay state, no se puede editar porque no hay datos
-      alert('No se encontró el sala. Volvé al listado.');
+    if (!id) {
+      alert('ID de sala inválido');
       this.router.navigate(['/sala/lista']);
       return;
     }
 
-    // Setear datos
-    this.sala = { ...navState };
-    this.originalsala = { ...navState };
-  }
-  onSave() {
-    const modifiedKeys = Object.keys(this.sala).filter(
-      (key) => key !== 'id' && this.sala[key] !== this.originalsala[key]
-    );
-    if (modifiedKeys.length === 0) {
-      alert('No se cambió ningún dato.');
-    } else if (modifiedKeys.length === Object.keys(this.sala).length - 1) {
-      this.apiService
-        .updateSala(this.sala)
-        .then(() => {
-          alert('sala actualizado correctamente.');
-        })
-        .catch((error) => {
-          console.error('Error al actualizar el sala:', error);
-          alert('Error al actualizar el sala.');
-        });
-    }
+    try {
+      const salaBackend = await this.apiService.getSalaById(id);
 
-    this.router.navigate(['/sala/lista']);
+      this.sala = { ...salaBackend };
+      this.originalsala = { ...salaBackend };
+    } catch (error) {
+      console.error('Error al cargar la sala:', error);
+      alert('No se pudo cargar la sala');
+      this.router.navigate(['/sala/lista']);
+    }
   }
+
+  onSave() {
+    this.apiService
+      .updateSala(this.sala)
+      .then(() => {
+        alert('Sala actualizada correctamente.');
+        this.router.navigate(['/sala/lista']);
+      })
+      .catch((error) => {
+        console.error('Error al actualizar la sala:', error);
+        alert('Error al actualizar la sala.');
+      });
+  }
+
   volver() {
     this.router.navigate(['/sala/lista']);
   }

@@ -221,3 +221,9 @@ body {
 .button-group button:hover {
   background-color: #e0bcbc;
 }
+#captcha {
+  margin-top: 25px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+}
