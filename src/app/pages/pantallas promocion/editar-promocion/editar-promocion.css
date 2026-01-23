@@ -3,107 +3,135 @@
   min-height: 100vh;
   background: #4f1917;
   color: #fff;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Arial,
+    sans-serif;
 }
 
-/* CONTENEDOR PRINCIPAL */
+/* Layout */
 .wrap {
   display: grid;
   place-items: center;
   padding: 24px;
 }
 
-/* CARD */
 .card {
-  width: min(900px, 92vw);
-  background: #7d1c16; /* rojo oscuro */
+  width: min(500px, 92vw);
+  background: #7d1c16;
   border-radius: 24px;
-  padding: 36px 28px 28px;
+  padding: 36px 28px 40px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
 .card h1 {
   text-align: center;
-  margin: 0 0 28px;
+  margin: 0 0 24px;
   font-size: 28px;
   font-weight: 700;
   color: #ffffff;
 }
 
-/* FORM */
 .form {
-  display: grid;
-  justify-items: center;
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.form label {
+/* <CHANGE> Agregar estilos para form-group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
   font-weight: 600;
-  margin-bottom: 2px;
-  color: #fff;
+  color: #f0d0cd;
 }
 
-.form input {
-  width: min(520px, 80vw);
-  padding: 10px 14px;
+/* "Píldora" ID */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #eac4c1;
+  color: #5a2422;
   border-radius: 999px;
-  border: none;
-  outline: none;
-  background: #eac4c1; /* rosado claro */
-  color: #300;
-  font-size: 16px;
+  padding: 8px 16px;
+  font-weight: 700;
+  width: fit-content;
 }
 
-.form input.invalid {
+/* Inputs */
+input,
+select {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 20px;
+  border: none;
+  background-color: #ebccc7;
+  font-size: 14px;
+  outline: none;
+  color: #5a2422;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: 2px solid #f2dede;
+}
+
+input.invalid {
   outline: 2px solid #ffd1d1;
   background: #ffe9e9;
 }
 
 .error {
-  width: min(520px, 80vw);
   color: #ffd3d3;
   font-size: 12px;
   text-align: left;
-  margin-top: -6px;
 }
 
-.form button {
+/* Botones */
+button {
   background-color: #f2dede;
   color: #541b1b;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border-radius: 15px;
   cursor: pointer;
   font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.2s;
 }
 
-.form button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+button:hover {
+  background-color: #e0bcbc;
 }
 
-.form button:not(:disabled):active {
-  transform: translateY(1px);
+.form button[type='submit'] {
+  align-self: flex-start;
+  margin-top: 8px;
 }
+
 .button-group {
   display: flex;
   gap: 25px;
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 25px;
-  width: 100%;
+}
+/* ID en línea */
+.id-group {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
 }
 
-.button-group button {
-  background-color: #f2dede;
-  color: #541b1b;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 15px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.button-group button:hover {
-  background-color: #e0bcbc;
+.id-group label {
+  margin: 0;
 }

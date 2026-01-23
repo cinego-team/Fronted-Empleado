@@ -1,14 +1,12 @@
-<!-- Barra superior -->
-<div class="container">
-  <app-header></app-header>
-
+<app-header></app-header>
+<div class="page">
   <main class="wrap">
-    <section class="card">
+    <section class="register-box">
       <h2>Registrar Promoción</h2>
 
       <form [formGroup]="form" (ngSubmit)="onSave()">
         @if (error) {
-        <div class="alert alert-danger">{{ error }}</div>
+          <div class="alert alert-danger">{{ error }}</div>
         }
 
         <!-- Nombre -->
@@ -16,7 +14,7 @@
           <label for="nombre">Nombre</label>
           <input id="nombre" formControlName="nombre" />
           @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
-          <small class="text-danger">Nombre requerido</small>
+            <small class="text-danger">Nombre requerido</small>
           }
         </div>
 
@@ -27,12 +25,12 @@
             <option [ngValue]="''" disabled>Seleccione un día</option>
 
             @for (dia of dias; track dia.id) {
-            <option [value]="dia.id">{{ dia.id }}-{{ dia.nombre }}</option>
+              <option [value]="dia.id">{{ dia.id }}-{{ dia.nombre }}</option>
             }
           </select>
 
           @if (form.get('dia')?.invalid && form.get('dia')?.touched) {
-          <small class="text-danger">Debe seleccionar un día</small>
+            <small class="text-danger">Debe seleccionar un día</small>
           }
         </div>
 
@@ -41,9 +39,10 @@
           <label for="porcentajeDescuento">Porcentaje de Descuento</label>
           <input id="porcentajeDescuento" type="number" formControlName="porcentajeDescuento" />
 
-          @if (form.get('porcentajeDescuento')?.invalid && form.get('porcentajeDescuento')?.touched)
-          {
-          <small class="text-danger">Porcentaje entre 0 y 100</small>
+          @if (
+            form.get('porcentajeDescuento')?.invalid && form.get('porcentajeDescuento')?.touched
+          ) {
+            <small class="text-danger">Porcentaje entre 0 y 100</small>
           }
         </div>
 
@@ -54,11 +53,11 @@
             <option [ngValue]="''" disabled>Seleccione un tipo</option>
 
             @for (tc of tiposCliente; track tc.id) {
-            <option [value]="tc.id">{{ tc.id }}-{{ tc.denominacion }}</option>
+              <option [value]="tc.id">{{ tc.id }}-{{ tc.denominacion }}</option>
             }
           </select>
           @if (form.get('tipoCliente')?.invalid && form.get('tipoCliente')?.touched) {
-          <small class="text-danger">Debe seleccionar un tipo de cliente</small>
+            <small class="text-danger">Debe seleccionar un tipo de cliente</small>
           }
         </div>
 

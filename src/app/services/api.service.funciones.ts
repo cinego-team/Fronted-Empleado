@@ -61,6 +61,7 @@ export class ApiServiceFunciones {
     }>
   > {
     try {
+      console.log('URL usada:', config.APIFuncionesUrls.getSalas);
       const response = await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getSalas);
       const datos = response.data;
       return datos.map((item: any) => ({
@@ -198,7 +199,7 @@ export class ApiServiceFunciones {
           fecha: any;
           estaDisponible: any;
           idioma: { id: any; nombre: any };
-          sala: { id: any; numeroSala: any };
+          sala: { id: any; nroSala: any };
           formato: { id: any; nombre: any; precio: any };
         }) => ({
           id: item.id,
@@ -211,7 +212,7 @@ export class ApiServiceFunciones {
           },
           sala: {
             id: item.sala.id,
-            nroSala: item.sala.numeroSala,
+            nroSala: item.sala.nroSala,
           },
           formato: {
             id: item.formato.id,

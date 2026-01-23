@@ -15,40 +15,40 @@
           <th>Nombre Cliente</th>
           <th>Apellido Cliente</th>
           <th>Email Cliente</th>
-          <th>EStado Venta</th>
+          <th>Estado Venta</th>
           <th>Id Entradas</th>
           <th>Uso entradas</th>
         </tr>
       </thead>
       <tbody>
         @for (tipo of ventas; track tipo.nroVenta) {
-        <tr
-          [class.selected]="selectedRow === ventas.indexOf(tipo)"
-          (click)="selectRow(ventas.indexOf(tipo))"
-        >
-          <td>{{ tipo.nroVenta }}</td>
-          <td>{{ tipo.fecha }}</td>
-          <td>{{ tipo.total }}</td>
-          <td>{{ tipo.promocion?.id }}</td>
-          <td>{{ tipo.promocion?.nombre }}</td>
-          <td>{{ tipo.promocion?.porcentajeDescuento }}</td>
-          <td>{{ tipo.cliente.id }}</td>
-          <td>{{ tipo.cliente.nombre }}</td>
-          <td>{{ tipo.cliente.apellido }}</td>
-          <td>{{ tipo.cliente.email }}</td>
-          <td>{{ tipo.estadoVenta }}</td>
-          <td>
-            @for (entrada of tipo.entradas; track entrada.id) {
-            {{ entrada.id }}<br />
-            }
-          </td>
+          <tr
+            [class.selected]="selectedRow === ventas.indexOf(tipo)"
+            (click)="selectRow(ventas.indexOf(tipo))"
+          >
+            <td>{{ tipo.nroVenta }}</td>
+            <td>{{ tipo.fecha }}</td>
+            <td>{{ tipo.total }}</td>
+            <td>{{ tipo.promocion?.id }}</td>
+            <td>{{ tipo.promocion?.nombre }}</td>
+            <td>{{ tipo.promocion?.porcentajeDescuento }}</td>
+            <td>{{ tipo.cliente.id }}</td>
+            <td>{{ tipo.cliente.nombre }}</td>
+            <td>{{ tipo.cliente.apellido }}</td>
+            <td>{{ tipo.cliente.email }}</td>
+            <td>{{ tipo.estadoVenta.nombre }}</td>
+            <td>
+              @for (entrada of tipo.entradas; track entrada.id) {
+                {{ entrada.id }}<br />
+              }
+            </td>
 
-          <td>
-            @for (entrada of tipo.entradas; track entrada.id) {
-            {{ entrada.esUsado }}<br />
-            }
-          </td>
-        </tr>
+            <td>
+              @for (entrada of tipo.entradas; track entrada.id) {
+                {{ entrada.esUsado }}<br />
+              }
+            </td>
+          </tr>
         }
       </tbody>
     </table>
