@@ -78,7 +78,7 @@ export const routes: Routes = [
 
     { path: 'clasificacion/lista', component: ListaClasificacionComponent },
     { path: 'clasificacion/registrar', component: RegistrarClasificacionComponent },
-    { path: 'clasificacion/editar', component: EditarClasificacionComponent },
+    { path: 'clasificacion/editar/:id', component: EditarClasificacionComponent },
     { path: 'funcion/lista', component: ListaFuncion },
     { path: 'funcion/registrar', component: RegistrarFuncion },
     { path: 'funcion/editar/:id', component: EditarFuncion },

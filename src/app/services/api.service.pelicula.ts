@@ -189,21 +189,17 @@ export class ApiServicePelicula {
       nombre: datos.nombre,
     };
   }
-  async getAllGeneros(): Promise<
-    Array<{
-      id: number;
-      nombre: string;
-    }>
-  > {
-    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getGeneros)).data;
-
+  async getAllGeneros(page = 1, quantity = 10): Promise<Array<{ id: number; nombre: string }>> {
+    const datos = (await axiosAPIPeliculas.get(
+        `${config.APIPeliculasUrls.getGeneros}?page=${page}&quantity=${quantity}`
+    )).data;
     const respuesta = datos.map((item: { id: number; nombre: string }) => ({
       id: item.id,
       nombre: item.nombre,
     }));
-
     return respuesta;
   }
+
   async deleteGenero(id: number): Promise<void> {
     await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getGeneroById(id));
   }

@@ -4,11 +4,6 @@ import { CommonModule } from '@angular/common';
 import { ApiServicePelicula } from '../../../../services/api.service.pelicula';
 import { Header } from '../../../../shared/header/header';
 
-interface GeneroRow {
-  id: number;
-  nombre: string;
-}
-
 @Component({
   selector: 'app-lista-genero',
   standalone: true,
@@ -18,23 +13,44 @@ interface GeneroRow {
 })
 export class ListaGeneroComponent {
   constructor(private router: Router, private readonly apiService: ApiServicePelicula) {}
-  generos: Array<{
-    id: number;
-    nombre: string;
-  }> = [];
+  
+  generos: Array<{ id: number; nombre: string }> = [];
   selec: number | null = null;
+  
+  // Paginacion
+  currentPage = 1;
+  pageSize = 10;
+  hasMore = true;  // Indica si hay mas paginas
 
   ngOnInit(): void {
-    this.initialization();
+    this.loadGeneros();
   }
 
-  async initialization(): Promise<void> {
-    const data = await this.apiService.getAllGeneros();
-    if (data.length === 0) {
+  async loadGeneros(): Promise<void> {
+    const data = await this.apiService.getAllGeneros(this.currentPage, this.pageSize);
+    if (data.length === 0 && this.currentPage === 1) {
       alert('No hay generos para mostrar.');
       return;
     }
     this.generos = data;
+    // Si devuelve menos de pageSize, no hay mas paginas
+    this.hasMore = data.length === this.pageSize;
+  }
+
+  nextPage(): void {
+    if (this.hasMore) {
+      this.currentPage++;
+      this.selec = null;
+      this.loadGeneros();
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.selec = null;
+      this.loadGeneros();
+    }
   }
 
   seleccionar(rowId: number) {
@@ -43,23 +59,21 @@ export class ListaGeneroComponent {
 
   eliminar(): void {
     if (this.selec === null) {
-      alert('Seleccioná un genero  primero.');
+      alert('Selecciona un genero primero.');
       return;
     }
-
     const selectedG = this.generos[this.selec];
-
-    if (confirm(`¿Estás seguro de que querés eliminar ?`)) {
+    if (confirm(`¿Estas seguro de que queres eliminar?`)) {
       this.apiService
         .deleteGenero(selectedG.id)
         .then(() => {
-          alert('Genero eliminada correctamente.');
-          this.generos.splice(this.selec!, 1);
+          alert('Genero eliminado correctamente.');
+          this.loadGeneros();  // Recargar la pagina actual
           this.selec = null;
         })
         .catch((error) => {
           console.error('Error al eliminar', error);
-          alert('Ocurrió un error al eliminar');
+          alert('Ocurrio un error al eliminar');
         });
     }
   }
@@ -70,16 +84,15 @@ export class ListaGeneroComponent {
 
   editar() {
     if (this.selec === null) {
-      alert('Seleccioná uno primero.');
+      alert('Selecciona uno primero.');
       return;
     }
     const selected = this.generos[this.selec];
     this.router.navigate(['/genero/editar', selected.id], {
-      state: {
-        genero: selected,
-      },
+      state: { genero: selected },
     });
   }
+
   volver() {
     this.router.navigate(['/home']);
   }

@@ -28,4 +28,23 @@
       <button (click)="editar()">EDITAR</button>
     </div>
   </div>
+  <div class="pagination-container">
+    <button 
+      (click)="prevPage()" 
+      [disabled]="currentPage === 1"
+      class="btn-pagination"
+    >
+      Anterior
+    </button>
+    
+    <span class="page-info">Pagina {{ currentPage }}</span>
+    
+    <button 
+      (click)="nextPage()" 
+      [disabled]="!hasMore"
+      class="btn-pagination"
+    >
+      Siguiente
+    </button>
+  </div>
 </div>

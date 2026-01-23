@@ -59,7 +59,7 @@ export const config = {
         createTipoCliente: 'microservicio-usuarios/tipo-cliente/admin/new',
         updateTipoCliente: (id: number) => `microservicio-usuarios/tipo-cliente/admin/${id}`,
         refreshToken: 'microservicio-usuarios/refresh-token',
-        getDatosEmpleado: 'microservicio-usuarios/datos-empleado',
+        getDatosEmpleado: 'microservicio-usuarios/usuario/datos-empleado',
     },
     APIPeliculasUrls: {
         baseUrl: 'http://localhost:3000',

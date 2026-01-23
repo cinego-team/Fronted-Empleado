@@ -44,21 +44,23 @@ export class EditarGeneroComponent implements OnInit {
     const modifiedKeys = Object.keys(this.genero).filter(
       (key) => key !== 'id' && this.genero[key] !== this.originalGenero[key]
     );
+    
     if (modifiedKeys.length === 0) {
-      alert('No se cambió ningún dato.');
-    } else if (modifiedKeys.length === Object.keys(this.genero).length - 1) {
-      this.apiService
-        .updateGenero(this.genero)
-        .then(() => {
-          alert('Genero actualizado correctamente.');
-        })
-        .catch((error) => {
-          console.error('Error al actualizar el genero:', error);
-          alert('Error al actualizar el genero.');
-        });
+      alert('No se cambio ningun dato.');
+      this.router.navigate(['/genero/lista']);
+      return;
     }
-
-    this.router.navigate(['/genero/lista']);
+    
+    this.apiService
+      .updateGenero(this.genero)
+      .then(() => {
+        alert('Genero actualizado correctamente.');
+        this.router.navigate(['/genero/lista']);  
+      })
+      .catch((error) => {
+        console.error('Error al actualizar el genero:', error);
+        alert('Error al actualizar el genero.');
+      });
   }
 
   volver() {

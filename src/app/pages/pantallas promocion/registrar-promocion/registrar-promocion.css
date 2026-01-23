@@ -6,6 +6,11 @@
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
+.container {
+  min-height: 100vh;
+  background: #4f1917;
+}
+
 /* CONTENEDOR PRINCIPAL */
 .wrap {
   display: grid;
@@ -15,95 +20,158 @@
 
 /* CARD */
 .card {
-  width: min(900px, 92vw);
-  background: #7d1c16; /* rojo oscuro */
+  width: min(700px, 92vw);
+  background: #7d1c16;
   border-radius: 24px;
-  padding: 36px 28px 28px;
+  padding: 36px 40px 40px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
 .card h1 {
   text-align: center;
   margin: 0 0 28px;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   color: #ffffff;
 }
 
 /* FORM */
 .form {
-  display: grid;
-  justify-items: center;
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
 }
 
-.form label {
-  font-weight: 600;
-  margin-bottom: 2px;
-  color: #fff;
+.form-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  justify-content: center;
 }
 
-.form input {
-  width: min(520px, 80vw);
-  padding: 10px 14px;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 280px;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #e8c4c0;
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 16px;
   border-radius: 999px;
   border: none;
   outline: none;
-  background: #eac4c1; /* rosado claro */
-  color: #300;
-  font-size: 16px;
+  background: #eac4c1;
+  color: #4a1a1a;
+  font-size: 15px;
+  box-sizing: border-box;
 }
 
-.form input.invalid {
-  outline: 2px solid #ffd1d1;
-  background: #ffe9e9;
+.form-group input::placeholder {
+  color: #8a6a6a;
+}
+
+.form-group select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a1a1a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: 2px solid #f5d5d0;
 }
 
 .error {
-  width: min(520px, 80vw);
   color: #ffd3d3;
   font-size: 12px;
-  text-align: left;
-  margin-top: -6px;
+  margin-top: 4px;
+  padding-left: 10px;
 }
 
-.form button {
-  background-color: #f2dede;
+.alert-danger {
+  background: #ff6b6b;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Botón Registrar */
+.form button[type="submit"] {
+  background-color: #eac4c1;
   color: #541b1b;
   border: none;
-  padding: 10px 20px;
-  border-radius: 15px;
+  padding: 12px 32px;
+  border-radius: 12px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: 10px;
+  transition: background-color 0.2s;
 }
 
-.form button:disabled {
+.form button[type="submit"]:hover:not(:disabled) {
+  background-color: #f5d5d0;
+}
+
+.form button[type="submit"]:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.form button:not(:disabled):active {
-  transform: translateY(1px);
-}
+/* Botón Volver */
 .button-group {
   display: flex;
-  gap: 25px;
-  flex-wrap: wrap;
   justify-content: center;
-  margin-top: 25px;
-  width: 100%;
+  margin-top: 24px;
+  padding-bottom: 40px;
 }
 
 .button-group button {
-  background-color: #f2dede;
+  background-color: #eac4c1;
   color: #541b1b;
   border: none;
-  padding: 10px 20px;
-  border-radius: 15px;
+  padding: 12px 28px;
+  border-radius: 12px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s;
 }
 
 .button-group button:hover {
-  background-color: #e0bcbc;
+  background-color: #f5d5d0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-group {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .card {
+    padding: 28px 20px 32px;
+  }
 }

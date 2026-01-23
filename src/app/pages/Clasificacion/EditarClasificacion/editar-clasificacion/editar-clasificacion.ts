@@ -42,20 +42,28 @@ export class EditarClasificacionComponent implements OnInit {
   }
 
   onSave() {
-    if (this.clasificacion.nombre === this.originalClasificacion.nombre) {
-      alert('No se cambió ningún dato.');
-      return;
-    }
-
-    try {
-      this.apiService.updateClasificacion(this.clasificacion);
-      alert('Clasificación actualizada correctamente.');
-      this.router.navigate(['/clasificacion/lista']);
-    } catch (error) {
-      console.error('Error al actualizar la clasificación:', error);
-      alert('Error al actualizar la clasificación.');
-    }
+  const modifiedKeys = Object.keys(this.clasificacion).filter(
+    (key) => key !== 'id' && this.clasificacion[key] !== this.originalClasificacion[key]
+  );
+  
+  if (modifiedKeys.length === 0) {
+    alert('No se cambio ningun dato.');
+    this.router.navigate(['/clasificacion/lista']);
+    return;
   }
+  
+  // Si hay cambios, actualizar y ESPERAR a que termine antes de navegar
+  this.apiService
+    .updateClasificacion(this.clasificacion)
+    .then(() => {
+      alert('clasificacion actualizado correctamente.');
+      this.router.navigate(['/clasificacion/lista']);  // Mover DENTRO del then()
+    })
+    .catch((error) => {
+      console.error('Error al actualizar el clasificacion:', error);
+      alert('Error al actualizar el clasificacion.');
+    });
+}
 
   volver() {
     this.router.navigate(['/clasificacion/lista']);

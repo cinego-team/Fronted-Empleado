@@ -73,15 +73,17 @@ export class ApiServicePromociones {
   async deletePromocion(id: number): Promise<void> {
     await axiosAPIPromociones.delete(config.APIPromocionesUrls.getPromocionById(id));
   }
-  async createPromocion(formulario: any): Promise<void> {
+
+  async createPromocion(dto: { nombre: string; porcentajeDescuento: number; diaId: number; tipoClienteId: number }): Promise<void> {
     const nuevaPromocion: EditPromocionOutput = {
-      nombre: formulario.get('nombre').value,
-      porcentajeDescuento: formulario.get('porcentajeDescuento').value,
-      diaId: formulario.get('dia').value,
-      tipoClienteId: formulario.get('tipoClienteId').value,
+      nombre: dto.nombre,
+      porcentajeDescuento: dto.porcentajeDescuento,
+      diaId: dto.diaId,
+      tipoClienteId: dto.tipoClienteId,
     };
     await axiosAPIPromociones.post(config.APIPromocionesUrls.createPromocion, nuevaPromocion);
   }
+
   async updatePromocion(promocion: EditPromocionInput): Promise<void> {
     const data = {
       nombre: promocion.nombre,
