@@ -40,27 +40,28 @@ export class EditarFormatoComponent implements OnInit {
   }
 
   onSave() {
-    const campos = Object.keys(this.formato).filter((k) => k !== 'id');
+  const campos = Object.keys(this.formato).filter((k) => k !== 'id');
 
-    // verificar si TODOS los campos cambiaron
-    const cambioCompleto = campos.every((key) => this.formato[key] !== this.originalFormato[key]);
+  // Verificar si AL MENOS UN campo cambio
+  const hayCambios = campos.some((key) => this.formato[key] !== this.originalFormato[key]);
 
-    if (!cambioCompleto) {
-      alert('Debe modificar todos los campos para actualizar.');
-      return;
-    }
-
-    this.apiService
-      .update(this.formato)
-      .then(() => {
-        alert('Formato actualizado correctamente.');
-        this.router.navigate(['/formato/lista']);
-      })
-      .catch((error) => {
-        console.error('Error al actualizar el formato:', error);
-        alert('Error al actualizar el formato.');
-      });
+  if (!hayCambios) {
+    alert('No se cambio ningun dato.');
+    this.router.navigate(['/formato/lista']);
+    return;
   }
+
+  this.apiService
+    .update(this.formato)
+    .then(() => {
+      alert('Formato actualizado correctamente.');
+      this.router.navigate(['/formato/lista']);
+    })
+    .catch((error) => {
+      console.error('Error al actualizar el formato:', error);
+      alert('Error al actualizar el formato.');
+    });
+}
 
   volver() {
     this.router.navigate(['/formato/lista']);

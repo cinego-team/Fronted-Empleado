@@ -45,7 +45,7 @@ export class EstadosPeliculas {
       this.apiService
         .deleteEstado(selectedC.id)
         .then(() => {
-          alert('Genero eliminada correctamente.');
+          alert('Estado pelicula eliminada correctamente.');
           this.estados.splice(this.selec!, 1);
           this.selec = null;
         })

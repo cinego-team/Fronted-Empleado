@@ -84,7 +84,7 @@ export class EditPeliculaComponent implements OnInit {
   async cargarListas(): Promise<void> {
     try {
       const [generos, clasificaciones, estados] = await Promise.all([
-        this.apiService.getAllGeneros(),
+        this.apiService.getAllGeneros(1, 100),
         this.apiService.getAllClasificaciones(),
         this.apiService.getAllEstados(),
       ]);
@@ -142,7 +142,6 @@ export class EditPeliculaComponent implements OnInit {
     // Formatear la fecha correctamente con padding de ceros
     const mes = String(v.fechaEstrenoMes).padStart(2, '0');
     const dia = String(v.fechaEstrenoDia).padStart(2, '0');
-    const empleadoLogueado = JSON.parse(localStorage.getItem('empleado') || '{}');
 
     const payload = {
       id: this.pelicula.id,
@@ -155,7 +154,7 @@ export class EditPeliculaComponent implements OnInit {
       genero: { id: v.genero.id, nombre: v.genero.nombre },
       clasificacion: { id: v.clasificacion.id, nombre: v.clasificacion.nombre },
       estado: { id: v.estado.id, nombre: v.estado.nombre },
-      empleado: empleadoLogueado,
+      empleado: this.empleadoLogueado ?? { id: 0, legajo: 0, nombre: '', apellido: '' },
     };
 
     this.apiService

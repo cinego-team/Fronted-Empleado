@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 import { Header } from '../../../shared/header/header';
+import { ApiServiceUsuario } from '../../../services/api.service.usuario';
 
 @Component({
   selector: 'app-registrar-pelicula',
@@ -19,12 +20,14 @@ export class RegistrarPelicula implements OnInit {
   clasificaciones: any[] = [];
   generos: any[] = [];
   idiomas: any[] = [];
+  empleadoLogueado: { id: number; legajo: number; nombre: string; apellido: string } | null = null;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private apiService: ApiServicePelicula
-  ) {}
+    private apiService: ApiServicePelicula,
+    private apiServiceUsuario: ApiServiceUsuario  
+) {}
 
   async ngOnInit(): Promise<void> {
     // Formulario nuevo
@@ -39,6 +42,7 @@ export class RegistrarPelicula implements OnInit {
       clasificacion: ['', Validators.required],
       genero: ['', Validators.required],
     });
+    this.empleadoLogueado = await this.apiServiceUsuario.getEmpleadoCompletoDesdeToken();
 
     // Cargar listas desde backend
     try {
@@ -92,7 +96,7 @@ export class RegistrarPelicula implements OnInit {
         estado: { id: estadoObj.id, nombre: estadoObj.nombre },
         clasificacion: { id: clasificacionObj.id, nombre: clasificacionObj.nombre },
         genero: { id: generoObj.id, nombre: generoObj.nombre },
-        empleado: { id: 1, legajo: 0, nombre: '', apellido: '' },
+        empleado: this.empleadoLogueado ?? { id: 0, legajo: 0, nombre: '', apellido: '' },
       };
 
       await this.apiService.createPeliculaAdmin(peliculaParaEnviar);

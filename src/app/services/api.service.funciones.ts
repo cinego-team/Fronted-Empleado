@@ -110,17 +110,17 @@ export class ApiServiceFunciones {
   async getSalaById(id: number): Promise<{
     id: number;
     numero: number;
-    disponibilidad: string;
-    fila: number;
-    butaca: number;
+    disponibilidad: boolean;
+    cantFilas: number;
+    cantButacasPorFila: number;
   }> {
     const item = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getSalaById(id))).data;
     return {
       id: item.id,
-      numero: item.numero,
-      disponibilidad: item.disponibilidad,
-      fila: item.fila,
-      butaca: item.butaca,
+      numero: item.nroSala,
+      disponibilidad: item.estaDisponible,
+      cantFilas: item.cantFilas,
+      cantButacasPorFila: item.cantButacasPorFila,
     };
   }
 
@@ -147,14 +147,26 @@ export class ApiServiceFunciones {
   }
 
   async updateSala(sala: SalaInput): Promise<void> {
-    const data: SalaInput = {
-      numero: sala.numero,
-      disponibilidad: sala.disponibilidad,
-      cantFilas: sala.cantFilas,
-      cantButacasPorFila: sala.cantButacasPorFila,
+    const payload = {
+      nroSala: Number(sala.numero),
+      estaDisponible: sala.disponibilidad,
+      cantFilas: Number(sala.cantFilas),
+      cantButacasPorFila: Number(sala.cantButacasPorFila),
     };
-    await axiosAPIFuncionesYsalas.put(`${config.APIFuncionesUrls.updateSala(sala.id!)}`, data);
+    
+    const token = localStorage.getItem('access_token');
+    
+    await axiosAPIFuncionesYsalas.put(
+      config.APIFuncionesUrls.updateSala(sala.id!),
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   }
+    
   async deleteSala(id: number): Promise<void> {
     const token = localStorage.getItem('access_token');
 

@@ -61,6 +61,8 @@ export class Pelicula {
       return;
     }
     this.peliculas = data;
+    console.log('[v0] Peliculas cargadas:', this.peliculas);
+    console.log('[v0] Primer empleado:', this.peliculas[0]?.empleado);
   }
   selectRow(index: number) {
     this.selec = index;

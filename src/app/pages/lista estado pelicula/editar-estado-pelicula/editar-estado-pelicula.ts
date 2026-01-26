@@ -42,25 +42,28 @@ export class EditarEstadoPelicula implements OnInit {
   }
 
   onSave() {
-    const modifiedKeys = Object.keys(this.estado).filter(
-      (key) => key !== 'id' && this.estado[key] !== this.originalEstado[key]
-    );
-    if (modifiedKeys.length === 0) {
-      alert('No se cambió ningún dato.');
-    } else if (modifiedKeys.length === Object.keys(this.estado).length - 1) {
-      this.apiService
-        .updateEstado(this.estado)
-        .then(() => {
-          alert('Estado actualizado correctamente.');
-        })
-        .catch((error) => {
-          console.error('Error al actualizar el estado:', error);
-          alert('Error al actualizar el estado.');
-        });
-    }
-
+  const modifiedKeys = Object.keys(this.estado).filter(
+    (key) => key !== 'id' && this.estado[key] !== this.originalEstado[key]
+  );
+  
+  if (modifiedKeys.length === 0) {
+    alert('No se cambió ningún dato.');
     this.router.navigate(['/estado-pelicula/lista']);
+    return;
   }
+  
+  // Si hay cambios, actualizar y ESPERAR a que termine antes de navegar
+  this.apiService
+    .updateEstado(this.estado)
+    .then(() => {
+      alert('Estado actualizado correctamente.');
+      this.router.navigate(['/estado-pelicula/lista']);  // Mover DENTRO del then()
+    })
+    .catch((error) => {
+      console.error('Error al actualizar el estado:', error);
+      alert('Error al actualizar el estado.');
+    });
+}
 
   volver() {
     this.router.navigate(['/estado-pelicula/lista']);

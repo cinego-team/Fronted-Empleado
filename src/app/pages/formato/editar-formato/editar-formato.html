@@ -1,4 +1,4 @@
-<div class="page">
+<div class="container">
   <app-header></app-header>
 
   <main class="wrap">
@@ -7,27 +7,31 @@
 
       @if (formato) {
       <form (ngSubmit)="onSave()">
+        <!-- ID -->
         <div class="form-group">
           <label for="id">ID</label>
-          <div class="readonly-text">{{ formato.id }}</div>
+          <input id="id" [value]="formato.id" disabled />
         </div>
 
+        <!-- Nombre -->
         <div class="form-group">
           <label for="name">Nombre</label>
           <input id="name" [(ngModel)]="formato.nombre" name="name" required />
         </div>
+
+        <!-- Precio -->
         <div class="form-group">
           <label for="precio">Precio</label>
-          <input id="precio" [(ngModel)]="formato.precio" name="precio" required />
+          <input id="precio" type="number" [(ngModel)]="formato.precio" name="precio" required />
         </div>
 
         <button type="submit">GUARDAR</button>
       </form>
       }
     </section>
-
-    <div class="button-group">
-      <button (click)="volver()">VOLVER</button>
-    </div>
   </main>
+
+  <div class="button-group">
+    <button (click)="volver()">VOLVER</button>
+  </div>
 </div>
