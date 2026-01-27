@@ -11,7 +11,7 @@ import { Header } from '../../../shared/header/header';
   standalone: true,
   templateUrl: './registrar-funcion.html',
   styleUrl: './registrar-funcion.css',
-  imports: [CommonModule, ReactiveFormsModule, Header],  // Agregar CommonModule
+  imports: [CommonModule, ReactiveFormsModule, Header], // Agregar CommonModule
 })
 export class RegistrarFuncion {
   form: FormGroup;
@@ -25,7 +25,7 @@ export class RegistrarFuncion {
     private router: Router,
     private fb: FormBuilder,
     private apiService: ApiServiceFunciones,
-    private apiService2: ApiServicePelicula
+    private apiService2: ApiServicePelicula,
   ) {
     this.form = this.fb.group({
       pelicula: [null, Validators.required],
@@ -42,12 +42,11 @@ export class RegistrarFuncion {
     this.cargarDatos();
   }
 
-  
   async cargarDatos() {
     try {
-      this.peliculas = await this.apiService2.getPeliculasParaSelec();      
-      this.formatos = await this.apiService.findAllAdmin();      
-      this.salas = await this.apiService.getSalasForSelec();      
+      this.peliculas = await this.apiService2.getPeliculasParaSelec();
+      this.formatos = await this.apiService.findAllAdmin();
+      this.salas = await this.apiService.getSalasForSelec();
       this.idiomas = await this.apiService.getAllIdiomas();
     } catch (err) {
       alert('Error al cargar datos.');
@@ -63,11 +62,10 @@ export class RegistrarFuncion {
 
     const { pelicula, formato, fecha, hora, sala, disponible, idioma } = this.form.value;
 
-    const fechaHora = new Date(`${fecha}T${hora}:00`);
-
     const dto = {
       peliculaId: pelicula.id,
-      fecha: fechaHora,
+      fecha: fecha,
+      hora: hora,
       estaDisponible: disponible,
       sala: {
         id: sala.id,

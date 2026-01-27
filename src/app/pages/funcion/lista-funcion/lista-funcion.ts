@@ -16,6 +16,7 @@ export class ListaFuncion implements OnInit {
     estaDisponible: boolean;
     peliculaId: number;
     fecha: Date;
+    hora: string;
     idioma: {
       id: number;
       nombre: string;
@@ -29,13 +30,17 @@ export class ListaFuncion implements OnInit {
       nombre: string;
       precio: number;
     };
+    usuarioId: number;
   }> = [];
 
   selectedIndex: number | null = null;
   isLoading = true;
   errorMessage = '';
 
-  constructor(private router: Router, private apiService: ApiServiceFunciones) {}
+  constructor(
+    private router: Router,
+    private apiService: ApiServiceFunciones,
+  ) {}
 
   async ngOnInit() {
     await this.cargarFunciones();
@@ -54,6 +59,7 @@ export class ListaFuncion implements OnInit {
         estaDisponible: funcion.estaDisponible,
         peliculaId: funcion.peliculaId,
         fecha: funcion.fecha,
+        hora: funcion.hora,
         idioma: { id: funcion.idioma.id, nombre: funcion.idioma.nombre },
         sala: { id: funcion.sala.id, nroSala: funcion.sala.nroSala },
         formato: {
@@ -61,6 +67,7 @@ export class ListaFuncion implements OnInit {
           nombre: funcion.formato.nombre,
           precio: funcion.formato.precio,
         },
+        usuarioId: funcion.usuarioId,
       }));
 
       console.log(' funciones cargadas:', this.funciones);

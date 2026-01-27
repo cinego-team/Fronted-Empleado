@@ -3,7 +3,13 @@
   min-height: 100vh;
   background: #4f1917; /* fondo bordó */
   color: #fff;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Arial,
+    sans-serif;
 }
 
 .container {
@@ -64,10 +70,19 @@
   width: 45px;
   height: 45px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .footer .next:hover {
   background: #ebccc7;
   color: #4f1917;
+}
+h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #ffffff;
+  text-align: center;
 }

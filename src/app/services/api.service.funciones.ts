@@ -184,6 +184,7 @@ export class ApiServiceFunciones {
       id: number;
       peliculaId: number;
       fecha: Date;
+      hora: string;
       estaDisponible: boolean;
       idioma: {
         id: number;
@@ -198,41 +199,41 @@ export class ApiServiceFunciones {
         nombre: string;
         precio: number;
       };
+      usuarioId: number;
     }>
   > {
     try {
-      const response = await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getFunciones);
+      const token = localStorage.getItem('token');
+
+      const response = await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getFunciones, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       const datos = response.data;
 
-      return datos.map(
-        (item: {
-          id: any;
-          peliculaId: any;
-          fecha: any;
-          estaDisponible: any;
-          idioma: { id: any; nombre: any };
-          sala: { id: any; nroSala: any };
-          formato: { id: any; nombre: any; precio: any };
-        }) => ({
-          id: item.id,
-          peliculaId: item.peliculaId,
-          fecha: item.fecha,
-          estaDisponible: item.estaDisponible,
-          idioma: {
-            id: item.idioma.id,
-            nombre: item.idioma.nombre,
-          },
-          sala: {
-            id: item.sala.id,
-            nroSala: item.sala.nroSala,
-          },
-          formato: {
-            id: item.formato.id,
-            nombre: item.formato.nombre,
-            precio: item.formato.precio,
-          },
-        }),
-      );
+      return datos.map((item: any) => ({
+        id: item.id,
+        peliculaId: item.peliculaId,
+        hora: item.hora,
+        fecha: item.fecha,
+        estaDisponible: item.estaDisponible,
+        idioma: {
+          id: item.idioma.id,
+          nombre: item.idioma.nombre,
+        },
+        sala: {
+          id: item.sala.id,
+          nroSala: item.sala.nroSala,
+        },
+        formato: {
+          id: item.formato.id,
+          nombre: item.formato.nombre,
+          precio: item.formato.precio,
+        },
+        usuarioId: item.usuarioId,
+      }));
     } catch (error) {
       console.error('Error al obtener funciones:', error);
       return [];
@@ -257,6 +258,7 @@ export class ApiServiceFunciones {
       nombre: string;
       precio: number;
     };
+    usuarioId: number;
   }> {
     const item = (await axiosAPIFuncionesYsalas.get(config.APIFuncionesUrls.getFuncById(id))).data;
     return {
@@ -277,12 +279,14 @@ export class ApiServiceFunciones {
         nombre: item.formato.nombre,
         precio: item.formato.precio,
       },
+      usuarioId: item.usuarioId,
     };
   }
 
   async createFuncionAdmin(dto: {
     peliculaId: number;
     fecha: Date;
+    hora: string;
     estaDisponible: boolean;
     sala: { id: number; nroSala: number };
     formato: { id: number; nombre: string; precio: number };
@@ -293,21 +297,18 @@ export class ApiServiceFunciones {
   async updateFuncionAdmin(funcion: Partial<FuncionInput> & { id: number }): Promise<void> {
     const data: any = { ...funcion };
 
-    // Convertir fecha SOLO si vino como string
-    if (typeof data.fecha === 'string') {
-      data.fecha = new Date(data.fecha);
-    }
-
-    // Asegurar boolean correcto (por si vino "true"/"false" como string)
+    // Asegurar que 'estaDisponible' sea boolean
     if (typeof data.estaDisponible === 'string') {
       data.estaDisponible = data.estaDisponible === 'true';
     }
 
+    // Llamada PUT al backend con solo los cambios
     await axiosAPIFuncionesYsalas.put(
       `${config.APIFuncionesUrls.updateFuncionAdmin(funcion.id)}`,
       data,
     );
   }
+
   async deleteFuncion(id: number): Promise<void> {
     await axiosAPIFuncionesYsalas.delete(config.APIFuncionesUrls.getFuncById(id));
   }

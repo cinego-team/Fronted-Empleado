@@ -12,7 +12,7 @@ interface RegisterResponse {
 declare const grecaptcha: any;
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Header],
   templateUrl: './register.html',
   styleUrl: './register.css',
   standalone: true,

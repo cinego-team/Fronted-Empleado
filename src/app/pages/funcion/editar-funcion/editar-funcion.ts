@@ -27,22 +27,22 @@ export class EditarFuncion implements OnInit {
     private router: Router,
     private apiService: ApiServiceFunciones,
     private apiService2: ApiServicePelicula,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {}
 
   async ngOnInit() {
-  this.dataFuncion = history.state.funcion;
+    this.dataFuncion = history.state.funcion;
 
-  if (!this.dataFuncion) {
-    alert('No se recibió la función.');
-    this.router.navigate(['/funcion/lista']);
-    return;
+    if (!this.dataFuncion) {
+      alert('No se recibió la función.');
+      this.router.navigate(['/funcion/lista']);
+      return;
+    }
+
+    this.inicializarFormulario();
+    await this.cargarListas(); // <-- Agregar await aquí
+    this.cargarFuncionEnFormulario();
   }
-
-  this.inicializarFormulario();
-  await this.cargarListas();  // <-- Agregar await aquí
-  this.cargarFuncionEnFormulario();
-}
 
   inicializarFormulario() {
     this.form = this.fb.group({
@@ -64,10 +64,9 @@ export class EditarFuncion implements OnInit {
     this.salas = await this.apiService.getSalasForSelec();
   }
 
-  cargarFuncionEnFormulario() {  
+  cargarFuncionEnFormulario() {
     const f = this.dataFuncion;
-    const peliculaSeleccionada = this.peliculas.find(p => p.id === f.peliculaId);
-    const fechaObj = new Date(f.fecha);
+    const peliculaSeleccionada = this.peliculas.find((p) => p.id === f.peliculaId);
 
     console.log('[v0] Peliculas cargadas:', this.peliculas);
     console.log('[v0] PeliculaId de la funcion:', f.peliculaId);
@@ -78,8 +77,8 @@ export class EditarFuncion implements OnInit {
       formato: f.formato,
       idioma: f.idioma,
       sala: f.sala,
-      fecha: fechaObj.toISOString().substring(0, 10), // yyyy-mm-dd
-      hora: fechaObj.toTimeString().substring(0, 5), // HH:mm
+      fecha: f.fecha,
+      hora: f.hora,
       disponible: f.estaDisponible,
     });
   }
@@ -98,49 +97,60 @@ export class EditarFuncion implements OnInit {
       return;
     }
 
+    const f = this.form.value; // <- Valores del formulario
+    const original = this.dataFuncion;
+
     const cambios: any = {};
 
-    const f = this.form.value;
+    // Película
+    if (f['pelicula']?.id !== original.peliculaId) {
+      cambios.peliculaId = f['pelicula'].id;
+    }
 
-    // Valores originales recibidos en this.dataFuncion
-    const original = this.dataFuncion;
-    if (f.peliculaId !== original.peliculaId) {
-      cambios.peliculaId = f.peliculaId;
-    }
-    if (f.formato?.id !== original.formato?.id) {
+    // Formato
+    if (f['formato']?.id !== original.formato?.id) {
       cambios.formato = {
-        id: f.formato.id,
-        nombre: f.formato.nombre,
-        precio: f.formato.precio,
+        id: f['formato'].id,
+        nombre: f['formato'].nombre,
+        precio: f['formato'].precio,
       };
     }
-    if (f.idioma?.id !== original.idioma?.id) {
+
+    // Idioma
+    if (f['idioma']?.id !== original.idioma?.id) {
       cambios.idioma = {
-        id: f.idioma.id,
-        nombre: f.idioma.nombre,
+        id: f['idioma'].id,
+        nombre: f['idioma'].nombre,
       };
     }
-    if (f.sala?.id !== original.sala?.id) {
+
+    // Sala
+    if (f['sala']?.id !== original.sala?.id) {
       cambios.sala = {
-        id: f.sala.id,
-        nroSala: f.sala.nroSala,
+        id: f['sala'].id,
+        nroSala: f['sala'].nroSala,
       };
     }
-    if (f.fecha !== original.fecha || f.hora !== original.hora) {
-      cambios.fecha = new Date(`${f.fecha}T${f.hora}:00`);
+
+    // Fecha y hora
+    if (f['fecha'] !== original.fecha || f['hora'] !== original.hora) {
+      cambios.fecha = f['fecha'];
+      cambios.hora = f['hora'];
     }
-    const disponible = f.estaDisponible === true || f.estaDisponible === 'true';
+
+    // Disponible
+    const disponible = f['disponible'] === true || f['disponible'] === 'true';
     if (disponible !== original.estaDisponible) {
       cambios.estaDisponible = disponible;
     }
 
-    // Si no hay cambios, no llamar al backend
+    // Si no hay cambios
     if (Object.keys(cambios).length === 0) {
       alert('No se realizaron cambios.');
       return;
     }
 
-    // Agregamos el id de la función
+    // ID de la función
     cambios.id = original.id;
 
     this.apiService
@@ -149,7 +159,8 @@ export class EditarFuncion implements OnInit {
         alert('Función actualizada correctamente.');
         this.router.navigate(['/funcion/lista']);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error('Error al actualizar función:', error);
         alert('Error al actualizar la función.');
       });
   }

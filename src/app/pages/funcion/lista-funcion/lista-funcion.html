@@ -8,11 +8,13 @@
           <th>ID</th>
           <th>Película ID</th>
           <th>Fecha</th>
+          <th>Hora</th>
           <th>Disponible</th>
           <th>Idioma</th>
           <th>Nro. Sala</th>
           <th>Formato</th>
           <th>Precio</th>
+          <th>Empleado Responsable</th>
         </tr>
       </thead>
       <tbody>
@@ -24,11 +26,13 @@
           <td>{{ funcion.id }}</td>
           <td>{{ funcion.peliculaId }}</td>
           <td>{{ funcion.fecha }}</td>
+          <td>{{ funcion.hora }}</td>
           <td>{{ funcion.estaDisponible ? 'Sí' : 'No' }}</td>
           <td>{{ funcion.idioma?.nombre ?? 'Sin idioma' }}</td>
           <td>{{ funcion.sala?.nroSala }}</td>
           <td>{{ funcion.formato?.nombre ?? 'Sin formato' }}</td>
           <td>{{ funcion.formato?.precio ?? '-' }}</td>
+          <td>{{ funcion.usuarioId }}</td>
         </tr>
       </tbody>
     </table>
