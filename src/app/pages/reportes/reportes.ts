@@ -65,8 +65,8 @@ export class Reportes implements OnInit {
 
     if (this.chartHorarios) this.chartHorarios.destroy();
 
-    const labels = this.horariosMasElegidos.map((x) => x.horaFuncion);
-    const data = this.horariosMasElegidos.map((x) => x.cantidad);
+    const labels = this.horariosMasElegidos.map((x) => `${x.hora}:00`);  // Cambiado: x.horaFuncion -> x.hora
+    const data = this.horariosMasElegidos.map((x) => Number(x.cantidad));  // Agregado: Number()
 
     this.chartHorarios = new Chart('graficoHorarios', {
       type: 'bar',
@@ -84,7 +84,7 @@ export class Reportes implements OnInit {
       },
       options: this.getDefaultOptions(),
     });
-  }
+  } 
   //   Gráfico 3 — Entradas por día de la semana
 
   generarGraficoEntradasPorDia() {
@@ -92,8 +92,8 @@ export class Reportes implements OnInit {
 
     if (this.chartDias) this.chartDias.destroy();
 
-    const labels = this.entradasPorDia.map((x) => x.dia); // lunes, martes…
-    const data = this.entradasPorDia.map((x) => x.cantidad);
+    const labels = this.entradasPorDia.map((x) => x.dia_semana);  // Cambiado: x.dia -> x.dia_semana
+    const data = this.entradasPorDia.map((x) => Number(x.cantidad_entradas));  // Cambiado: x.cantidad -> x.cantidad_entradas + Number()
 
     this.chartDias = new Chart('graficoDias', {
       type: 'bar',
@@ -118,7 +118,7 @@ export class Reportes implements OnInit {
     if (this.chartPeliculas) this.chartPeliculas.destroy();
 
     const labels = this.peliculasTrimestral.map((x) => x.rango);
-    const data = this.peliculasTrimestral.map((x) => Number(x.cantidad_peliculas));
+    const data = this.peliculasTrimestral.map((x) => Number(x.cantidad_ventas));  // Cambiado: x.cantidad_peliculas -> x.cantidad_ventas
 
     this.chartPeliculas = new Chart('graficoPeliculas', {
       type: 'bar',

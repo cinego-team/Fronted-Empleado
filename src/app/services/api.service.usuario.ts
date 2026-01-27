@@ -121,18 +121,30 @@ export class ApiServiceUsuario {
         nombre: string;
       };
     },
-    captcha: string, // 👈 agregamos captcha como segundo argumento
+    captcha: string,
   ): Promise<any> {
     try {
-      const tokenAdmin = localStorage.getItem('access_token'); // si es necesario
-      const payload = { ...datosEmpleado };
+      const tokenAdmin = localStorage.getItem('access_token');
+      
+      // Transformar el objeto al formato que espera el backend
+      const payload = {
+        nombre: datosEmpleado.nombre,
+        apellido: datosEmpleado.apellido,
+        email: datosEmpleado.email,
+        contrasena: datosEmpleado.contrasena,
+        dd: datosEmpleado.dd,
+        mm: datosEmpleado.mm,
+        aaaa: datosEmpleado.aaaa,
+        nroTelefono: datosEmpleado.nroTelefono,
+        roleId: datosEmpleado.rol.id,  
+      };
 
       const respuesta = await axiosAPIUsuario.post(
-        config.APIUsuariosUrls.register, // o registerEmpleado si es admin
+        config.APIUsuariosUrls.register,
         payload,
         {
           headers: {
-            'x-captcha-token': captcha, // captcha en header
+            'x-captcha-token': captcha,
             Authorization: tokenAdmin ? `Bearer ${tokenAdmin}` : undefined,
             'Content-Type': 'application/json',
           },
