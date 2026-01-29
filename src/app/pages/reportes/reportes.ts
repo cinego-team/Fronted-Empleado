@@ -2,6 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { ApiServiceVentas } from '../../services/api.service.ventas';
 import { Chart } from 'chart.js/auto';
 import { Header } from '../../shared/header/header';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reportes',
@@ -18,28 +19,31 @@ export class Reportes implements AfterViewInit {
   chartDias: any;
   chartPeliculas: any;
 
-  constructor(private ventasService: ApiServiceVentas) {}
+  constructor(
+    private ventasService: ApiServiceVentas,
+    private router: Router,
+  ) {}
 
   async ngAfterViewInit() {
     await this.cargarDatos();
   }
 
   async cargarDatos() {
-  try {
-    this.datosDiasSemana = await this.ventasService.getHorariosMasElegidosMesActual();
-    this.datosHorarios = await this.ventasService.getEntradasPorDiaSemanaMesActual();
+    try {
+      this.datosDiasSemana = await this.ventasService.getHorariosMasElegidosMesActual();
+      this.datosHorarios = await this.ventasService.getEntradasPorDiaSemanaMesActual();
 
-    const anio = this.getAnioActual();
-    // Pasamos trimestre 1 pero el backend ahora ignora este parámetro y devuelve todos
-    this.datosTrimestral = await this.ventasService.getPeliculasPorRangoTrimestral(1, anio);
+      const anio = this.getAnioActual();
+      // Pasamos trimestre 1 pero el backend ahora ignora este parámetro y devuelve todos
+      this.datosTrimestral = await this.ventasService.getPeliculasPorRangoTrimestral(1, anio);
 
-    this.generarGraficoHorarios();
-    this.generarGraficoEntradasPorDia();
-    this.generarGraficoPeliculasTrimestral();
-  } catch (error) {
-    console.error('Error al cargar datos:', error);
+      this.generarGraficoHorarios();
+      this.generarGraficoEntradasPorDia();
+      this.generarGraficoPeliculasTrimestral();
+    } catch (error) {
+      console.error('Error al cargar datos:', error);
+    }
   }
-}
 
   getTrimestreActual(): number {
     const mes = new Date().getMonth() + 1;
@@ -119,14 +123,13 @@ export class Reportes implements AfterViewInit {
       // El API ahora devuelve la hora completa (ej: "19:30")
       // Solo necesitamos asegurarnos de que tenga el formato correcto HH:MM
       let horaFormateada = x.hora;
-      
+
       // Si la hora no tiene los 2 dígitos al inicio, agregar el 0
       if (horaFormateada.length === 4) {
-        horaFormateada = '0' + horaFormateada;  // "9:30" -> "09:30"
+        horaFormateada = '0' + horaFormateada; // "9:30" -> "09:30"
       }
-      
-      ventasPorHora[horaFormateada] =
-        (ventasPorHora[horaFormateada] || 0) + Number(x.cantidad);
+
+      ventasPorHora[horaFormateada] = (ventasPorHora[horaFormateada] || 0) + Number(x.cantidad);
     });
 
     console.log('[v0] ventasPorHora:', ventasPorHora);
@@ -162,50 +165,50 @@ export class Reportes implements AfterViewInit {
 
   // Gráfico 2 — Trimestres (etiquetas SIN rotar)
   // Gráfico 2 — Trimestres
-generarGraficoPeliculasTrimestral() {
-  if (this.chartPeliculas) this.chartPeliculas.destroy();
+  generarGraficoPeliculasTrimestral() {
+    if (this.chartPeliculas) this.chartPeliculas.destroy();
 
-  const trimestres = ['1er Trimestre', '2do Trimestre', '3er Trimestre', '4to Trimestre'];
-  
-  // El API ahora devuelve [{trimestre: '1', cantidad_ventas: '10'}, ...]
-  const ventasPorTrimestre: { [key: string]: number } = {};
-  this.datosTrimestral.forEach((x) => {
-    ventasPorTrimestre[x.trimestre] = Number(x.cantidad_ventas);
-  });
+    const trimestres = ['1er Trimestre', '2do Trimestre', '3er Trimestre', '4to Trimestre'];
 
-  // Mapear a los 4 trimestres
-  const data = [
-    ventasPorTrimestre['1'] || 0,
-    ventasPorTrimestre['2'] || 0,
-    ventasPorTrimestre['3'] || 0,
-    ventasPorTrimestre['4'] || 0,
-  ];
+    // El API ahora devuelve [{trimestre: '1', cantidad_ventas: '10'}, ...]
+    const ventasPorTrimestre: { [key: string]: number } = {};
+    this.datosTrimestral.forEach((x) => {
+      ventasPorTrimestre[x.trimestre] = Number(x.cantidad_ventas);
+    });
 
-  const canvas = document.getElementById('graficoPeliculas') as HTMLCanvasElement;
-  const ctx = canvas.getContext('2d')!;
+    // Mapear a los 4 trimestres
+    const data = [
+      ventasPorTrimestre['1'] || 0,
+      ventasPorTrimestre['2'] || 0,
+      ventasPorTrimestre['3'] || 0,
+      ventasPorTrimestre['4'] || 0,
+    ];
 
-  this.chartPeliculas = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: trimestres,
-      datasets: [
-        {
-          label: 'Entradas vendidas',
-          data,
-          backgroundColor: (context) => {
-            const chart = context.chart;
-            const { ctx, chartArea } = chart;
-            if (!chartArea) return '#fde8e8';
-            return this.createGradient(ctx, chartArea);
+    const canvas = document.getElementById('graficoPeliculas') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d')!;
+
+    this.chartPeliculas = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: trimestres,
+        datasets: [
+          {
+            label: 'Entradas vendidas',
+            data,
+            backgroundColor: (context) => {
+              const chart = context.chart;
+              const { ctx, chartArea } = chart;
+              if (!chartArea) return '#fde8e8';
+              return this.createGradient(ctx, chartArea);
+            },
+            borderRadius: 6,
+            borderSkipped: false,
           },
-          borderRadius: 6,
-          borderSkipped: false,
-        },
-      ],
-    },
-    options: this.getChartOptions(false),
-  });
-}
+        ],
+      },
+      options: this.getChartOptions(false),
+    });
+  }
 
   // Gráfico 3 — Días de la semana (etiquetas rotadas)
   generarGraficoEntradasPorDia() {
@@ -213,8 +216,13 @@ generarGraficoPeliculasTrimestral() {
 
     const diasSemana = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];
     const mapaDias: { [key: string]: string } = {
-      'Monday': 'Lun', 'Tuesday': 'Mar', 'Wednesday': 'Mie',
-      'Thursday': 'Jue', 'Friday': 'Vie', 'Saturday': 'Sab', 'Sunday': 'Dom',
+      Monday: 'Lun',
+      Tuesday: 'Mar',
+      Wednesday: 'Mie',
+      Thursday: 'Jue',
+      Friday: 'Vie',
+      Saturday: 'Sab',
+      Sunday: 'Dom',
     };
 
     const ventasPorDia: { [key: string]: number } = {};
@@ -247,7 +255,10 @@ generarGraficoPeliculasTrimestral() {
           },
         ],
       },
-      options: this.getChartOptions(true),  // Rotadas
+      options: this.getChartOptions(true), // Rotadas
     });
+  }
+  onBack() {
+    this.router.navigate(['/principal']);
   }
 }
