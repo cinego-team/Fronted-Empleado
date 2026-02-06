@@ -1,6 +1,6 @@
 export const config = {
     APIPromocionesUrls: {
-        baseUrl: 'https://servicio-promociones.vercel.app',
+        baseUrl: 'https://api-gateway-one-rose.vercel.app',
 
         // Días
         getDias: '/microservicio-promociones/dia/admin/all',
@@ -21,7 +21,7 @@ export const config = {
     },
 
     APIFuncionesUrls: {
-        baseUrl: 'https://servicio-funciones-y-salas.vercel.app',
+        baseUrl: 'https://api-gateway-one-rose.vercel.app',
         //formato
         findOneAdmin: (id: number) => `microservicio-funciones-y-salas/formato/admin/${id}`,
         findAllAdmin: 'microservicio-funciones-y-salas/formato/admin/all',
@@ -47,7 +47,7 @@ export const config = {
         updateIdioma: (id: number) => `microservicio-funciones-y-salas/idioma/admin/${id}`,
     },
     APIUsuariosUrls: {
-        baseUrl: 'https://servicio-usuarios.vercel.app',
+        baseUrl: 'https://api-gateway-one-rose.vercel.app',
         register: 'microservicio-usuarios/usuario/admin/register/empleado',
         login: 'microservicio-usuarios/usuario/login',
         //rol
@@ -62,7 +62,7 @@ export const config = {
         getDatosEmpleado: 'microservicio-usuarios/usuario/datos-empleado',
     },
     APIPeliculasUrls: {
-        baseUrl: 'https://microservicio-de-peliculas.vercel.app',
+        baseUrl: 'https://api-gateway-one-rose.vercel.app',
 
         getPeliculaByIdForAdmin: (id: number) => `/microservicio-peliculas/pelicula/admin/${id}`,
         getPeliculas: '/microservicio-peliculas/pelicula/admin/all',
@@ -91,7 +91,7 @@ export const config = {
     },
 
     APIVentasUrls: {
-        baseUrl: 'https://servicio-ventas-seven.vercel.app',
+        baseUrl: 'https://api-gateway-one-rose.vercel.app',
         getVentas: 'microservicio-ventas/venta/admin/all',
         getHorariosMasElegidosMesActual:
             'microservicio-ventas/venta/admin/reportes/entradas-por-dia-semana/actual',
