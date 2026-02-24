@@ -182,7 +182,7 @@ export class ApiServiceFunciones {
   async getFunciones(): Promise<
     Array<{
       id: number;
-      peliculaId: number;
+      peliculaNombre: string;
       fecha: Date;
       hora: string;
       estaDisponible: boolean;
@@ -199,8 +199,11 @@ export class ApiServiceFunciones {
         nombre: string;
         precio: number;
       };
-      usuarioId: number;
-    }>
+      empleado:{
+        nombre: string;
+        apellido: string;
+      }   
+     }>
   > {
     try {
       const token = localStorage.getItem('token');
@@ -215,7 +218,7 @@ export class ApiServiceFunciones {
 
       return datos.map((item: any) => ({
         id: item.id,
-        peliculaId: item.peliculaId,
+        peliculaNombre: item.peliculaNombre,
         hora: item.hora,
         fecha: item.fecha,
         estaDisponible: item.estaDisponible,
@@ -232,7 +235,10 @@ export class ApiServiceFunciones {
           nombre: item.formato.nombre,
           precio: item.formato.precio,
         },
-        usuarioId: item.usuarioId,
+        empleado: {
+          nombre: item.empleado.nombre,
+          apellido: item.empleado.apellido
+        }      
       }));
     } catch (error) {
       console.error('Error al obtener funciones:', error);

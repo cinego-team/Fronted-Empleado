@@ -6,7 +6,7 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Película ID</th>
+          <th>Película</th>
           <th>Fecha</th>
           <th>Hora</th>
           <th>Disponible</th>
@@ -24,7 +24,7 @@
           (click)="selectRow(i)"
         >
           <td>{{ funcion.id }}</td>
-          <td>{{ funcion.peliculaId }}</td>
+          <td>{{ funcion.pelicula }}</td>
           <td>{{ funcion.fecha }}</td>
           <td>{{ funcion.hora }}</td>
           <td>{{ funcion.estaDisponible ? 'Sí' : 'No' }}</td>
@@ -32,7 +32,7 @@
           <td>{{ funcion.sala?.nroSala }}</td>
           <td>{{ funcion.formato?.nombre ?? 'Sin formato' }}</td>
           <td>{{ funcion.formato?.precio ?? '-' }}</td>
-          <td>{{ funcion.usuarioId }}</td>
+          <td>{{ funcion.empleado?.nombre ?? '' }} {{ funcion.empleado?.apellido ?? 'Sin empleado' }}</td>
         </tr>
       </tbody>
     </table>

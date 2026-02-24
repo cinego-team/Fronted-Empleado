@@ -98,6 +98,42 @@ h1 {
   background-color: #e0bcbc;
 }
 
+.buscador-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.buscador-input {
+  width: 320px;
+  padding: 12px 15px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background-color: #e7bcbc; /* rosa claro como tus inputs */
+  font-size: 14px;
+}
+
+.buscador-input:focus {
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+}
+
+.buscador-btn {
+  padding: 12px 25px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #f3d6d6; /* tono claro como tus botones */
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.buscador-btn:hover {
+  background-color: #ffffff;
+  transform: scale(1.05);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .tabla-formatos {

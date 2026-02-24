@@ -3,10 +3,13 @@ import { Router } from '@angular/router';
 import { GlobalStatusService } from '../../services/global-status.service';
 import { ApiServiceVentas } from '../../services/api.service.ventas';
 import { Header } from '../../shared/header/header';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-ventas',
-  imports: [Header],
+  standalone: true,
+  imports: [Header, CommonModule, FormsModule ],
   templateUrl: './ventas.html',
   styleUrl: './ventas.css',
 })
@@ -21,12 +24,10 @@ export class Ventas {
     fecha: Date;
     total: number;
     promocion?: {
-      id: number;
       nombre: string;
       porcentajeDescuento: number;
     };
     cliente: {
-      id: number;
       nombre: string;
       apellido: string;
       email: string;
@@ -41,6 +42,8 @@ export class Ventas {
   }> = [];
   selectedRow: number | null = null;
   actualPage: number = 1;
+  searchEmail: string = '';
+  ventasOriginal: any[] = [];
   ngOnInit(): void {
     this.initialization();
   }
@@ -57,8 +60,16 @@ export class Ventas {
         this.actualPage--;
         return;
       }
+      this.ventasOriginal = data;
 
-      this.ventas = data;
+      this.ventas = data
+        .map(v => ({
+          ...v,
+          fecha: new Date(v.fecha)
+        }))
+        .sort((a, b) => b.nroVenta - a.nroVenta);
+
+      this.ventas = data.map(v => ({...v,fecha: new Date(v.fecha)})).sort((a, b) => b.nroVenta - a.nroVenta); //  orden descendente
     } catch (error) {
       console.error('Error al cargar ventas:', error);
       alert('Error al cargar las ventas. Por favor intente nuevamente.');
@@ -74,5 +85,18 @@ export class Ventas {
   }
   inicio() {
     this.router.navigate(['/principal']);
+  }
+
+  buscarPorEmail() {
+  if (!this.searchEmail.trim()) {
+    this.ventas = [...this.ventasOriginal].sort((a, b) => b.nroVenta - a.nroVenta);
+    return;
+  }
+
+  this.ventas = this.ventasOriginal
+    .filter(v =>
+      v.cliente.email.toLowerCase().includes(this.searchEmail.toLowerCase())
+    )
+    .sort((a, b) => b.nroVenta - a.nroVenta);
   }
 }

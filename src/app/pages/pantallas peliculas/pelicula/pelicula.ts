@@ -42,8 +42,6 @@ export class Pelicula {
       nombre: string;
     };
     empleado: {
-      id: number;
-      legajo: number;
       nombre: string;
       apellido: string;
     };

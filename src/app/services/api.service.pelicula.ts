@@ -72,7 +72,6 @@ export class ApiServicePelicula {
         id: number;
         nombre: string;
       };
-
       clasificacion: {
         id: number;
         nombre: string;
@@ -82,14 +81,17 @@ export class ApiServicePelicula {
         nombre: string;
       };
       empleado: {
-        id: number;
-        legajo: number;
         nombre: string;
         apellido: string;
       };
     }>
   > {
-    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculas)).data;
+    const token = localStorage.getItem('access_token') || '';
+    const datos = (
+      await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculas, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+    ).data;
     const respuesta = datos.map(
       (item: {
         id: any;
@@ -103,7 +105,6 @@ export class ApiServicePelicula {
           id: any;
           nombre: any;
         };
-
         clasificacion: {
           id: any;
           nombre: any;
@@ -113,8 +114,6 @@ export class ApiServicePelicula {
           nombre: any;
         };
         empleado: {
-          id: any;
-          legajo: any;
           nombre: any;
           apellido: any;
         };
@@ -131,8 +130,6 @@ export class ApiServicePelicula {
         estado: { id: item.estado.id, nombre: item.estado.nombre },
         empleado: item.empleado
           ? {
-              id: item.empleado.id,
-              legajo: item.empleado.legajo,
               nombre: item.empleado.nombre,
               apellido: item.empleado.apellido,
             }

@@ -14,7 +14,7 @@ export class ListaFuncion implements OnInit {
   funciones: Array<{
     id: number;
     estaDisponible: boolean;
-    peliculaId: number;
+    pelicula: string;
     fecha: Date;
     hora: string;
     idioma: {
@@ -30,8 +30,10 @@ export class ListaFuncion implements OnInit {
       nombre: string;
       precio: number;
     };
-    usuarioId: number;
-  }> = [];
+    empleado: {
+      nombre: string;
+      apellido: string;
+    };  }> = [];
 
   selectedIndex: number | null = null;
   isLoading = true;
@@ -57,7 +59,7 @@ export class ListaFuncion implements OnInit {
       this.funciones = funcionesBackend.map((funcion) => ({
         id: funcion.id,
         estaDisponible: funcion.estaDisponible,
-        peliculaId: funcion.peliculaId,
+        pelicula: funcion.peliculaNombre,
         fecha: funcion.fecha,
         hora: funcion.hora,
         idioma: { id: funcion.idioma.id, nombre: funcion.idioma.nombre },
@@ -67,7 +69,10 @@ export class ListaFuncion implements OnInit {
           nombre: funcion.formato.nombre,
           precio: funcion.formato.precio,
         },
-        usuarioId: funcion.usuarioId,
+        empleado: {
+          nombre:funcion.empleado.nombre,
+          apellido: funcion.empleado.apellido
+        }
       }));
 
       console.log(' funciones cargadas:', this.funciones);
