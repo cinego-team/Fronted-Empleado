@@ -2,6 +2,7 @@
   min-height: 100vh;
   background: #4f1917;
   display: flex;
+  flex-direction: column; /* 👈 esto es la clave */
   justify-content: center;
   align-items: center;
   padding: 2rem 1rem;
@@ -221,6 +222,16 @@ body {
 .button-group button:hover {
   background-color: #e0bcbc;
 }
+
+.button-group.outside {
+  margin-top: 20px;
+}
+.button-group.outside {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 #captcha {
   margin-top: 25px;
   margin-bottom: 15px;

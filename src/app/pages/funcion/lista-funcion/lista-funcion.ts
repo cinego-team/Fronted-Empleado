@@ -15,6 +15,7 @@ export class ListaFuncion implements OnInit {
     id: number;
     estaDisponible: boolean;
     pelicula: string;
+    peliculaId:number;
     fecha: Date;
     hora: string;
     idioma: {
@@ -60,6 +61,7 @@ export class ListaFuncion implements OnInit {
         id: funcion.id,
         estaDisponible: funcion.estaDisponible,
         pelicula: funcion.peliculaNombre,
+        peliculaId: funcion.peliculaId,
         fecha: funcion.fecha,
         hora: funcion.hora,
         idioma: { id: funcion.idioma.id, nombre: funcion.idioma.nombre },

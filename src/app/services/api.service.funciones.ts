@@ -5,6 +5,7 @@ import { SalaInput } from '../pages/sala/sala-dto';
 import { FormatoInput, FormatoOutput } from '../pages/formato/formato.dto';
 import { EditFuncion, FuncionInput } from '../pages/funcion/funcion-dto';
 import { EditIdioma, IdiomaInput } from '../pages/Idioma/idioma.dto';
+import { Pelicula } from '../pages/pantallas peliculas/pelicula/pelicula';
 @Injectable({ providedIn: 'root' })
 export class ApiServiceFunciones {
   constructor() {}
@@ -183,6 +184,7 @@ export class ApiServiceFunciones {
     Array<{
       id: number;
       peliculaNombre: string;
+      peliculaId:number;
       fecha: Date;
       hora: string;
       estaDisponible: boolean;
@@ -219,6 +221,7 @@ export class ApiServiceFunciones {
       return datos.map((item: any) => ({
         id: item.id,
         peliculaNombre: item.peliculaNombre,
+        peliculaId: item.peliculaId,
         hora: item.hora,
         fecha: item.fecha,
         estaDisponible: item.estaDisponible,

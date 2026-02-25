@@ -59,6 +59,10 @@ h1 {
   overflow: hidden;
 }
 
+.tabla-formatos th:nth-child(6) {
+  min-width: 150px;
+}
+
 .tabla-formatos th,
 .tabla-formatos td {
   padding: 15px;

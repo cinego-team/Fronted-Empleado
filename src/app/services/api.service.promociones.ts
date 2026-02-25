@@ -70,6 +70,7 @@ export class ApiServicePromociones {
     );
     return respuesta;
   }
+  
   async deletePromocion(id: number): Promise<void> {
     await axiosAPIPromociones.delete(config.APIPromocionesUrls.getPromocionById(id));
   }
