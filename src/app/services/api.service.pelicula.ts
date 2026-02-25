@@ -58,7 +58,7 @@ export class ApiServicePelicula {
         return respuesta;
     }
 
-    async getPeliculasCompleto(): Promise<
+    async getPeliculasCompleto(page = 1, quantity = 5): Promise<
         Array<{
             id: number;
             titulo: string;
@@ -85,12 +85,10 @@ export class ApiServicePelicula {
             };
         }>
     > {
-        const token = localStorage.getItem('access_token') || '';
         const datos = (
             await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculas, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-        ).data;
+                params: { page, quantity },
+            })).data;
         const respuesta = datos.map(
             (item: {
                 id: any;
@@ -187,10 +185,9 @@ export class ApiServicePelicula {
     }
     async getAllGeneros(page = 1, quantity = 10): Promise<Array<{ id: number; nombre: string }>> {
         const datos = (
-            await axiosAPIPeliculas.get(
-                `${config.APIPeliculasUrls.getGeneros}?page=${page}&quantity=${quantity}`,
-            )
-        ).data;
+            await axiosAPIPeliculas.get(config.APIPeliculasUrls.getGeneros, {
+                params: { page, quantity },
+            })).data;
         const respuesta = datos.map((item: { id: number; nombre: string }) => ({
             id: item.id,
             nombre: item.nombre,
