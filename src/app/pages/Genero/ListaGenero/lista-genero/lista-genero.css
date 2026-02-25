@@ -12,7 +12,13 @@
   min-height: 100vh;
   background: #4f1917;
   color: #fff;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Arial,
+    sans-serif;
 }
 
 .container {
@@ -68,7 +74,7 @@ h1 {
   cursor: pointer;
 }
 .selected {
-  background-color: #e6dcda;
+  background-color: #d9c0c0;
 }
 
 /* Botones */

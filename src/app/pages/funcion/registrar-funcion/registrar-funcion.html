@@ -36,7 +36,7 @@
           <label for="sala">Sala</label>
           <select id="sala" formControlName="sala">
             <option [ngValue]="null" disabled selected>Seleccione la sala</option>
-            <option *ngFor="let s of salas" [ngValue]="s">{{ s.id }} - Sala {{ s.nroSala }}</option>
+            <option *ngFor="let s of salas" [ngValue]="s">{{ s.id }}</option>
           </select>
         </div>
       </div>

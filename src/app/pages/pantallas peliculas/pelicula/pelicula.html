@@ -10,34 +10,33 @@
           <th>Título</th>
           <th>Director</th>
           <th>Duración</th>
-          <th>Fecha Estreno</th>
-          <th>Sinopsis</th>
+          <th>Fecha_estreno</th>
           <th>Estado</th>
           <th>Género</th>
           <th>Clasificación</th>
           <th>Empleado</th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
         @for (tipo of peliculas; track tipo.id) {
-        <tr
-          [class.selected]="selec === peliculas.indexOf(tipo)"
-          (click)="selectRow(peliculas.indexOf(tipo))"
-        >
-          <td>{{ tipo.id }}</td>
-          <td><img [src]="tipo.urlImagen" alt="Pelicula image" class="thumbnail" /></td>
-          <td>{{ tipo.titulo }}</td>
-          <td>{{ tipo.director }}</td>
-          <td>{{ tipo.duracion }}</td>
-          <td>{{ tipo.fechaEstreno }}</td>
-          <td>{{ tipo.sinopsis }}</td>
-          <!-- Agregar ?. para manejar valores null -->
-          <td>{{ tipo.estado?.nombre ?? 'Sin estado' }}</td>
-          <td>{{ tipo.genero?.nombre ?? 'Sin género' }}</td>
-          <td>{{ tipo.clasificacion?.nombre ?? 'Sin clasificación' }}</td>
-          <td>{{ tipo.empleado?.nombre ?? '' }} {{ tipo.empleado?.apellido ?? 'Sin empleado' }}</td>
-        </tr>
+          <tr
+            [class.selected]="selec === peliculas.indexOf(tipo)"
+            (click)="selectRow(peliculas.indexOf(tipo))"
+          >
+            <td>{{ tipo.id }}</td>
+            <td><img [src]="tipo.urlImagen" alt="Pelicula image" class="thumbnail" /></td>
+            <td>{{ tipo.titulo }}</td>
+            <td>{{ tipo.director }}</td>
+            <td>{{ tipo.duracion }}</td>
+            <td>{{ tipo.fechaEstreno }}</td>
+            <!-- Agregar ?. para manejar valores null -->
+            <td>{{ tipo.estado?.nombre ?? 'Sin estado' }}</td>
+            <td>{{ tipo.genero?.nombre ?? 'Sin género' }}</td>
+            <td>{{ tipo.clasificacion?.nombre ?? 'Sin clasificación' }}</td>
+            <td>
+              {{ tipo.empleado?.nombre ?? '' }} {{ tipo.empleado?.apellido ?? 'Sin empleado' }}
+            </td>
+          </tr>
         }
       </tbody>
     </table>

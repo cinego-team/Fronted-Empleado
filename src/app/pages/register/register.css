@@ -1,6 +1,6 @@
 .register-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #4f1917 0%, #2d0a0a 100%);
+  background: #4f1917;
   display: flex;
   justify-content: center;
   align-items: center;

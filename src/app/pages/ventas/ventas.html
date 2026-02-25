@@ -8,10 +8,8 @@
       [(ngModel)]="searchEmail"
       class="buscador-input"
     />
-    <button (click)="buscarPorEmail()" class="buscador-btn">
-      Buscar
-    </button>
-</div>
+    <button (click)="buscarPorEmail()" class="buscador-btn">Buscar</button>
+  </div>
   <div class="tabla-container">
     <table class="tabla-formatos">
       <thead>
@@ -36,10 +34,10 @@
             (click)="selectRow(ventas.indexOf(tipo))"
           >
             <td>{{ tipo.nroVenta }}</td>
-            <td>{{ tipo.fecha | date:'dd/MM/yy HH:mm' }}</td>            
-            <td>{{ tipo.total }}</td>
-            <td>{{ tipo.promocion?.nombre }}</td>
-            <td>{{ tipo.promocion?.porcentajeDescuento }}</td>
+            <td>{{ tipo.fecha | date: 'dd/MM/yy HH:mm' }}</td>
+            <td>${{ tipo.total }}</td>
+            <td>{{ tipo.promocion?.nombre || '-' }}</td>
+            <td>{{ tipo.promocion?.porcentajeDescuento || '-' }}</td>
             <td>{{ tipo.cliente.nombre }}</td>
             <td>{{ tipo.cliente.apellido }}</td>
             <td>{{ tipo.cliente.email }}</td>
@@ -52,7 +50,8 @@
 
             <td>
               @for (entrada of tipo.entradas; track entrada.id) {
-                {{ entrada.esUsado ? 'Sí' : 'No' }}              }
+                {{ entrada.esUsado ? 'Sí' : 'No' }} <br />
+              }
             </td>
           </tr>
         }

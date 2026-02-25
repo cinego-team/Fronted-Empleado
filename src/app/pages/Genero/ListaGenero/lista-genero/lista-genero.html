@@ -1,5 +1,5 @@
+<app-header></app-header>
 <div class="page">
-  <app-header></app-header>
   <h1>Géneros</h1>
   <div class="tabla-container">
     <table class="tabla-formatos">
@@ -11,13 +11,13 @@
       </thead>
       <tbody>
         @for (tipo of generos; track tipo.id) {
-        <tr
-          [class.selected]="selec === generos.indexOf(tipo)"
-          (click)="seleccionar(generos.indexOf(tipo))"
-        >
-          <td>{{ tipo.id }}</td>
-          <td>{{ tipo.nombre }}</td>
-        </tr>
+          <tr
+            [class.selected]="selec === generos.indexOf(tipo)"
+            (click)="seleccionar(generos.indexOf(tipo))"
+          >
+            <td>{{ tipo.id }}</td>
+            <td>{{ tipo.nombre }}</td>
+          </tr>
         }
       </tbody>
     </table>
@@ -29,22 +29,12 @@
     </div>
   </div>
   <div class="pagination-container">
-    <button 
-      (click)="prevPage()" 
-      [disabled]="currentPage === 1"
-      class="btn-pagination"
-    >
+    <button (click)="prevPage()" [disabled]="currentPage === 1" class="btn-pagination">
       Anterior
     </button>
-    
+
     <span class="page-info">Pagina {{ currentPage }}</span>
-    
-    <button 
-      (click)="nextPage()" 
-      [disabled]="!hasMore"
-      class="btn-pagination"
-    >
-      Siguiente
-    </button>
+
+    <button (click)="nextPage()" [disabled]="!hasMore" class="btn-pagination">Siguiente</button>
   </div>
 </div>

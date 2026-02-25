@@ -12,11 +12,11 @@
       <div class="form-row">
         <div class="form-group">
           <label for="pelicula">Película</label>
-        <select id="pelicula" formControlName="pelicula" [compareWith]="compareById">            
-          <option *ngFor="let pelicula of peliculas" [ngValue]="pelicula">
+          <select id="pelicula" formControlName="pelicula" [compareWith]="compareById">
+            <option *ngFor="let pelicula of peliculas" [ngValue]="pelicula">
               {{ pelicula.id }} - {{ pelicula.titulo }}
-          </option>
-        </select>
+            </option>
+          </select>
         </div>
 
         <div class="form-group">
@@ -42,7 +42,7 @@
           <select id="sala" formControlName="sala" [compareWith]="compareById">
             <option [ngValue]="null" disabled selected>Seleccione la sala</option>
 
-            <option *ngFor="let s of salas" [ngValue]="s">{{ s.id }} - {{ s.nroSala }}</option>
+            <option *ngFor="let s of salas" [ngValue]="s">{{ s.id }}</option>
           </select>
         </div>
       </div>

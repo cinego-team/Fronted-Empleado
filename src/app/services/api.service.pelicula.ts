@@ -4,306 +4,298 @@ import { EditPeliculaInput } from '../pages/pantallas peliculas/editar-pelicula/
 import { EditGenero, GeneroInput } from '../pages/Genero/genero.dto';
 import { config } from '../axios_service/env';
 import { EditIdioma, IdiomaInput } from '../pages/Idioma/idioma.dto';
-import { EditEstado, EstadoInput } from '../pages/lista estado pelicula/estado-pelicula.dto';
 import { EditClasificacion, ClasificacionInput } from '../pages/Clasificacion/clasificacion.dto';
 import { axiosAPIPeliculas } from '../axios_service/axios.client';
 @Injectable({ providedIn: 'root' })
 export class ApiServicePelicula {
-  constructor() {}
-  //peliculas
-  async getPeliculaByIdForAdmin(id: number): Promise<{
-    urlImagen: string;
-    id: number;
-    titulo: string;
-    sinopsis: string;
-    director: string;
-    duracion: number;
-    fechaEstreno: string;
-    genero: { id: number; nombre: string };
-    clasificacion: { id: number; nombre: string };
-    estado: { id: number; nombre: string };
-    empleado: { id: number; legajo: number; nombre: string; apellido: string };
-  }> {
-    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculaByIdForAdmin(id)))
-      .data;
-    return {
-      id: datos.id,
-      titulo: datos.titulo,
-      sinopsis: datos.sinopsis,
-      director: datos.director,
-      duracion: datos.duracion,
-      fechaEstreno: datos.fechaEstreno,
-      genero: { id: datos.genero.id, nombre: datos.genero.nombre },
-      clasificacion: { id: datos.clasificacion.id, nombre: datos.clasificacion.nombre },
-      estado: { id: datos.estado.id, nombre: datos.estado.nombre },
-      urlImagen: datos.urlImagen,
-      empleado: {
-        id: datos.empleado.id,
-        legajo: datos.empleado.legajo,
-        nombre: datos.empleado.nombre,
-        apellido: datos.empleado.apellido,
-      },
-    };
-  }
-  async getPeliculasParaSelec(): Promise<
-    Array<{
-      id: number;
-      titulo: string;
-    }>
-  > {
-    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculasPAraSelec)).data;
-    const respuesta = datos.map((item: { id: any; titulo: any }) => ({
-      id: item.id,
-      titulo: item.titulo,
-    }));
-    return respuesta;
-  }
+    constructor() { }
+    //peliculas
+    async getPeliculaByIdForAdmin(id: number): Promise<{
+        urlImagen: string;
+        id: number;
+        titulo: string;
+        sinopsis: string;
+        director: string;
+        duracion: number;
+        fechaEstreno: string;
+        genero: { id: number; nombre: string };
+        clasificacion: { id: number; nombre: string };
+        estado: { id: number; nombre: string };
+        empleado: { id: number; legajo: number; nombre: string; apellido: string };
+    }> {
+        const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculaByIdForAdmin(id)))
+            .data;
+        return {
+            id: datos.id,
+            titulo: datos.titulo,
+            sinopsis: datos.sinopsis,
+            director: datos.director,
+            duracion: datos.duracion,
+            fechaEstreno: datos.fechaEstreno,
+            genero: { id: datos.genero.id, nombre: datos.genero.nombre },
+            clasificacion: { id: datos.clasificacion.id, nombre: datos.clasificacion.nombre },
+            estado: { id: datos.estado.id, nombre: datos.estado.nombre },
+            urlImagen: datos.urlImagen,
+            empleado: {
+                id: datos.empleado.id,
+                legajo: datos.empleado.legajo,
+                nombre: datos.empleado.nombre,
+                apellido: datos.empleado.apellido,
+            },
+        };
+    }
+    async getPeliculasParaSelec(): Promise<
+        Array<{
+            id: number;
+            titulo: string;
+        }>
+    > {
+        const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculasPAraSelec)).data;
+        const respuesta = datos.map((item: { id: any; titulo: any }) => ({
+            id: item.id,
+            titulo: item.titulo,
+        }));
+        return respuesta;
+    }
 
-  async getPeliculasCompleto(): Promise<
-    Array<{
-      id: number;
-      titulo: string;
-      sinopsis: string;
-      director: string;
-      duracion: number;
-      fechaEstreno: string;
-      urlImagen: string;
-      genero: {
+    async getPeliculasCompleto(): Promise<
+        Array<{
+            id: number;
+            titulo: string;
+            sinopsis: string;
+            director: string;
+            duracion: number;
+            fechaEstreno: string;
+            urlImagen: string;
+            genero: {
+                id: number;
+                nombre: string;
+            };
+            clasificacion: {
+                id: number;
+                nombre: string;
+            };
+            estado: {
+                id: number;
+                nombre: string;
+            };
+            empleado: {
+                nombre: string;
+                apellido: string;
+            };
+        }>
+    > {
+        const token = localStorage.getItem('access_token') || '';
+        const datos = (
+            await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculas, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+        ).data;
+        const respuesta = datos.map(
+            (item: {
+                id: any;
+                titulo: any;
+                sinopsis: any;
+                director: any;
+                duracion: any;
+                fechaEstreno: any;
+                urlImagen: any;
+                genero: {
+                    id: any;
+                    nombre: any;
+                };
+                clasificacion: {
+                    id: any;
+                    nombre: any;
+                };
+                estado: {
+                    id: any;
+                    nombre: any;
+                };
+                empleado: {
+                    nombre: any;
+                    apellido: any;
+                };
+            }) => ({
+                id: item.id,
+                titulo: item.titulo,
+                sinopsis: item.sinopsis,
+                director: item.director,
+                duracion: item.duracion,
+                fechaEstreno: item.fechaEstreno,
+                urlImagen: item.urlImagen,
+                genero: { id: item.genero.id, nombre: item.genero.nombre },
+                clasificacion: { id: item.clasificacion.id, nombre: item.clasificacion.nombre },
+                estado: { id: item.estado.id, nombre: item.estado.nombre },
+                empleado: item.empleado
+                    ? {
+                        nombre: item.empleado.nombre,
+                        apellido: item.empleado.apellido,
+                    }
+                    : null,
+            }),
+        );
+        return respuesta;
+    }
+    async deletePelicula(id: number): Promise<void> {
+        await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getPeliculaByIdForAdmin(id));
+    }
+    async createPeliculaAdmin(nuevaPelicula: EditPeliculaOutput): Promise<void> {
+        await axiosAPIPeliculas.post(config.APIPeliculasUrls.createPelicula, nuevaPelicula);
+    }
+
+    async updatePeliculaAdmin(pelicula: EditPeliculaInput): Promise<void> {
+        const data: EditPeliculaOutput = {
+            titulo: pelicula.titulo,
+            sinopsis: pelicula.sinopsis,
+            director: pelicula.director,
+            duracion: pelicula.duracion,
+            fechaEstreno: pelicula.fechaEstreno,
+            genero: {
+                id: pelicula.genero.id,
+                nombre: pelicula.genero.nombre,
+            },
+            clasificacion: {
+                id: pelicula.clasificacion.id,
+                nombre: pelicula.clasificacion.nombre,
+            },
+            estado: {
+                id: pelicula.estado.id,
+                nombre: pelicula.estado.nombre,
+            },
+            empleado: {
+                id: pelicula.empleado.id,
+                legajo: pelicula.empleado.legajo,
+                nombre: pelicula.empleado.nombre,
+                apellido: pelicula.empleado.apellido,
+            },
+            urlImagen: pelicula.urlImagen,
+        };
+        await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updatePelicula(pelicula.id!)}`, data);
+    }
+
+    //genero
+    async getGeneroById(id: number): Promise<{
         id: number;
         nombre: string;
-      };
-      clasificacion: {
+    }> {
+        const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getGeneroById(id))).data;
+        return {
+            id: datos.id,
+            nombre: datos.nombre,
+        };
+    }
+    async getAllGeneros(page = 1, quantity = 10): Promise<Array<{ id: number; nombre: string }>> {
+        const datos = (
+            await axiosAPIPeliculas.get(
+                `${config.APIPeliculasUrls.getGeneros}?page=${page}&quantity=${quantity}`,
+            )
+        ).data;
+        const respuesta = datos.map((item: { id: number; nombre: string }) => ({
+            id: item.id,
+            nombre: item.nombre,
+        }));
+        return respuesta;
+    }
+
+    async deleteGenero(id: number): Promise<void> {
+        await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getGeneroById(id));
+    }
+    async createGenero(nombre: string): Promise<void> {
+        const nuevoGenero: EditGenero = {
+            nombre: nombre,
+        };
+
+        await axiosAPIPeliculas.post(config.APIPeliculasUrls.createGenero, nuevoGenero);
+    }
+
+    async updateGenero(genero: GeneroInput): Promise<void> {
+        const data: GeneroInput = {
+            nombre: genero.nombre,
+        };
+        await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateGenero(genero.id!)}`, data);
+    }
+    //clasificacion
+    async getClasificacionById(id: number): Promise<{
         id: number;
         nombre: string;
-      };
-      estado: {
+    }> {
+        const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getClasificacionById(id)))
+            .data;
+        return {
+            id: datos.id,
+            nombre: datos.nombre,
+        };
+    }
+    async getAllClasificaciones(): Promise<
+        Array<{
+            id: number;
+            nombre: string;
+        }>
+    > {
+        const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getClasificaciones)).data;
+
+        const respuesta = datos.map((item: { id: number; nombre: string }) => ({
+            id: item.id,
+            nombre: item.nombre,
+        }));
+
+        return respuesta;
+    }
+    async deleteClasificacion(id: number): Promise<void> {
+        await axiosAPIPeliculas.delete(config.APIPeliculasUrls.deleteClasificacionById(id));
+    }
+
+    async createClasificacion(nombre: string): Promise<void> {
+        const nuevaClasificacion: EditClasificacion = {
+            nombre,
+        };
+
+        await axiosAPIPeliculas.post(config.APIPeliculasUrls.createClasificacion, nuevaClasificacion);
+    }
+    async updateClasificacion(clasificacion: ClasificacionInput): Promise<void> {
+        const data: ClasificacionInput = {
+            nombre: clasificacion.nombre,
+        };
+        await axiosAPIPeliculas.put(
+            `${config.APIPeliculasUrls.updateClasificacion(clasificacion.id!)}`,
+            data,
+        );
+    }
+    //estados
+    async getEstadosById(id: number): Promise<{
         id: number;
         nombre: string;
-      };
-      empleado: {
-        nombre: string;
-        apellido: string;
-      };
-    }>
-  > {
-    const token = localStorage.getItem('access_token') || '';
-    const datos = (
-      await axiosAPIPeliculas.get(config.APIPeliculasUrls.getPeliculas, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-    ).data;
-    const respuesta = datos.map(
-      (item: {
-        id: any;
-        titulo: any;
-        sinopsis: any;
-        director: any;
-        duracion: any;
-        fechaEstreno: any;
-        urlImagen: any;
-        genero: {
-          id: any;
-          nombre: any;
+    }> {
+        const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getEstadoById(id))).data;
+        return {
+            id: datos.id,
+            nombre: datos.nombre,
         };
-        clasificacion: {
-          id: any;
-          nombre: any;
+    }
+    async getAllEstados(): Promise<
+        Array<{
+            id: number;
+            nombre: string;
+        }>
+    > {
+        const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getEstados)).data;
+
+        const respuesta = datos.map((item: { id: number; nombre: string }) => ({
+            id: item.id,
+            nombre: item.nombre,
+        }));
+
+        return respuesta;
+    }
+    async deleteEstado(id: number): Promise<void> {
+        await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getEstadoById(id));
+    }
+    async createEstado(formulario: { nombre: string }): Promise<void> {
+        const nuevoEstado = {
+            nombre: formulario.nombre,
         };
-        estado: {
-          id: any;
-          nombre: any;
-        };
-        empleado: {
-          nombre: any;
-          apellido: any;
-        };
-      }) => ({
-        id: item.id,
-        titulo: item.titulo,
-        sinopsis: item.sinopsis,
-        director: item.director,
-        duracion: item.duracion,
-        fechaEstreno: item.fechaEstreno,
-        urlImagen: item.urlImagen,
-        genero: { id: item.genero.id, nombre: item.genero.nombre },
-        clasificacion: { id: item.clasificacion.id, nombre: item.clasificacion.nombre },
-        estado: { id: item.estado.id, nombre: item.estado.nombre },
-        empleado: item.empleado
-          ? {
-              nombre: item.empleado.nombre,
-              apellido: item.empleado.apellido,
-            }
-          : null,
-      }),
-    );
-    return respuesta;
-  }
-  async deletePelicula(id: number): Promise<void> {
-    await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getPeliculaByIdForAdmin(id));
-  }
-  async createPeliculaAdmin(nuevaPelicula: EditPeliculaOutput): Promise<void> {
-    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createPelicula, nuevaPelicula);
-  }
 
-  async updatePeliculaAdmin(pelicula: EditPeliculaInput): Promise<void> {
-    const data: EditPeliculaOutput = {
-      titulo: pelicula.titulo,
-      sinopsis: pelicula.sinopsis,
-      director: pelicula.director,
-      duracion: pelicula.duracion,
-      fechaEstreno: pelicula.fechaEstreno,
-      genero: {
-        id: pelicula.genero.id,
-        nombre: pelicula.genero.nombre,
-      },
-      clasificacion: {
-        id: pelicula.clasificacion.id,
-        nombre: pelicula.clasificacion.nombre,
-      },
-      estado: {
-        id: pelicula.estado.id,
-        nombre: pelicula.estado.nombre,
-      },
-      empleado: {
-        id: pelicula.empleado.id,
-        legajo: pelicula.empleado.legajo,
-        nombre: pelicula.empleado.nombre,
-        apellido: pelicula.empleado.apellido,
-      },
-      urlImagen: pelicula.urlImagen,
-    };
-    await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updatePelicula(pelicula.id!)}`, data);
-  }
-
-  //genero
-  async getGeneroById(id: number): Promise<{
-    id: number;
-    nombre: string;
-  }> {
-    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getGeneroById(id))).data;
-    return {
-      id: datos.id,
-      nombre: datos.nombre,
-    };
-  }
-  async getAllGeneros(page = 1, quantity = 10): Promise<Array<{ id: number; nombre: string }>> {
-    const datos = (
-      await axiosAPIPeliculas.get(
-        `${config.APIPeliculasUrls.getGeneros}?page=${page}&quantity=${quantity}`,
-      )
-    ).data;
-    const respuesta = datos.map((item: { id: number; nombre: string }) => ({
-      id: item.id,
-      nombre: item.nombre,
-    }));
-    return respuesta;
-  }
-
-  async deleteGenero(id: number): Promise<void> {
-    await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getGeneroById(id));
-  }
-  async createGenero(nombre: string): Promise<void> {
-    const nuevoGenero: EditGenero = {
-      nombre: nombre,
-    };
-
-    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createGenero, nuevoGenero);
-  }
-
-  async updateGenero(genero: GeneroInput): Promise<void> {
-    const data: GeneroInput = {
-      nombre: genero.nombre,
-    };
-    await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateGenero(genero.id!)}`, data);
-  }
-  //clasificacion
-  async getClasificacionById(id: number): Promise<{
-    id: number;
-    nombre: string;
-  }> {
-    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getClasificacionById(id)))
-      .data;
-    return {
-      id: datos.id,
-      nombre: datos.nombre,
-    };
-  }
-  async getAllClasificaciones(): Promise<
-    Array<{
-      id: number;
-      nombre: string;
-    }>
-  > {
-    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getClasificaciones)).data;
-
-    const respuesta = datos.map((item: { id: number; nombre: string }) => ({
-      id: item.id,
-      nombre: item.nombre,
-    }));
-
-    return respuesta;
-  }
-  async deleteClasificacion(id: number): Promise<void> {
-    await axiosAPIPeliculas.delete(config.APIPeliculasUrls.deleteClasificacionById(id));
-  }
-
-  async createClasificacion(nombre: string): Promise<void> {
-    const nuevaClasificacion: EditClasificacion = {
-      nombre,
-    };
-
-    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createClasificacion, nuevaClasificacion);
-  }
-  async updateClasificacion(clasificacion: ClasificacionInput): Promise<void> {
-    const data: ClasificacionInput = {
-      nombre: clasificacion.nombre,
-    };
-    await axiosAPIPeliculas.put(
-      `${config.APIPeliculasUrls.updateClasificacion(clasificacion.id!)}`,
-      data,
-    );
-  }
-  //estados
-  async getEstadosById(id: number): Promise<{
-    id: number;
-    nombre: string;
-  }> {
-    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getEstadoById(id))).data;
-    return {
-      id: datos.id,
-      nombre: datos.nombre,
-    };
-  }
-  async getAllEstados(): Promise<
-    Array<{
-      id: number;
-      nombre: string;
-    }>
-  > {
-    const datos = (await axiosAPIPeliculas.get(config.APIPeliculasUrls.getEstados)).data;
-
-    const respuesta = datos.map((item: { id: number; nombre: string }) => ({
-      id: item.id,
-      nombre: item.nombre,
-    }));
-
-    return respuesta;
-  }
-  async deleteEstado(id: number): Promise<void> {
-    await axiosAPIPeliculas.delete(config.APIPeliculasUrls.getEstadoById(id));
-  }
-  async createEstado(formulario: { nombre: string }): Promise<void> {
-    const nuevoEstado = {
-      nombre: formulario.nombre,
-    };
-
-    await axiosAPIPeliculas.post(config.APIPeliculasUrls.createEstado, nuevoEstado);
-  }
-
-  async updateEstado(estado: EstadoInput): Promise<void> {
-    const data: EstadoInput = {
-      nombre: estado.nombre,
-    };
-    await axiosAPIPeliculas.put(`${config.APIPeliculasUrls.updateEstado(estado.id!)}`, data);
-  }
+        await axiosAPIPeliculas.post(config.APIPeliculasUrls.createEstado, nuevoEstado);
+    }
 }
