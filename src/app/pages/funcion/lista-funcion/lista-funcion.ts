@@ -87,8 +87,6 @@ export class ListaFuncion implements OnInit {
                 },
             }));
             this.hasMore = funcionesBackend.length === this.pageSize;
-
-            console.log(' funciones cargadas:', this.funciones);
         } catch (error) {
             console.error('Error al cargar funciones:', error);
             this.errorMessage = 'Error al cargar las funciones. Por favor, intenta nuevamente.';
