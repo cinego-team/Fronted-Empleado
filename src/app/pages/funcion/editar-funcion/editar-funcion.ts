@@ -68,9 +68,6 @@ export class EditarFuncion implements OnInit {
     const f = this.dataFuncion;
     const peliculaSeleccionada = this.peliculas.find((p) => p.id === f.peliculaId);
 
-    console.log('[v0] Peliculas cargadas:', this.peliculas);
-    console.log('[v0] PeliculaId de la funcion:', f.peliculaId);
-
     this.form.patchValue({
       id: f.id,
       pelicula: peliculaSeleccionada,

@@ -132,8 +132,6 @@ export class Reportes implements AfterViewInit {
       ventasPorHora[horaFormateada] = (ventasPorHora[horaFormateada] || 0) + Number(x.cantidad);
     });
 
-    console.log('[v0] ventasPorHora:', ventasPorHora);
-
     // Asignar 0 a las horas sin ventas
     const data = todasLasHoras.map((hora) => ventasPorHora[hora] || 0);
 

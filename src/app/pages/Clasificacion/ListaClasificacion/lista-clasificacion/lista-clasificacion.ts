@@ -18,7 +18,10 @@ interface ClasificacionRow {
   styleUrls: ['./lista-clasificacion.css'],
 })
 export class ListaClasificacionComponent {
-  constructor(private router: Router, private readonly apiService: ApiServicePelicula) {}
+  constructor(
+    private router: Router,
+    private readonly apiService: ApiServicePelicula,
+  ) {}
   clasificaciones: Array<{
     id: number;
     nombre: string;
@@ -51,8 +54,6 @@ export class ListaClasificacionComponent {
     const selectedC = this.clasificaciones[this.selec];
 
     if (confirm(`¿Estás seguro de que querés eliminar ?`)) {
-      console.log(selectedC);
-
       this.apiService
         .deleteClasificacion(selectedC.id)
         .then(() => {

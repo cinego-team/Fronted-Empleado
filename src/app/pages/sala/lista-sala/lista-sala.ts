@@ -24,7 +24,10 @@ export class ListaSala implements OnInit {
   isLoading = true;
   errorMessage = '';
 
-  constructor(private router: Router, private apiService: ApiServiceFunciones) {}
+  constructor(
+    private router: Router,
+    private apiService: ApiServiceFunciones,
+  ) {}
 
   async ngOnInit() {
     await this.cargarSalas();
@@ -45,8 +48,6 @@ export class ListaSala implements OnInit {
         cantFilas: sala.cantFilas,
         capacidad: sala.capacidad,
       }));
-
-      console.log(' Salas cargadas:', this.salas);
     } catch (error) {
       console.error(' Error al cargar salas:', error);
       this.errorMessage = 'Error al cargar las salas. Por favor, intenta nuevamente.';

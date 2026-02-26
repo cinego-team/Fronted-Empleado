@@ -5,133 +5,133 @@ import { Router } from '@angular/router';
 import { ApiServicePelicula } from '../../../services/api.service.pelicula';
 import { Header } from '../../../shared/header/header';
 @Component({
-    selector: 'app-pelicula',
-    standalone: true, // si tu proyecto usa standalone components
-    imports: [CommonModule, ReactiveFormsModule, Header],
-    templateUrl: './pelicula.html',
-    styleUrls: ['./pelicula.css'],
+  selector: 'app-pelicula',
+  standalone: true, // si tu proyecto usa standalone components
+  imports: [CommonModule, ReactiveFormsModule, Header],
+  templateUrl: './pelicula.html',
+  styleUrls: ['./pelicula.css'],
 })
 export class Pelicula {
-    selectedPelicula: any | null = null;
+  selectedPelicula: any | null = null;
 
-    constructor(
-        private fb: FormBuilder,
-        private apiService: ApiServicePelicula,
-        private router: Router
-    ) { }
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiServicePelicula,
+    private router: Router,
+  ) {}
 
-    peliculas: Array<{
-        id: number;
-        titulo: string;
-        sinopsis: string;
-        director: string;
-        duracion: number;
-        fechaEstreno: string;
-        urlImagen: string;
-        genero: {
-            id: number;
-            nombre: string;
-        };
+  peliculas: Array<{
+    id: number;
+    titulo: string;
+    sinopsis: string;
+    director: string;
+    duracion: number;
+    fechaEstreno: string;
+    urlImagen: string;
+    genero: {
+      id: number;
+      nombre: string;
+    };
 
-        clasificacion: {
-            id: number;
-            nombre: string;
-        };
-        estado: {
-            id: number;
-            nombre: string;
-        };
-        empleado: {
-            nombre: string;
-            apellido: string;
-        };
-    }> = [];
-    selec: number | null = null;
+    clasificacion: {
+      id: number;
+      nombre: string;
+    };
+    estado: {
+      id: number;
+      nombre: string;
+    };
+    empleado: {
+      nombre: string;
+      apellido: string;
+    };
+  }> = [];
+  selec: number | null = null;
 
-    // Paginacion
-    currentPage = 1;
-    pageSize = 5;
-    hasMore = true;
+  // Paginacion
+  currentPage = 1;
+  pageSize = 5;
+  hasMore = true;
 
-    ngOnInit(): void {
-        this.initialization();
+  ngOnInit(): void {
+    this.initialization();
+  }
+
+  async initialization(): Promise<void> {
+    this.loadPeliculas();
+  }
+  async loadPeliculas(): Promise<void> {
+    const data = await this.apiService.getPeliculasCompleto(this.currentPage, this.pageSize);
+    if (data.length === 0 && this.currentPage === 1) {
+      alert('No hay películas para mostrar.');
+      return;
+    }
+    this.peliculas = data;
+    this.hasMore = data.length === this.pageSize;
+  }
+
+  nextPage(): void {
+    if (this.hasMore) {
+      this.currentPage++;
+      this.selec = null;
+      this.loadPeliculas();
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.selec = null;
+      this.loadPeliculas();
+    }
+  }
+
+  selectRow(index: number) {
+    this.selec = index;
+    this.selectedPelicula = this.peliculas[index];
+  }
+
+  editar() {
+    if (this.selec === null) {
+      alert('Seleccioná uno primero.');
+      return;
+    }
+    const selected = this.peliculas[this.selec];
+    this.router.navigate(['/pelicula/editar', selected.id], {
+      state: {
+        pelicula: selected,
+      },
+    });
+  }
+
+  onBack() {
+    this.router.navigate(['/home']);
+  }
+
+  onNew() {
+    this.router.navigate(['/pelicula/registrar']);
+  }
+
+  eliminar(): void {
+    if (this.selec === null) {
+      alert('Seleccioná una película  primero.');
+      return;
     }
 
-    async initialization(): Promise<void> {
-        this.loadPeliculas();
-    }
-    async loadPeliculas(): Promise<void> {
-        const data = await this.apiService.getPeliculasCompleto(this.currentPage, this.pageSize);
-        if (data.length === 0 && this.currentPage === 1) {
-            alert('No hay películas para mostrar.');
-            return;
-        }
-        this.peliculas = data;
-        this.hasMore = data.length === this.pageSize;
-    }
+    const selectedC = this.peliculas[this.selec];
 
-    nextPage(): void {
-        if (this.hasMore) {
-            this.currentPage++;
-            this.selec = null;
-            this.loadPeliculas();
-        }
-    }
-
-    prevPage(): void {
-        if (this.currentPage > 1) {
-            this.currentPage--;
-            this.selec = null;
-            this.loadPeliculas();
-        }
-    }
-
-    selectRow(index: number) {
-        this.selec = index;
-        this.selectedPelicula = this.peliculas[index];
-    }
-
-    editar() {
-        if (this.selec === null) {
-            alert('Seleccioná uno primero.');
-            return;
-        }
-        const selected = this.peliculas[this.selec];
-        this.router.navigate(['/pelicula/editar', selected.id], {
-            state: {
-                pelicula: selected,
-            },
+    if (confirm(`¿Estás seguro de que querés eliminar ?`)) {
+      this.apiService
+        .deletePelicula(selectedC.id)
+        .then(() => {
+          alert('Película eliminada correctamente.');
+          this.peliculas.splice(this.selec!, 1);
+          this.selec = null;
+        })
+        .catch((error) => {
+          console.error('Error al eliminar', error);
+          alert('Ocurrió un error al eliminar');
         });
     }
-
-    onBack() {
-        this.router.navigate(['/home']);
-    }
-
-    onNew() {
-        this.router.navigate(['/pelicula/registrar']);
-    }
-
-    eliminar(): void {
-        if (this.selec === null) {
-            alert('Seleccioná una película  primero.');
-            return;
-        }
-
-        const selectedC = this.peliculas[this.selec];
-
-        if (confirm(`¿Estás seguro de que querés eliminar ?`)) {
-            this.apiService
-                .deletePelicula(selectedC.id)
-                .then(() => {
-                    alert('Película eliminada correctamente.');
-                    this.peliculas.splice(this.selec!, 1);
-                    this.selec = null;
-                })
-                .catch((error) => {
-                    console.error('Error al eliminar', error);
-                    alert('Ocurrió un error al eliminar');
-                });
-        }
-    }
+  }
 }

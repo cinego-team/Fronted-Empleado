@@ -35,6 +35,5 @@ export class TokenTimeoutService {
 
   private logout() {
     this.apiService.logout();
-    console.log('Sesión cerrada');
   }
 }

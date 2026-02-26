@@ -43,7 +43,6 @@ export class TiposCliente {
       this.globalStatusService.setLoading(true);
 
       const data = await this.apiService.getAllTiposClientes();
-      console.log('DATA RECIBIDA:', data);
 
       if (data.length === 0) {
         alert('No hay tipos cliente para mostrar.');

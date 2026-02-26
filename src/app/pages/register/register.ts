@@ -73,7 +73,6 @@ export class Register implements OnInit, AfterViewInit, OnDestroy {
   }
   async cargarRoles() {
     this.roles = await this.authService.getAllRoles();
-    console.log(this.roles);
   }
 
   ngOnInit() {
@@ -89,7 +88,6 @@ export class Register implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onRegister() {
-    console.log('Submit disparado');
     if (this.formulario.invalid) {
       alert('Por favor, completa todos los campos correctamente.');
       this.formulario.markAllAsTouched();
